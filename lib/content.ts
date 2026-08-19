@@ -163,6 +163,12 @@ export const products: Product[] = [
   },
 ];
 
+export function getProduct(slug: string): Product {
+  const product = products.find((item) => item.slug === slug);
+  if (!product) throw new Error(`Unknown product slug: ${slug}`);
+  return product;
+}
+
 export type NewsItem = {
   category: string;
   date: string;
