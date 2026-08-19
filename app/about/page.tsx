@@ -8,11 +8,13 @@ export const metadata = createPageMetadata({
   path: "/about",
 });
 
-const team = [
-  ["Jerry Jung", "대표", "블록체인 기업 경영과 기술 전략을 총괄하며 비즈니스 혁신을 이끕니다."],
-  ["Tommy Han", "Dev Leader", "블록체인 개발팀을 리드하며 기술적 아키텍처와 구현을 책임집니다."],
-  ["Echo Lee", "Web3 Developer", "Web3 기술과 탈중앙화 애플리케이션 개발을 전담하는 전문가입니다."],
-  ["UI/UX Designer", "디자이너", "사용자 중심의 직관적이고 아름다운 인터페이스를 디자인합니다."],
+type TeamMember = { name: string; role: string; copy: string; image: string; alt: string };
+
+const team: TeamMember[] = [
+  { name: "Jerry Jung", role: "대표", copy: "블록체인 기업 경영과 기술 전략을 총괄하며 비즈니스 혁신을 이끕니다.", image: "/team-jerry.png", alt: "Jerry Jung 프로필 일러스트" },
+  { name: "Tommy Han", role: "Dev Leader", copy: "블록체인 개발팀을 리드하며 기술적 아키텍처와 구현을 책임집니다.", image: "/team-tommy.png", alt: "Tommy Han 프로필 일러스트" },
+  { name: "Echo Lee", role: "Web3 Developer", copy: "Web3 기술과 탈중앙화 애플리케이션 개발을 전담하는 전문가입니다.", image: "/team-echo.png", alt: "Echo Lee 프로필 일러스트" },
+  { name: "UI/UX Designer", role: "디자이너", copy: "사용자 중심의 직관적이고 아름다운 인터페이스를 디자인합니다.", image: "/team-designer.png", alt: "UI/UX Designer 프로필 일러스트" },
 ];
 
 export default function AboutPage() {
@@ -154,7 +156,7 @@ export default function AboutPage() {
     <section className="section section--subtle">
       <div className="container">
         <div className="section-heading"><p className="eyebrow">OUR TEAM</p><h2>기술과 비즈니스를 연결하는 사람들</h2></div>
-        <div className="team-grid">{team.map(([name, role, copy]) => <article className="team-card" key={name}><span>{name.split(" ").map(value => value[0]).join("")}</span><div><h3>{name}</h3><small>{role}</small><p>{copy}</p></div></article>)}</div>
+        <div className="team-grid">{team.map((member) => <article className="team-card" key={member.name}><Image src={member.image} width={70} height={70} alt={member.alt}/><div><h3>{member.name}</h3><small>{member.role}</small><p>{member.copy}</p></div></article>)}</div>
       </div>
     </section>
     <ContactCTA />
