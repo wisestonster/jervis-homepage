@@ -183,6 +183,25 @@ export const products: Product[] = [
     flow: [["Fund", "NFT 발행으로 제작비 조달"], ["Decide", "DAO 커뮤니티가 기획 단계 의사결정에 참여"], ["Reward", "참여 기여도에 따른 보상·인센티브 제공"]],
     audiences: ["관객·팬", "NFT·Web3 투자자", "엔터테인먼트 제작사", "크리에이터·창작자"],
   },
+  {
+    slug: "coresetdao",
+    name: "CoReset DAO",
+    category: "AI 시대 권리 실행 인프라",
+    tagline: "함께 기록하고 함께 권리를 만듭니다.",
+    description: "공동저작권, 라이선스 실행과 제3자 대항력을 연결하는 AI 시대 권리 실행 인프라입니다. 공동 저작권자들이 함께 참여하고 제안하고 기록하며 새로운 권리 경제를 만들어가고, DAO 참여로 권리를 활성화하며 라이선스 사용과 권리 상태 변화를 기록합니다.",
+    demo: "https://coreset.ai/",
+    demoLabel: "서비스 바로가기",
+    status: "LIVE · AI RIGHTS INFRASTRUCTURE",
+    accent: "product-emerald",
+    features: [
+      ["공동저작권 관리", "공동 저작권자들이 함께 참여하고 제안하며 권리 관계를 기록합니다."],
+      ["DAO 기반 권리 활성화", "DAO 참여를 통해 저작권을 활성화하고 의사결정에 반영합니다."],
+      ["라이선스 실행 기록", "라이선스 사용과 권리 상태 변화를 온체인에 기록합니다."],
+      ["제3자 대항력 확보", "기록된 권리 관계로 제3자에 대한 대항력을 뒷받침합니다."],
+    ],
+    flow: [["Record", "공동 저작권자들이 참여·제안·기록"], ["Activate", "DAO 참여로 권리 활성화"], ["Enforce", "라이선스 실행과 제3자 대항력 확보"]],
+    audiences: ["공동 저작권자", "AI 창작 도구·플랫폼", "라이선스 관리 기관", "저작권 법률 전문가"],
+  },
 ];
 
 export function getProduct(slug: string): Product {
