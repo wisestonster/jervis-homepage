@@ -6,7 +6,7 @@ import { breadcrumbJsonLd, createPageMetadata } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
   title: "솔루션",
-  description: "AI 창작성 증명 JervisBox, 미술품 등기 ArtPass, RWA·STO 플랫폼 JerviX와 AI 숏폼 DokReels를 만나보세요.",
+  description: "AI 창작성 증명 JervisBox, 미술품 등기 ArtPass, RWA·STO 플랫폼 JerviX, AI 숏폼 DokReels와 Web3 영화 제작 MelomanceDAO를 만나보세요.",
   path: "/product",
 });
 
@@ -15,6 +15,7 @@ const illustrations: Record<string, { src: string; alt: string }> = {
   artpass: { src: "/solution-artpass.webp", alt: "미술품과 블록체인 등기 증명서를 표현한 일러스트" },
   jervix: { src: "/solution-jervix.webp", alt: "실물자산의 디지털 토큰화와 거래를 표현한 일러스트" },
   dokreels: { src: "/solution-dokreels.webp", alt: "AI 숏폼 영상 콘텐츠 제작을 표현한 일러스트" },
+  melomancedao: { src: "/solution-melomancedao.png", alt: "NFT와 DAO 거버넌스 기반 영화 제작을 표현한 일러스트" },
 };
 
 export default function SolutionPage() {

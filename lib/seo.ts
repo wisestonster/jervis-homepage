@@ -59,6 +59,7 @@ const productImages: Record<string, string> = {
   artpass: "/solution-artpass.webp",
   jervix: "/solution-jervix.webp",
   dokreels: "/solution-dokreels.webp",
+  melomancedao: "/solution-melomancedao.png",
 };
 
 export function createProductMetadata(product: Product): Metadata {

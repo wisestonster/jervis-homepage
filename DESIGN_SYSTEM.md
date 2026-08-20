@@ -69,6 +69,7 @@ linear-gradient(118deg, #EFF6FC, #EAFBFB)
 | `.product-cyan` | `#0E97A2` | Cyan 계열 |
 | `.product-navy` | `#003A66` | Navy 계열 |
 | `.product-violet` | `#6D61BD` | Violet 계열 |
+| `.product-gold` | `#B8862E` | Gold 계열 |
 
 제품 Accent는 카드 상단선, 카테고리, 콘솔 마크에 사용하며 본문 전체를 Accent 색상으로 채우지 않습니다.
 
