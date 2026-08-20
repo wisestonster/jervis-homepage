@@ -81,6 +81,8 @@ export type Product = {
   tagline: string;
   description: string;
   demo?: string;
+  demoLabel?: string;
+  posterImage?: string;
   status: string;
   accent: string;
   features: Array<[string, string]>;
@@ -168,6 +170,8 @@ export const products: Product[] = [
     tagline: "참여, 공유, 개방으로 함께 만드는 영화.",
     description: "국내 최초로 블록체인 기술을 상업영화 제작에 도입한 프로젝트입니다. NFT 발행으로 제작비를 조달하고, DAO 커뮤니티가 배우 캐스팅·로케이션 선정·굿즈 제작·스토리 구조 변경까지 기획 단계의 의사결정에 참여하며, 관객·팬의 참여 기여도에 따라 보상과 인센티브를 제공합니다.",
     demo: "https://melomance.dothome.co.kr/",
+    demoLabel: "홈페이지 이동",
+    posterImage: "/melomancedao-poster.jpg",
     status: "CASE STUDY · WEB3 FILM DAO",
     accent: "product-gold",
     features: [
