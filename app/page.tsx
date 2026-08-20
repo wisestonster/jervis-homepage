@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ContactCTA, Arrow } from "@/components/page-ui";
 import { NewsCard } from "@/components/news-card";
 import { products, technologies } from "@/lib/content";
@@ -122,6 +123,12 @@ export default async function Home() {
         </div>
       </section>
       <ContactCTA />
+      <section className="sponsor-notice">
+        <div className="container">
+          <Image src="/dada-logo.png" width={155} height={32} alt="디지털자산기부연구회 로고" />
+          <p>저비스랩스는 디지털자산기부연구회(Digital Asset Donation Association)의 스폰서입니다.</p>
+        </div>
+      </section>
     </>
   );
 }
