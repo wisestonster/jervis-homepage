@@ -6,7 +6,7 @@ import { breadcrumbJsonLd, productServiceJsonLd } from "@/lib/seo";
 export function Arrow() { return <span aria-hidden="true">↗</span>; }
 export function JsonLd({ data }: { data: object }) { return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }} />; }
 export function PageHero({ eyebrow, title, description, dark = false }: { eyebrow: string; title: React.ReactNode; description: string; dark?: boolean }) { return <section className={dark ? "page-hero page-hero--dark" : "page-hero"}><div className="container"><p className="eyebrow">{eyebrow}</p><h1>{title}</h1><p className="page-hero__copy">{description}</p></div></section>; }
-export function ContactCTA() { return <section className="cta"><div className="container cta-inner"><div><p className="eyebrow">LET&apos;S BUILD TOGETHER</p><h2>새로운 비즈니스의 시작,<br />Jervis Labs와 함께 하세요.</h2></div><Link className="button button--light" href="/contact">상담 문의 <Arrow /></Link></div></section>; }
+export function ContactCTA({ children }: { children?: React.ReactNode } = {}) { return <section className="cta"><div className="container cta-inner"><div><p className="eyebrow">LET&apos;S BUILD TOGETHER</p><h2>새로운 비즈니스의 시작,<br />Jervis Labs와 함께 하세요.</h2></div><Link className="button button--light" href="/contact">상담 문의 <Arrow /></Link></div>{children && <div className="container cta-sponsor">{children}</div>}</section>; }
 
 export function ProductLanding({ product }: { product: Product }) {
   return <>
