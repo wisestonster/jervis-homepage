@@ -83,6 +83,7 @@ export type Product = {
   demo?: string;
   demoLabel?: string;
   posterImage?: string;
+  markImage?: string;
   status: string;
   accent: string;
   features: Array<[string, string]>;
@@ -155,6 +156,7 @@ export const products: Product[] = [
     description: "공동저작권, 라이선스 실행과 제3자 대항력을 연결하는 AI 시대 권리 실행 인프라입니다. 공동 저작권자들이 함께 참여하고 제안하고 기록하며 새로운 권리 경제를 만들어가고, DAO 참여로 권리를 활성화하며 라이선스 사용과 권리 상태 변화를 기록합니다.",
     demo: "https://coreset.ai/",
     demoLabel: "서비스 바로가기",
+    markImage: "/coreset-icon.png",
     status: "LIVE · AI RIGHTS INFRASTRUCTURE",
     accent: "product-emerald",
     features: [
