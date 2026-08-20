@@ -99,6 +99,7 @@ export const products: Product[] = [
     tagline: "완성 파일이 아니라, 창작의 과정을 증명합니다.",
     description: "프롬프트, 레퍼런스, AI 생성 결과와 사람의 편집 과정을 순서대로 해시하고 지갑으로 서명해 블록체인에 기록합니다. 원본 파일은 로컬에 두고, 창작 사실을 검증할 수 있는 증거만 온체인에 남깁니다.",
     demo: `http://${demoHost}:8080/`,
+    markImage: "/solution-jervisbox.webp",
     status: "BETA · PROOF OF PROCESS",
     accent: "product-blue",
     features: [
@@ -117,6 +118,7 @@ export const products: Product[] = [
     tagline: "실물 미술품의 등기부를 온체인에.",
     description: "미술품 등록, 진품확인서 발급과 소유권 이전 이력을 관리하는 작품 등기 서비스입니다. 작품 1점당 등기 NFT 1개를 발행하고, 검증된 소유권 이전 절차를 통해 이력을 이어갑니다.",
     demo: `http://${demoHost}:3030/`,
+    markImage: "/solution-artpass.webp",
     status: "BETA · ARTWORK REGISTRY",
     accent: "product-cyan",
     features: [
@@ -175,6 +177,7 @@ export const products: Product[] = [
     tagline: "실물자산의 발행과 거래를 하나의 시장으로.",
     description: "부동산, 미술품과 지식재산권 등 실물자산을 디지털 증권으로 구조화하고 발행·청약·거래·정산을 연결하는 RWA·STO 거래 플랫폼입니다.",
     demo: `http://${demoHost}:3040/`,
+    markImage: "/solution-jervix.webp",
     status: "COMING SOON · RWA / STO",
     accent: "product-navy",
     features: [
@@ -193,6 +196,7 @@ export const products: Product[] = [
     tagline: "K-콘텐츠 크리에이터를 위한 숏폼 커뮤니티.",
     description: "AI 영상과 K-콘텐츠를 짧고 몰입감 있게 발견하고 공유하는 숏폼 커뮤니티입니다. 추천·팔로잉 피드, 크리에이터 탐색, 챌린지와 개인화 기능으로 콘텐츠와 팬을 연결합니다.",
     demo: `http://${demoHost}:3010/`,
+    markImage: "/solution-dokreels.webp",
     status: "BETA · K-CONTENT SHORTFORM",
     accent: "product-violet",
     features: [
