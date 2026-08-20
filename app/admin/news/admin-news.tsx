@@ -26,6 +26,7 @@ type CardForm = {
   sourceUrl: string;
   publishedAt: string;
   visible: boolean;
+  pinned: boolean;
 };
 
 const emptyCard = (): CardForm => ({
@@ -37,6 +38,7 @@ const emptyCard = (): CardForm => ({
   sourceUrl: "",
   publishedAt: today(),
   visible: false,
+  pinned: false,
 });
 
 function itemToForm(item: ManagedNewsItem): CardForm {
@@ -49,6 +51,7 @@ function itemToForm(item: ManagedNewsItem): CardForm {
     sourceUrl: item.sourceUrl,
     publishedAt: item.publishedAt,
     visible: item.status === "published",
+    pinned: item.pinned,
   };
 }
 
@@ -81,14 +84,18 @@ export function AdminLogin({ configured }: { configured: boolean }) {
   );
 }
 
-function VisibilitySwitch({ checked, onChange, disabled = false }: { checked: boolean; onChange: (checked: boolean) => void; disabled?: boolean }) {
+function ToggleSwitch({ checked, onChange, disabled = false, onLabel, offLabel }: { checked: boolean; onChange: (checked: boolean) => void; disabled?: boolean; onLabel: string; offLabel: string }) {
   return (
     <label className="visibility-switch">
       <input type="checkbox" role="switch" checked={checked} disabled={disabled} onChange={(event) => onChange(event.target.checked)} />
       <span aria-hidden="true"><i /></span>
-      <b>{checked ? "노출" : "비노출"}</b>
+      <b>{checked ? onLabel : offLabel}</b>
     </label>
   );
+}
+
+function VisibilitySwitch({ checked, onChange, disabled = false }: { checked: boolean; onChange: (checked: boolean) => void; disabled?: boolean }) {
+  return <ToggleSwitch checked={checked} onChange={onChange} disabled={disabled} onLabel="노출" offLabel="비노출" />;
 }
 
 function CardFields({ value, onChange }: { value: CardForm; onChange: (next: CardForm) => void }) {
@@ -132,6 +139,7 @@ function CardFields({ value, onChange }: { value: CardForm; onChange: (next: Car
       <label>카테고리<input value={value.category} maxLength={30} onChange={(event) => update("category", event.target.value)} placeholder="예: RWA" /></label>
       <label>게시일<input type="date" value={value.publishedAt} onChange={(event) => update("publishedAt", event.target.value)} /></label>
       <div className="admin-visible-field"><span>공개 상태</span><VisibilitySwitch checked={value.visible} onChange={(checked) => update("visible", checked)} /></div>
+      <div className="admin-visible-field"><span>고정 노출</span><ToggleSwitch checked={value.pinned} onChange={(checked) => update("pinned", checked)} onLabel="고정" offLabel="고정 안함" /></div>
       <label className="admin-wide">카드 제목<input required value={value.title} maxLength={200} onChange={(event) => update("title", event.target.value)} /></label>
       <label className="admin-wide">카드 이미지 URL<input type="url" value={value.imageUrl} onChange={(event) => update("imageUrl", event.target.value)} placeholder="https://example.com/image.jpg" /></label>
       <label className="admin-wide">카드 내용<textarea required rows={6} value={value.summary} maxLength={5000} onChange={(event) => update("summary", event.target.value)} /></label>
@@ -192,6 +200,17 @@ export function AdminNewsDashboard({ initialItems }: { initialItems: ManagedNews
       setBusyId(null);
     }
   };
+  const togglePin = async (item: ManagedNewsItem, pinned: boolean) => {
+    setBusyId(item.id);
+    try {
+      const body = await api(`/api/admin/news/${item.id}`, { method: "PATCH", body: JSON.stringify({ ...itemToForm(item), pinned }) });
+      setItems((current) => current.map((entry) => entry.id === body.item.id ? body.item : entry));
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "고정 상태를 변경하지 못했습니다.");
+    } finally {
+      setBusyId(null);
+    }
+  };
   const remove = async (item: ManagedNewsItem) => {
     if (!confirm(`“${item.title}” 뉴스를 삭제할까요?`)) return;
     setBusyId(item.id);
@@ -221,10 +240,10 @@ export function AdminNewsDashboard({ initialItems }: { initialItems: ManagedNews
           {items.map((item, index) => (
             <article className="admin-board__row" key={item.id}>
               <span className="admin-board__number">{items.length - index}</span>
-              <div className="admin-board__title"><small>{item.category}</small><strong>{item.title}</strong><a href={item.sourceUrl} target="_blank" rel="noreferrer">원문 보기</a></div>
+              <div className="admin-board__title"><small>{item.category}</small><strong>{item.pinned && <span className="admin-badge admin-badge--pinned">고정</span>}{item.title}</strong><a href={item.sourceUrl} target="_blank" rel="noreferrer">원문 보기</a></div>
               <time dateTime={item.publishedAt}>{item.publishedAt}</time>
               <VisibilitySwitch checked={item.status === "published"} disabled={busyId === item.id} onChange={(checked) => toggleVisibility(item, checked)} />
-              <div className="admin-board__actions"><button type="button" disabled={busyId === item.id} onClick={() => { setEditingId(item.id); setCreating(false); window.scrollTo({ top: 0, behavior: "smooth" }); }}>수정</button><button type="button" className="is-delete" disabled={busyId === item.id} onClick={() => remove(item)}>삭제</button></div>
+              <div className="admin-board__actions"><button type="button" disabled={busyId === item.id} onClick={() => togglePin(item, !item.pinned)}>{item.pinned ? "고정 해제" : "고정"}</button><button type="button" disabled={busyId === item.id} onClick={() => { setEditingId(item.id); setCreating(false); window.scrollTo({ top: 0, behavior: "smooth" }); }}>수정</button><button type="button" className="is-delete" disabled={busyId === item.id} onClick={() => remove(item)}>삭제</button></div>
             </article>
           ))}
           {items.length === 0 && <p className="admin-empty">등록된 뉴스가 없습니다.</p>}

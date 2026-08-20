@@ -20,6 +20,7 @@ export type ManagedNewsItem = {
   imageUrl: string;
   sources: NewsSource[];
   status: NewsStatus;
+  pinned: boolean;
   collectedAt: string;
   createdAt: string;
   updatedAt: string;
@@ -35,6 +36,7 @@ export type CreateNewsInput = Pick<
   | "sourceUrl"
   | "imageUrl"
   | "status"
+  | "pinned"
 >;
 
 export const NEWS_KINDS: NewsKind[] = [

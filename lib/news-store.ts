@@ -27,6 +27,7 @@ type NewsRow = {
   image_url: string;
   sources_json: string;
   status: NewsStatus;
+  pinned: number;
   collected_at: string;
   created_at: string;
   updated_at: string;
@@ -73,6 +74,7 @@ function mapRow(row: NewsRow): ManagedNewsItem {
     imageUrl: row.image_url,
     sources,
     status: row.status,
+    pinned: Boolean(row.pinned),
     collectedAt: row.collected_at,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
@@ -96,6 +98,7 @@ function legacySeed(): ManagedNewsItem[] {
     imageUrl: item.image,
     sources: [{ title: item.source, url: item.url }],
     status: "published",
+    pinned: false,
     collectedAt: now,
     createdAt: now,
     updatedAt: now,
@@ -108,8 +111,8 @@ function insertItem(database: DatabaseSync, item: ManagedNewsItem) {
       `
     INSERT INTO news_items (
       id, kind, category, title, summary, importance, impact, published_at,
-      source, source_url, image_url, sources_json, status, collected_at, created_at, updated_at
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      source, source_url, image_url, sources_json, status, pinned, collected_at, created_at, updated_at
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `,
     )
     .run(
@@ -126,6 +129,7 @@ function insertItem(database: DatabaseSync, item: ManagedNewsItem) {
       item.imageUrl,
       JSON.stringify(item.sources),
       item.status,
+      item.pinned ? 1 : 0,
       item.collectedAt,
       item.createdAt,
       item.updatedAt,
@@ -199,12 +203,19 @@ function getDatabase() {
       image_url TEXT NOT NULL,
       sources_json TEXT NOT NULL DEFAULT '[]',
       status TEXT NOT NULL CHECK (status IN ('draft', 'published')),
+      pinned INTEGER NOT NULL DEFAULT 0,
       collected_at TEXT NOT NULL,
       created_at TEXT NOT NULL,
       updated_at TEXT NOT NULL
     ) STRICT;
     CREATE INDEX IF NOT EXISTS idx_news_status_published ON news_items(status, published_at DESC);
   `);
+  const hasPinnedColumn = (
+    database.prepare("PRAGMA table_info(news_items)").all() as Array<{ name: string }>
+  ).some((column) => column.name === "pinned");
+  if (!hasPinnedColumn) {
+    database.exec("ALTER TABLE news_items ADD COLUMN pinned INTEGER NOT NULL DEFAULT 0;");
+  }
   migrateJson(database);
   globalDatabase.__jervisNewsDatabase = database;
   globalDatabase.__jervisNewsDatabasePath = databasePath;
@@ -214,7 +225,7 @@ function getDatabase() {
 export async function listNews() {
   const rows = getDatabase()
     .prepare(
-      "SELECT * FROM news_items ORDER BY published_at DESC, created_at DESC",
+      "SELECT * FROM news_items ORDER BY pinned DESC, published_at DESC, created_at DESC",
     )
     .all() as unknown as NewsRow[];
   return rows.map(mapRow);
@@ -226,12 +237,12 @@ export async function listPublishedNews(limit?: number) {
     typeof limit === "number"
       ? database
           .prepare(
-            "SELECT * FROM news_items WHERE status = 'published' ORDER BY published_at DESC, created_at DESC LIMIT ?",
+            "SELECT * FROM news_items WHERE status = 'published' ORDER BY pinned DESC, published_at DESC, created_at DESC LIMIT ?",
           )
           .all(limit)
       : database
           .prepare(
-            "SELECT * FROM news_items WHERE status = 'published' ORDER BY published_at DESC, created_at DESC",
+            "SELECT * FROM news_items WHERE status = 'published' ORDER BY pinned DESC, published_at DESC, created_at DESC",
           )
           .all();
   return (rows as unknown as NewsRow[]).map(mapRow);
@@ -251,7 +262,7 @@ export async function listPublishedNewsPage(requestedPage: number, pageSize = 9)
   const page = Math.min(Math.max(1, Math.trunc(requestedPage) || 1), totalPages);
   const rows = database
     .prepare(
-      "SELECT * FROM news_items WHERE status = 'published' ORDER BY published_at DESC, created_at DESC LIMIT ? OFFSET ?",
+      "SELECT * FROM news_items WHERE status = 'published' ORDER BY pinned DESC, published_at DESC, created_at DESC LIMIT ? OFFSET ?",
     )
     .all(safePageSize, (page - 1) * safePageSize) as unknown as NewsRow[];
   return { items: rows.map(mapRow), page, pageSize: safePageSize, total, totalPages };
@@ -294,7 +305,7 @@ export async function updateNews(id: string, patch: Partial<ManagedNewsItem>) {
     .prepare(
       `
     UPDATE news_items SET kind = ?, category = ?, title = ?, summary = ?, importance = ?, impact = ?,
-      published_at = ?, source = ?, source_url = ?, image_url = ?, sources_json = ?, status = ?, updated_at = ?
+      published_at = ?, source = ?, source_url = ?, image_url = ?, sources_json = ?, status = ?, pinned = ?, updated_at = ?
     WHERE id = ?
   `,
     )
@@ -311,6 +322,7 @@ export async function updateNews(id: string, patch: Partial<ManagedNewsItem>) {
       next.imageUrl,
       JSON.stringify(next.sources),
       next.status,
+      next.pinned ? 1 : 0,
       next.updatedAt,
       id,
     );

@@ -39,6 +39,7 @@ export async function POST(request: Request) {
   const sourceUrl = text("sourceUrl");
   const imageUrl = text("imageUrl");
   const status = body.visible === true ? "published" : "draft";
+  const pinned = body.pinned === true;
 
   if (!title || title.length > 200)
     return NextResponse.json(
@@ -75,6 +76,7 @@ export async function POST(request: Request) {
     sourceUrl,
     imageUrl,
     status,
+    pinned,
   };
   return NextResponse.json({ item: await createNews(input) }, { status: 201 });
 }

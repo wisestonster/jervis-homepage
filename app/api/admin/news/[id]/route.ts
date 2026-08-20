@@ -74,6 +74,7 @@ export async function PATCH(
     imageUrl,
     sources: [{ title: source, url: sourceUrl }],
     status: body.visible === true ? "published" : "draft",
+    pinned: body.pinned === true,
   };
   const { id } = await params;
   const item = await updateNews(id, patch);
