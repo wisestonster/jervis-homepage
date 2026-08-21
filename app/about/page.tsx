@@ -70,7 +70,7 @@ export default function AboutPage() {
     </section>
     <section className="section section--subtle">
       <div className="container">
-        <div className="section-heading"><p className="eyebrow">OUR HISTORY</p><h2>주요 연혁</h2></div>
+        <div className="section-heading"><p className="eyebrow">OUR HISTORY</p></div>
         <div className="history-list">
           {history.map((entry) => (
             <article key={entry.year}>
