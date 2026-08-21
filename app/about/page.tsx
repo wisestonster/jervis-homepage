@@ -8,6 +8,44 @@ export const metadata = createPageMetadata({
   path: "/about",
 });
 
+type HistoryYear = { year: string; items: string[] };
+
+const history: HistoryYear[] = [
+  { year: "2022", items: [
+    "'저비스랩스' 설립",
+    "이광재 의원 정치후원금 NFT 프로젝트",
+    "DAO 기반의 기부후원 Jervis 프로토콜 개발",
+    "월드비전 가상자산후원 플랫폼 개발",
+    "조선일보 포인트, 멤버십 NFT 개발",
+    "K-디아스포라 가상자산 후원 서비스 개발",
+    "리오브 온체인 기록 프로젝트 개발",
+  ] },
+  { year: "2023", items: [
+    "'캔디플러스' 카메라 NFT 서비스 개발",
+    "AGLA 토큰 관리 대시보드 개발",
+    "'멜로망스DAO' 민팅 및 후원 서비스 개발",
+    "도로위험정보 SAFELAB 스마트컨트랙트 개발",
+    "디자인저작권관리 및 NFT 생성시스템 블록체인 인프라 구축",
+  ] },
+  { year: "2024", items: [
+    "칸웨이 NFT마켓 개발",
+    "칸짱NFT 민팅 및 NFT 마켓 개발 운영",
+  ] },
+  { year: "2025", items: [
+    "저비스랩스 기업부설연구소 설립",
+    "숏폼플랫폼 '칸태움' 앱 개발",
+  ] },
+  { year: "2026", items: [
+    "저작권기반 DAO 플랫폼 '코리셋DAO' 개발",
+    "코리셋 오픈북 코어엔진 개발",
+  ] },
+];
+
+const awards = [
+  "Blocko Dapp Contest 수상",
+  "ICP Hackathon 우승 'Play Samble'",
+];
+
 type TeamMember = { name: string; role: string; copy: string; image: string; alt: string };
 
 const team: TeamMember[] = [
@@ -27,6 +65,23 @@ export default function AboutPage() {
           <p className="eyebrow">OUR MISSION</p>
           <h2>블록체인 기술을 통해 더 투명하고 효율적인 디지털 세상을 만들어갑니다.</h2>
           <p>기술의 복잡함은 줄이고 비즈니스의 가능성은 확장합니다. 산업과 서비스에 최적화된 블록체인·Web3 솔루션을 설계하고 실행합니다.</p>
+        </div>
+      </div>
+    </section>
+    <section className="section section--subtle">
+      <div className="container">
+        <div className="section-heading"><p className="eyebrow">OUR HISTORY</p><h2>주요 연혁</h2></div>
+        <div className="history-list">
+          {history.map((entry) => (
+            <article key={entry.year}>
+              <span>{entry.year}</span>
+              <ul>{entry.items.map((item) => <li key={item}>{item}</li>)}</ul>
+            </article>
+          ))}
+        </div>
+        <div className="awards-block">
+          <p className="eyebrow">AWARDS</p>
+          <ul className="awards-list">{awards.map((award) => <li key={award}>{award}</li>)}</ul>
         </div>
       </div>
     </section>
