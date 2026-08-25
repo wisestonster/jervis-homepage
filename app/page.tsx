@@ -27,6 +27,9 @@ export default async function Home() {
               블록체인 비즈니스 혁신을 주도합니다
             </p>
             <div className="hero-actions">
+              <Link className="button button--secondary" href="/product">
+                솔루션 보기
+              </Link>
               <Link className="button" href="/project">
                 프로젝트 보기 <Arrow />
               </Link>
