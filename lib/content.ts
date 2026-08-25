@@ -208,6 +208,25 @@ export const products: Product[] = [
     flow: [["Create", "AI·K-콘텐츠 숏폼 업로드"], ["Discover", "추천 피드와 챌린지에서 발견"], ["Connect", "크리에이터와 팬 커뮤니티 연결"]],
     audiences: ["AI 영상 크리에이터", "K-콘텐츠 스튜디오", "브랜드·광고주", "숏폼 콘텐츠 팬"],
   },
+  {
+    slug: "keedarifunding",
+    name: "Keedari Funding",
+    category: "크라우드펀딩 플랫폼",
+    tagline: "아이디어가 현실이 되는 곳",
+    description: "영화, 음악, 출판, 디자인까지 — 크리에이터의 프로젝트를 발견하고 후원하세요.",
+    demo: `http://${demoHost}:3020/`,
+    markImage: "/solution-keedarifunding.png",
+    status: "DEMO · CROWDFUNDING",
+    accent: "product-rose",
+    features: [
+      ["프로젝트 발견", "영화, 음악, 출판, 디자인 등 다양한 카테고리의 창작 프로젝트를 탐색합니다."],
+      ["후원 & 리워드", "원하는 금액으로 프로젝트를 후원하고 그에 맞는 리워드를 받습니다."],
+      ["펀딩 현황 공개", "목표 금액, 달성률과 남은 기간을 투명하게 확인할 수 있습니다."],
+      ["크리에이터 페이지", "크리에이터가 프로젝트를 소개하고 후원자와 소통하는 공간을 제공합니다."],
+    ],
+    flow: [["Discover", "관심 있는 창작 프로젝트를 발견"], ["Fund", "원하는 금액으로 후원에 참여"], ["Receive", "프로젝트 완료 후 리워드 수령"]],
+    audiences: ["크리에이터", "영화·음악 팬", "출판·디자인 애호가", "얼리어답터 후원자"],
+  },
 ];
 
 export function getProduct(slug: string): Product {

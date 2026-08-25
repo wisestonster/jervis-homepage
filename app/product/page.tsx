@@ -17,6 +17,7 @@ const illustrations: Record<string, { src: string; alt: string }> = {
   dokreels: { src: "/solution-dokreels.webp", alt: "AI 숏폼 영상 콘텐츠 제작을 표현한 일러스트" },
   melomancedao: { src: "/solution-melomancedao.png", alt: "NFT와 DAO 거버넌스 기반 영화 제작을 표현한 일러스트" },
   coresetdao: { src: "/solution-coresetdao.png", alt: "공동저작권과 DAO 기반 권리 실행을 표현한 일러스트" },
+  keedarifunding: { src: "/solution-keedarifunding.png", alt: "크라우드펀딩과 창작 프로젝트 후원을 표현한 일러스트" },
 };
 
 export default function SolutionPage() {

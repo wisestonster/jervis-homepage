@@ -61,6 +61,7 @@ const productImages: Record<string, string> = {
   dokreels: "/solution-dokreels.webp",
   melomancedao: "/solution-melomancedao.png",
   coresetdao: "/solution-coresetdao.png",
+  keedarifunding: "/solution-keedarifunding.png",
 };
 
 export function createProductMetadata(product: Product): Metadata {
