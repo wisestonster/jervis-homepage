@@ -100,7 +100,7 @@ export const products: Product[] = [
     description: "프롬프트, 레퍼런스, AI 생성 결과와 사람의 편집 과정을 순서대로 해시하고 지갑으로 서명해 블록체인에 기록합니다. 원본 파일은 로컬에 두고, 창작 사실을 검증할 수 있는 증거만 온체인에 남깁니다.",
     demo: `http://${demoHost}:8080/`,
     markImage: "/solution-jervisbox.webp",
-    status: "BETA · PROOF OF PROCESS",
+    status: "DEMO · PROOF OF PROCESS",
     accent: "product-blue",
     features: [
       ["과정 단위 기록", "첫 프롬프트부터 최종 편집까지 창작 이벤트를 시간순으로 기록합니다."],
@@ -119,7 +119,7 @@ export const products: Product[] = [
     description: "미술품 등록, 진품확인서 발급과 소유권 이전 이력을 관리하는 작품 등기 서비스입니다. 작품 1점당 등기 NFT 1개를 발행하고, 검증된 소유권 이전 절차를 통해 이력을 이어갑니다.",
     demo: `http://${demoHost}:3030/`,
     markImage: "/solution-artpass.webp",
-    status: "BETA · ARTWORK REGISTRY",
+    status: "DEMO · ARTWORK REGISTRY",
     accent: "product-cyan",
     features: [
       ["작품 등록 & 심사", "작가·화랑이 작품 정보, 이미지와 친필 서명을 등록하면 관리자가 서류를 검토합니다."],
@@ -178,7 +178,7 @@ export const products: Product[] = [
     description: "부동산, 미술품과 지식재산권 등 실물자산을 디지털 증권으로 구조화하고 발행·청약·거래·정산을 연결하는 RWA·STO 거래 플랫폼입니다.",
     demo: `http://${demoHost}:3040/`,
     markImage: "/solution-jervix.webp",
-    status: "COMING SOON · RWA / STO",
+    status: "DEMO · RWA / STO",
     accent: "product-navy",
     features: [
       ["자산 구조화", "실물자산의 권리와 수익 구조를 디지털 증권 발행 조건으로 설계합니다."],
@@ -197,7 +197,7 @@ export const products: Product[] = [
     description: "AI 영상과 K-콘텐츠를 짧고 몰입감 있게 발견하고 공유하는 숏폼 커뮤니티입니다. 추천·팔로잉 피드, 크리에이터 탐색, 챌린지와 개인화 기능으로 콘텐츠와 팬을 연결합니다.",
     demo: `http://${demoHost}:3010/`,
     markImage: "/solution-dokreels.webp",
-    status: "BETA · K-CONTENT SHORTFORM",
+    status: "DEMO · K-CONTENT SHORTFORM",
     accent: "product-violet",
     features: [
       ["추천 & 팔로잉 피드", "관심사 기반 추천 영상과 팔로우한 크리에이터의 콘텐츠를 탐색합니다."],
