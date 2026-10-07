@@ -11,14 +11,14 @@ export const navItems = [
 export const insightsNavItems: { href?: string; label: string }[] = [
   { href: "/insights/world-models", label: "World Models" },
   { href: "/insights/mirofish", label: "MiroFish" },
-  { href: "/news", label: "NEWS" },
+  { href: "/news", label: "News" },
 ];
 
 // 기존 GNB 메뉴 — 푸터 상단의 보조 메뉴로 유지합니다.
 export const archiveNavItems = [
-  { href: "/product", label: "SOLUTION" },
-  { href: "/technology", label: "TECHNOLOGY" },
-  { href: "/project", label: "PROJECT" },
+  { href: "/product", label: "Solution" },
+  { href: "/technology", label: "Technology" },
+  { href: "/project", label: "Project" },
 ];
 
 export const technologies = [
