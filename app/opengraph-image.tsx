@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Jervis Labs — Blockchain, Web3 & AI Transformation";
+export const alt = "Jervis Labs — AI Prediction Engine & Automation";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -23,15 +23,15 @@ export default function OpenGraphImage() {
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
         <div style={{ display: "flex", flexDirection: "column", fontSize: 70, lineHeight: 1.05, fontWeight: 800, letterSpacing: "-3px" }}>
-          <span>Blockchain, Web3 & AI</span>
-          <span>Transformation</span>
+          <span>AI Prediction Engine</span>
+          <span>& Automation</span>
         </div>
         <div style={{ fontSize: 28, color: "#b9d8eb" }}>
-          기술을 실제 비즈니스 솔루션으로.
+          From concept to global hit — simulate market reaction first.
         </div>
       </div>
       <div style={{ display: "flex", gap: 18, color: "#7fdce3", fontSize: 20, letterSpacing: "2px" }}>
-        BLOCKCHAIN · RWA/STO · AI CREATIVITY
+        CINEMIND · SHOT-X · AI AUTOMATION
       </div>
     </div>,
     size,

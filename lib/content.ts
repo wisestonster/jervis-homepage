@@ -2,11 +2,17 @@ const demoHost = process.env.NEXT_PUBLIC_DEMO_HOST || "jervis.viewdns.net";
 
 export const navItems = [
   { href: "/about", label: "ABOUT US" },
-  { href: "/technology", label: "TECHNOLOGY" },
-  { href: "/project", label: "PROJECT" },
-  { href: "/product", label: "SOLUTION" },
+  { href: "/cinemind", label: "CINEMIND", alpha: true },
+  { href: "/shot-x", label: "SHOT-X", alpha: true },
   { href: "/news", label: "NEWS" },
   { href: "/contact", label: "CONTACT" },
+];
+
+// 기존 GNB 메뉴 — 푸터 상단의 보조 메뉴로 유지합니다.
+export const archiveNavItems = [
+  { href: "/product", label: "SOLUTION" },
+  { href: "/technology", label: "TECHNOLOGY" },
+  { href: "/project", label: "PROJECT" },
 ];
 
 export const technologies = [

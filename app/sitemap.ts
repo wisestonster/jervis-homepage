@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { statSync } from "node:fs";
 import path from "node:path";
 import { products } from "@/lib/content";
+import { DEFAULT_LOCALE, LOCALES, localizedPath } from "@/lib/locale";
 import { absoluteUrl } from "@/lib/seo";
 import { listPublishedNews } from "@/lib/news-store";
 
@@ -21,26 +22,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = [
     { path: "/", changeFrequency: "monthly" as const, priority: 1, lastModified: homeLastModified },
     { path: "/about", changeFrequency: "yearly" as const, priority: 0.8, lastModified: contentLastModified },
+    { path: "/cinemind", changeFrequency: "monthly" as const, priority: 0.95, lastModified: contentLastModified },
+    { path: "/shot-x", changeFrequency: "monthly" as const, priority: 0.95, lastModified: contentLastModified },
     { path: "/technology", changeFrequency: "monthly" as const, priority: 0.8, lastModified: contentLastModified },
     { path: "/project", changeFrequency: "monthly" as const, priority: 0.8, lastModified: contentLastModified },
     { path: "/product", changeFrequency: "monthly" as const, priority: 0.9, lastModified: contentLastModified },
     { path: "/news", changeFrequency: "weekly" as const, priority: 0.7, lastModified: newsLastModified },
     { path: "/contact", changeFrequency: "yearly" as const, priority: 0.6, lastModified: contentLastModified },
+    ...products.map((product) => ({
+      path: `/product/${product.slug}`,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+      lastModified: contentLastModified,
+    })),
   ];
 
-  return [
-    ...staticRoutes.map((route) => ({
-      url: absoluteUrl(route.path),
+  // 모든 페이지를 3개 언어 주소로 등록하고, 서로를 대체 언어(hreflang)로 연결합니다.
+  return staticRoutes.flatMap((route) =>
+    LOCALES.map((locale) => ({
+      url: absoluteUrl(localizedPath(locale, route.path)),
       lastModified: route.lastModified,
       changeFrequency: route.changeFrequency,
       priority: route.priority,
+      alternates: {
+        languages: {
+          ...Object.fromEntries(LOCALES.map((code) => [code, absoluteUrl(localizedPath(code, route.path))])),
+          "x-default": absoluteUrl(localizedPath(DEFAULT_LOCALE, route.path)),
+        },
+      },
     })),
-    ...products.map((product) => ({
-      url: absoluteUrl(`/product/${product.slug}`),
-      lastModified: contentLastModified,
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
-    })),
-  ];
+  );
 }
-

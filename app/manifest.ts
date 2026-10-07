@@ -1,16 +1,17 @@
 import type { MetadataRoute } from "next";
-import { SITE_DESCRIPTION, SITE_NAME } from "@/lib/seo";
+import { siteCopy } from "@/lib/seo";
 
 export default function manifest(): MetadataRoute.Manifest {
+  const site = siteCopy("en");
   return {
-    name: SITE_NAME,
-    short_name: SITE_NAME,
-    description: SITE_DESCRIPTION,
+    name: site.name,
+    short_name: site.name,
+    description: site.description,
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",
     theme_color: "#0064ab",
-    lang: "ko-KR",
+    lang: "en",
     icons: [{ src: "/favicon.svg", sizes: "any", type: "image/svg+xml" }],
   };
 }

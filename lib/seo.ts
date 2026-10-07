@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
 import type { Product } from "@/lib/content";
+import { common } from "@/lib/copy/common";
+import { DEFAULT_LOCALE, LOCALES, localizedPath, OG_LOCALE, type Locale } from "@/lib/locale";
 
-export const SITE_NAME = "저비스랩스";
 export const SITE_NAME_EN = "Jervis Labs";
-export const SITE_TITLE = "저비스랩스 | 블록체인·Web3·AI 기술 기업";
-export const SITE_DESCRIPTION = "하이브리드 블록체인, Web3, NFT, RWA·STO와 AI 창작성 증명 기술로 비즈니스의 디지털 전환을 지원합니다.";
+
+/** 언어별 사이트 이름/제목/설명 */
+export function siteCopy(locale: Locale = DEFAULT_LOCALE) {
+  return common[locale].site;
+}
+
 export const DEFAULT_SITE_URL = "https://jervis.kr";
 
 export function getSiteUrl(): URL {
@@ -25,24 +30,33 @@ export function createPageMetadata({
   description,
   path,
   image = "/opengraph-image",
+  locale = DEFAULT_LOCALE,
 }: {
   title: string;
   description: string;
   path: string;
   image?: string;
+  locale?: Locale;
 }): Metadata {
+  const siteName = siteCopy(locale).name;
   return {
     title,
     description,
-    alternates: { canonical: path },
+    alternates: {
+      canonical: localizedPath(locale, path),
+      languages: {
+        ...Object.fromEntries(LOCALES.map((code) => [code, localizedPath(code, path)])),
+        "x-default": localizedPath(DEFAULT_LOCALE, path),
+      },
+    },
     openGraph: {
       type: "website",
-      locale: "ko_KR",
-      siteName: SITE_NAME,
+      locale: OG_LOCALE[locale],
+      siteName,
       title,
       description,
-      url: path,
-      images: [{ url: image, width: 1200, height: 630, alt: `${title} | ${SITE_NAME}` }],
+      url: localizedPath(locale, path),
+      images: [{ url: image, width: 1200, height: 630, alt: `${title} | ${siteName}` }],
     },
     twitter: {
       card: "summary_large_image",
@@ -64,17 +78,18 @@ const productImages: Record<string, string> = {
   keedarifunding: "/solution-keedarifunding.png",
 };
 
-export function createProductMetadata(product: Product): Metadata {
+export function createProductMetadata(product: Product, locale: Locale = DEFAULT_LOCALE): Metadata {
   const description = `${product.tagline} ${product.description}`.slice(0, 155).trim();
   return createPageMetadata({
     title: `${product.name} — ${product.category}`,
     description,
     path: `/product/${product.slug}`,
     image: productImages[product.slug],
+    locale,
   });
 }
 
-export function breadcrumbJsonLd(items: Array<{ name: string; path: string }>) {
+export function breadcrumbJsonLd(items: Array<{ name: string; path: string }>, locale: Locale = DEFAULT_LOCALE) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -82,19 +97,19 @@ export function breadcrumbJsonLd(items: Array<{ name: string; path: string }>) {
       "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: absoluteUrl(item.path),
+      item: absoluteUrl(localizedPath(locale, item.path)),
     })),
   };
 }
 
-export function productServiceJsonLd(product: Product) {
+export function productServiceJsonLd(product: Product, locale: Locale = DEFAULT_LOCALE) {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
     name: product.name,
     serviceType: product.category,
     description: product.description,
-    url: absoluteUrl(`/product/${product.slug}`),
+    url: absoluteUrl(localizedPath(locale, `/product/${product.slug}`)),
     provider: { "@id": `${getSiteUrl().origin}/#organization` },
     areaServed: "KR",
   };
