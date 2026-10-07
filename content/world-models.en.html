@@ -1,0 +1,678 @@
+<section class="page-hero">
+  <div class="container wm-mast">
+    <div>
+      <p class="eyebrow">Field Reference · World Models · As of 2026-09-11</p>
+      <h1>World Models</h1>
+      <p class="page-hero__copy">“AI that runs the world in its head.” From definition and lineage to internal architecture, key models, academic debates, industrial applications and the state of Korea — a single reference built by cross-checking some 50 recent papers, reports, expert columns and reliable news articles.</p>
+    </div>
+    <div class="wm-epigraph">
+      <div class="eq" aria-label="P of s t plus 1 given s t and a t">P(s<sub>t+1</sub> | s<sub>t</sub>, a<sub>t</sub>)</div>
+      <p>Given the current state of the world <span class="m">s</span> and the action I take <span class="m">a</span>, predict what the world looks like next. That is a world model in one line. Without the action <span class="m">a</span> it is “video prediction”; with it, it becomes “world simulation.”<sup class="c"><a href="#r35">35</a></sup></p>
+      <div class="meta-row"><span>12 chapters · 3 appendices</span><span>51 references</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="wm-section">
+<div class="container">
+<div class="wrap">
+<nav class="toc" aria-label="Table of contents">
+  <details open>
+    <summary>Contents</summary>
+    <ol>
+      <li><a href="#guide"><span>00</span><span>Overview</span></a></li>
+      <li><a href="#ch1"><span>01</span><span>What is a world model?</span></a></li>
+      <li><a href="#ch2"><span>02</span><span>Why now?</span></a></li>
+      <li><a href="#ch3"><span>03</span><span>Lineage: 1943 to 2026</span></a></li>
+      <li><a href="#ch4"><span>04</span><span>Anatomy: the parts of a world model</span></a></li>
+      <li><a href="#ch5"><span>05</span><span>Taxonomy: four maps</span></a></li>
+      <li><a href="#ch6"><span>06</span><span>Key players and a model catalog</span></a></li>
+      <li><a href="#ch7"><span>07</span><span>The big debate: must you draw pixels to understand?</span></a></li>
+      <li><a href="#ch8"><span>08</span><span>Applications</span></a></li>
+      <li><a href="#ch9"><span>09</span><span>A practical guide for creators</span></a></li>
+      <li><a href="#ch10"><span>10</span><span>Limits and open problems</span></a></li>
+      <li><a href="#ch11"><span>11</span><span>Korea: status and challenges</span></a></li>
+      <li><a href="#ch12"><span>12</span><span>Outlook: what to watch</span></a></li>
+      <li><a href="#appA"><span>A</span><span>Glossary</span></a></li>
+      <li><a href="#appB"><span>B</span><span>Reading list by stage</span></a></li>
+      <li><a href="#appC"><span>C</span><span>References</span></a></li>
+    </ol>
+  </details>
+</nav>
+
+<div class="wm-main">
+<section class="chapter" id="guide">
+  <div class="ch-head"><div class="ch-num">00 · Preface</div><h2>Overview</h2></div>
+  <div class="prose">
+    <p>Between the second half of 2025 and 2026, “world model” became the hottest term in the AI industry. Google DeepMind unveiled Genie 3, which generates worlds you can walk around in real time. Yann LeCun left Meta to found the world-model startup AMI Labs and raised a seed round of more than one billion dollars, and Fei-Fei Li’s World Labs raised another billion. NVIDIA released Cosmos 3 for robotics and autonomous driving, and the Korean government launched a 34-billion-won project to build world models domestically.</p>
+    <p>Yet the term means very different things to different people. Some mean “a video generator you can steer like a game,” others “the prediction engine inside a robot’s head,” and still others “a tool that builds 3D spaces.” One person on the AMI Labs side quipped that “within six months every company will call itself a world model to get funded.”<sup class="c"><a href="#r8">8</a></sup></p>
+    <p>This document aims to sort out that confusion. It is organized as follows.</p>
+    <ul class="plain">
+      <li><strong>Chapters 1–2</strong> cover concepts and background. Newcomers can join the conversation after reading just these.</li>
+      <li><strong>Chapters 3–5</strong> cover history, internal structure and taxonomy — for readers who want the technical skeleton.</li>
+      <li><strong>Chapters 6–8</strong> cover actual models and companies, the central debates and applications.</li>
+      <li><strong>Chapter 9</strong> lays out, from the viewpoint of video, game and content creators, what you can use now and what still doesn’t work.</li>
+      <li><strong>Chapters 10–12</strong> cover limits, the situation in Korea and indicators to watch. The appendices contain a glossary, a staged reading list and the references.</li>
+    </ul>
+    <div class="note accent"><span class="lab">Notation</span>Superscript numbers in the text refer to the reference numbers in Appendix C. Performance figures and plans that companies state themselves are marked “according to the announcement,” and press reports “according to reports.” Judgments such as outlooks and interpretations that this document makes itself are labeled as such.</div>
+  </div>
+</section>
+
+<section class="chapter" id="ch1">
+  <div class="ch-head"><div class="ch-num">Chapter 1</div><h2>What is a world model?</h2><p class="ch-sub">A one-sentence definition, three analogies, and the boundaries with easily confused neighbors</p></div>
+  <div class="gist"><span class="lab">Key points</span><ul>
+    <li>A world model is <strong>an internal simulator in an AI that predicts how the world changes when you act</strong>.</li>
+    <li>The crux is being “action-conditioned.” If you cannot feed in an action, it is merely a video generator.</li>
+    <li>The goal is not to draw pretty pictures but to produce predictions usable for <strong>planning, learning and evaluation</strong>.</li>
+  </ul></div>
+  <div class="prose">
+    <h3>A one-sentence definition</h3>
+    <p>Google DeepMind defines a world model as follows: “an AI system that simulates parts of the world based on an understanding of it, so that an agent can predict how the environment will change and how its own actions will affect it.”<sup class="c"><a href="#r1">1</a></sup> A comprehensive survey in embodied AI likewise calls a world model “an internal simulator that captures the dynamics of the environment.”<sup class="c"><a href="#r34">34</a></sup> Korea’s Software Policy &amp; Research Institute (SPRi) summarizes it as “a technology in which AI understands the structure and dynamics of the physical world and predicts future states.”<sup class="c"><a href="#r25">25</a></sup></p>
+    <p>Three elements are common to all three definitions. <strong>① Compress and represent the current state of the world</strong>, <strong>② predict the next state as time passes or actions are applied</strong>, and <strong>③ use that prediction for decision-making</strong>.</p>
+
+    <h3>Three analogies</h3>
+    <h4>① A person playing catch</h4>
+    <p>When catching a ball, we do not solve Newton’s equations. Instead we reach out in advance with a feel that “at that speed and that angle, it will land about there.” That feel is the world model in the brain. In 1943 the psychologist Kenneth Craik proposed that organisms carry a “small-scale model” of external reality in their heads and test alternatives inside that model before acting. This is the root of the concept.<sup class="c"><a href="#r50">50</a></sup></p>
+    <h4>② A novice driver and a veteran driver</h4>
+    <p>A veteran who sees a ball roll out of an alley anticipates that a child will soon dash out and slows down. They ran a future that had not yet happened in their head first. That is why the autonomous-driving industry clings to world models: they allow dangerous situations that almost never occur on real roads to be experienced billions of times virtually.<sup class="c"><a href="#r4">4</a></sup></p>
+    <h4>③ Practicing in a lucid dream</h4>
+    <p>The 2018 paper <em>World Models</em> by David Ha and Jürgen Schmidhuber showed that an AI can practice driving and games inside the world model it learned — that is, “in a dream” — and then carry that skill over to the real environment.<sup class="c"><a href="#r37">37</a></sup> Dreamer 4 mining a Minecraft diamond using only video data and imagined practice, without ever playing the actual game, is an extension of the same principle.<sup class="c"><a href="#r7">7</a></sup></p>
+
+    <h3>Easily confused neighbors</h3>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Concept</th><th>What it does</th><th>Relation to world models</th></tr></thead>
+    <tbody>
+      <tr><td>Large language model (LLM)</td><td>Predicts the next word (token)</td><td>It holds abundant “knowledge in text” but was not trained to directly predict the physical consequences of actions. Whether a world model forms inside an LLM is a central debate in Chapter 7.</td></tr>
+      <tr><td>Video generation model</td><td>Generates a video of a few seconds to minutes in one go from a prompt</td><td>It imitates the look of the world well but usually lets the user intervene midway. It comes closer to a world model once it takes actions and continues frame by frame (e.g., Runway GWM-1 is an “autoregressive diffusion” model based on Gen-4.5).<sup class="c"><a href="#r15">15</a></sup></td></tr>
+      <tr><td>3D generation / reconstruction</td><td>Generates explorable 3D space from text or images</td><td>The space is consistent, but what happens in it over time and with actions (the dynamics) needs a separate engine. World Labs’ Marble is representative.<sup class="c"><a href="#r10">10</a></sup></td></tr>
+      <tr><td>Physics / game engine</td><td>Computes the world with rules written by people</td><td>Accurate and controllable, but humans must code every rule. A world model differs in that it <em>learns</em> the rules from data.</td></tr>
+      <tr><td>Digital twin</td><td>Virtually replicates a specific factory or city</td><td>There is a trend of world models serving as the “brain” of digital twins. NAVER’s Seoul World Model, which combines a generative model with real Seoul street data, is one example.<sup class="c"><a href="#r24">24</a></sup></td></tr>
+      <tr><td>VLA (vision-language-action model)</td><td>Sees, understands instructions and outputs robot actions</td><td>A VLA is the policy that decides “what to do”; a world model is the simulator that predicts “what happens if I do it.” Training and evaluating VLAs inside world models is increasingly common.<sup class="c"><a href="#r29">29</a></sup></td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <div class="note accent"><span class="lab">The most important dividing line</span>An essay in <em>Not Boring</em> in March 2026 puts it this way. A video model learns <span class="m">P(x<sub>t+1</sub> | x<sub>t</sub>)</span>, i.e., “what scene comes after this one?” A world model learns <span class="m">P(s<sub>t+1</sub> | s<sub>t</sub>, a<sub>t</sub>)</span>, i.e., “what happens to the world if I do this?” What separates the two is interactivity — the user can act and see the result in real time.<sup class="c"><a href="#r35">35</a></sup></div>
+  </div>
+</section>
+
+<section class="chapter" id="ch2">
+  <div class="ch-head"><div class="ch-num">Chapter 2</div><h2>Why now?</h2><p class="ch-sub">The limits of language, the scarcity of physical data, and the flow of money</p></div>
+  <div class="gist"><span class="lab">Key points</span><ul>
+    <li>The view has spread that LLMs describe the world well in words but fall short for <strong>embodied AI (robots, autonomous driving)</strong>.</li>
+    <li>Robot-learning data is <strong>tens to thousands of times scarcer</strong> than internet text and video. World models can “generate” that data.</li>
+    <li>Investment has surged. Funding in the world-model field grew from $1.4 billion in 2024 to $6.9 billion in 2025 (CB Insights).<sup class="c"><a href="#r29">29</a></sup></li>
+  </ul></div>
+  <div class="prose">
+    <h3>Reason 1 — The reckoning that language alone is not enough</h3>
+    <p>Yann LeCun has long argued that “language is too low-bandwidth and derivative a signal to be the main learning signal, and human and animal intelligence is learned by observing the world and acting in it.”<sup class="c"><a href="#r9">9</a></sup> A four-year-old knows that a cup falls when pushed without having read a single book. A favorite analogy of LeCun’s in talks is that the amount of visual information that child has taken in is similar to, or greater than, the amount of text an LLM learns from.</p>
+    <p>This argument gained strength after 2025 not because LLMs stopped improving, but because demand grew to deploy AI in factories, on roads and in homes. To make a model that handles text well judge “if I lift this box, will the next one collapse?” a different kind of knowledge is needed.</p>
+
+    <h3>Reason 2 — An absolute shortage of physical-world data</h3>
+    <p>At the June 2026 kickoff of the Physical AI flagship project, Vice Minister Ryu Je-myung of the Ministry of Science and ICT summarized the problem this way.</p>
+    <blockquote>“Collecting all of this in reality requires enormous cost and time, and with real data alone, adequately learning from failure cases and exceptional dangerous situations is practically impossible.”<cite>— Ryu Je-myung, Vice Minister of Science and ICT, 9 June 2026.<sup class="c"><a href="#r27">27</a></sup></cite></blockquote>
+    <p>World Labs likewise says physically accurate simulation data is short by “orders of magnitude” compared with internet video.<sup class="c"><a href="#r11">11</a></sup> A world model becomes both a “data factory” that fills this gap and a “practice ground” where robots can fail without getting hurt.</p>
+
+    <h3>Reason 3 — The technology crossed a threshold</h3>
+    <p>Until early 2024, interactive world models ran at around one frame per second and the world collapsed after a few seconds. In late 2024 Genie 2 held out for 10–20 seconds, and in August 2025 Genie 3 generated a consistent world in real time for several minutes at 720p and 24 frames per second.<sup class="c"><a href="#r1">1</a></sup><sup class="c"><a href="#r3">3</a></sup> The moment a “demo” became “something you can try,” industry attention rushed in.</p>
+
+    <h3>Reason 4 — The flow of money</h3>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Company</th><th>When</th><th>Size</th><th>Notes</th></tr></thead>
+    <tbody class="num">
+      <tr><td>AMI Labs (Yann LeCun)</td><td>Mar 2026</td><td>$1.03B seed</td><td>$3.5B pre-money valuation, headquartered in Paris. Backers include NVIDIA, Samsung and Toyota Ventures<sup class="c"><a href="#r8">8</a></sup></td></tr>
+      <tr><td>World Labs (Fei-Fei Li)</td><td>Feb 2026</td><td>$1B Series B</td><td>Autodesk $200M anchor, with AMD, NVIDIA and others. About $1.23B raised in total<sup class="c"><a href="#r11">11</a></sup></td></tr>
+      <tr><td>Runway</td><td>Feb 2026</td><td>$315M</td><td>$860M raised in total, $5.3B valuation<sup class="c"><a href="#r16">16</a></sup></td></tr>
+      <tr><td>General Intuition</td><td>Oct 2025</td><td>$134M seed</td><td>Uses 2 billion videos a year from the game-clip platform Medal as training data<sup class="c"><a href="#r21">21</a></sup></td></tr>
+      <tr><td>Whole field</td><td>2024→2025</td><td>$1.4B → $6.9B</td><td>World-model funding as tallied by CB Insights<sup class="c"><a href="#r29">29</a></sup></td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <p>The market reaction was big, too. After Google opened Project Genie to general paying users in January 2026, reports followed that shares of game-related companies such as Unity, Roblox and Take-Two fell sharply.<sup class="c"><a href="#r3">3</a></sup> It captured both the hope and the fear that “the way games are made could change entirely.”</p>
+  </div>
+</section>
+
+<section class="chapter" id="ch3">
+  <div class="ch-head"><div class="ch-num">Chapter 3</div><h2>Lineage: 1943 to 2026</h2><p class="ch-sub">From a hypothesis in psychology to a tool of reinforcement learning, and on to the battlefield of foundation models</p></div>
+  <div class="prose">
+    <p>World models are not a new idea. The <em>Not Boring</em> essay divides the history into five waves: the theoretical foundations (1990–91), proof of possibility (2018–19), human-level performance (2020–22), interaction with the real world (2023–24), and the present deployment stage.<sup class="c"><a href="#r35">35</a></sup> The timeline below follows this division and adds the latest events.</p>
+  </div>
+  <ol class="tl">
+    <li class="era"><span class="d">1943</span><span class="t"><span class="era-lab">Roots</span> — Kenneth Craik, in <em>The Nature of Explanation</em>, proposes the “small-scale model in the head” hypothesis<sup class="c"><a href="#r50">50</a></sup></span></li>
+    <li><span class="d">1990–91</span><span class="t">Schmidhuber’s work on world models built on recurrent neural networks, and Richard Sutton’s <b>Dyna</b> architecture — the idea of learning from “real experience plus experience imagined by the model”<sup class="c"><a href="#r35">35</a></sup></span></li>
+    <li class="era"><span class="d">Mar 2018</span><span class="t"><span class="era-lab">Proof of possibility</span> — Ha &amp; Schmidhuber, <em>World Models</em>. A structure split into vision (VAE), memory (MDN-RNN) and controller, with a demonstration of “training in a dream”<sup class="c"><a href="#r37">37</a></sup></span></li>
+    <li><span class="d">Nov 2019</span><span class="t">DeepMind <b>MuZero</b> — learns the dynamics and values of Go, chess and Atari by itself without being told the rules (published in Nature in 2020)<sup class="c"><a href="#r48">48</a></sup></span></li>
+    <li class="era"><span class="d">2020–23</span><span class="t"><span class="era-lab">Human level</span> — Danijar Hafner’s <b>Dreamer</b> family. DreamerV2 reaches human level on Atari, and DreamerV3 mines a Minecraft diamond without human demonstrations<sup class="c"><a href="#r47">47</a></sup></span></li>
+    <li><span class="d">Jun 2022</span><span class="t">Yann LeCun, <em>A Path Towards Autonomous Machine Intelligence</em>. Proposes a cognitive architecture centered on the world model, and <b>JEPA</b><sup class="c"><a href="#r38">38</a></sup></span></li>
+    <li><span class="d">2023</span><span class="t">Meta <b>I-JEPA</b>, Wayve <b>GAIA-1</b> (a generative world model for autonomous driving). Research on “world representations” inside LLMs (Othello-GPT and others) flourishes<sup class="c"><a href="#r42">42</a></sup></span></li>
+    <li class="era"><span class="d">Feb 2024</span><span class="t"><span class="era-lab">Generative models arrive</span> — OpenAI’s Sora technical report, <em>Video generation models as world simulators</em>. DeepMind <b>Genie</b> (first generation, 11 billion parameters, learns “latent actions” from game videos without action labels)<sup class="c"><a href="#r39">39</a></sup><sup class="c"><a href="#r3">3</a></sup></span></li>
+    <li><span class="d">Aug–Oct 2024</span><span class="t">Google <b>GameNGen</b> (runs Doom in real time with a neural network alone), Decart·Etched <b>Oasis</b> (Minecraft-like real-time generation)</span></li>
+    <li><span class="d">Dec 2024</span><span class="t">DeepMind <b>Genie 2</b> — generates a 3D world from a single image, lasts 10–20 seconds, 360p<sup class="c"><a href="#r40">40</a></sup></span></li>
+    <li><span class="d">Jan 2025</span><span class="t">NVIDIA <b>Cosmos</b> world foundation model platform (CES). According to the announcement, trained on 20 million hours of real-world data<sup class="c"><a href="#r14">14</a></sup> · DeepMind and INSAIT’s <b>Physics-IQ</b> — “visual realism ≠ physical understanding”<sup class="c"><a href="#r30">30</a></sup></span></li>
+    <li><span class="d">Feb 2025</span><span class="t">Microsoft <b>Muse (WHAM)</b> published in Nature — a gameplay-generation model trained on play data from the game <em>Bleeding Edge</em><sup class="c"><a href="#r22">22</a></sup></span></li>
+    <li><span class="d">Jun 2025</span><span class="t">Meta <b>V-JEPA 2</b> — self-supervised learning on over a million hours of video; with under 62 hours of robot video alone, it succeeds at picking and placing in unseen environments<sup class="c"><a href="#r5">5</a></sup></span></li>
+    <li class="era"><span class="d">Aug 2025</span><span class="t"><span class="era-lab">Real-time interaction</span> — DeepMind <b>Genie 3</b>. 720p, 24 fps in real time, consistency for several minutes, about one minute of visual memory, and event insertion by text (“promptable world events”)<sup class="c"><a href="#r1">1</a></sup></span></li>
+    <li><span class="d">Sep 2025</span><span class="t">OpenAI <b>Sora 2</b> — described by the company as “the GPT-3.5 moment for video”<sup class="c"><a href="#r17">17</a></sup> · <b>Dreamer 4</b> — mines a Minecraft diamond from offline data alone, real-time inference on a single GPU<sup class="c"><a href="#r7">7</a></sup></span></li>
+    <li><span class="d">Oct 2025</span><span class="t">Tesla unveils a “neural-network world simulator” shared by FSD and Optimus<sup class="c"><a href="#r19">19</a></sup> · General Intuition’s $134M seed<sup class="c"><a href="#r21">21</a></sup></span></li>
+    <li><span class="d">Nov 2025</span><span class="t">World Labs <b>Marble</b> launches commercially<sup class="c"><a href="#r10">10</a></sup> · LeCun announces his departure from Meta and a new company<sup class="c"><a href="#r43">43</a></sup> · DeepMind’s <b>SIMA 2</b> agent<sup class="c"><a href="#r44">44</a></sup></span></li>
+    <li><span class="d">Dec 2025</span><span class="t">Runway <b>GWM-1</b> (Worlds · Robotics · Avatars)<sup class="c"><a href="#r15">15</a></sup> · Wayve <b>GAIA-3</b> (15 billion parameters, for evaluating autonomous driving)<sup class="c"><a href="#r20">20</a></sup></span></li>
+    <li class="era"><span class="d">Jan 2026</span><span class="t"><span class="era-lab">The deployment era</span> — Google <b>Project Genie</b> opens to AI Ultra subscribers in the US (60-second limit)<sup class="c"><a href="#r2">2</a></sup></span></li>
+    <li><span class="d">Feb 2026</span><span class="t"><b>Waymo World Model</b> (based on Genie 3, generating camera and lidar together)<sup class="c"><a href="#r4">4</a></sup> · World Labs raises $1B · <b>WorldArena</b> benchmark<sup class="c"><a href="#r32">32</a></sup></span></li>
+    <li><span class="d">Mar 2026</span><span class="t"><b>AMI Labs</b> raises a $1.03B seed<sup class="c"><a href="#r8">8</a></sup> · Meta FAIR <b>V-JEPA 2.1</b><sup class="c"><a href="#r6">6</a></sup> · NAVER <b>Seoul World Model</b><sup class="c"><a href="#r24">24</a></sup> · OpenAI announces the end of the Sora app and redirects the team to world-simulation research for robotics<sup class="c"><a href="#r18">18</a></sup></span></li>
+    <li><span class="d">May–Jun 2026</span><span class="t">SPRi issue report <em>World Models</em><sup class="c"><a href="#r25">25</a></sup> · NVIDIA <b>Cosmos 3</b> (reasoning, generation and action in one model)<sup class="c"><a href="#r12">12</a></sup> · the Ministry of Science and ICT’s <b>Physical AI flagship project</b> kicks off (34 billion won)<sup class="c"><a href="#r26">26</a></sup></span></li>
+    <li><span class="d">Jul–Aug 2026</span><span class="t">TIME column <em>World Models Are AI’s Next Frontier</em><sup class="c"><a href="#r36">36</a></sup> · <b>PlayWorld</b> benchmark comparing nine models including Genie 3<sup class="c"><a href="#r33">33</a></sup></span></li>
+  </ol>
+</section>
+<section class="chapter" id="ch4">
+  <div class="ch-head"><div class="ch-num">Chapter 4</div><h2>Anatomy: the parts of a world model</h2><p class="ch-sub">Compress observations, roll the future forward from actions, and plan with that future</p></div>
+  <div class="gist"><span class="lab">Key points</span><ul>
+    <li>Nearly all world models share the skeleton <strong>encoder → latent state → dynamics predictor → (decoder) → planning</strong>.</li>
+    <li>The difference is “where the prediction happens.” In pixels it is <strong>generative</strong>; in an abstract space it is <strong>latent</strong>.</li>
+    <li>The common secret of the latest models is <strong>a large amount of unlabeled video plus a small amount of action data</strong>.</li>
+  </ul></div>
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 900 305" role="img" aria-labelledby="figTitle">
+        <title id="figTitle">Basic structure of a world model: an observation passes through an encoder to become a latent state; a dynamics predictor that receives memory and an action predicts the next state; and a planner uses that prediction to choose the next action, in a loop</title>
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="s-arrow"/></marker>
+          <marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="s-arrow-a"/></marker>
+        </defs>
+        <rect class="s-box" x="20" y="100" width="130" height="64" rx="3"/>
+        <text class="s-t" x="85" y="128" text-anchor="middle">Observation x<tspan font-size="10" dy="3">t</tspan></text>
+        <text class="s-s" x="85" y="148" text-anchor="middle">camera · lidar · screen</text>
+
+        <rect class="s-box" x="185" y="100" width="130" height="64" rx="3"/>
+        <text class="s-t" x="250" y="128" text-anchor="middle">Encoder</text>
+        <text class="s-s" x="250" y="148" text-anchor="middle">compress · abstract</text>
+
+        <rect class="s-box" x="350" y="100" width="150" height="64" rx="3"/>
+        <text class="s-t" x="425" y="128" text-anchor="middle">Latent state s<tspan font-size="10" dy="3">t</tspan></text>
+        <text class="s-s" x="425" y="148" text-anchor="middle">summary of the world</text>
+
+        <rect class="s-key" x="535" y="100" width="170" height="64" rx="3"/>
+        <text class="s-t" x="620" y="128" text-anchor="middle">Dynamics predictor</text>
+        <text class="s-s" x="620" y="148" text-anchor="middle">P(s′ | s, a)</text>
+
+        <rect class="s-box" x="740" y="100" width="140" height="64" rx="3"/>
+        <text class="s-t" x="810" y="128" text-anchor="middle">Predicted ŝ<tspan font-size="10" dy="3">t+1</tspan></text>
+        <text class="s-s" x="810" y="148" text-anchor="middle">imagined future</text>
+
+        <rect class="s-box" x="740" y="14" width="140" height="50" rx="3" stroke-dasharray="4 4"/>
+        <text class="s-t" x="810" y="36" text-anchor="middle" font-size="13">Decoder → screen</text>
+        <text class="s-s" x="810" y="54" text-anchor="middle">generative only</text>
+
+        <rect class="s-box" x="350" y="222" width="150" height="64" rx="3"/>
+        <text class="s-t" x="425" y="250" text-anchor="middle">Memory</text>
+        <text class="s-s" x="425" y="270" text-anchor="middle">past frames · states</text>
+
+        <rect class="s-box" x="560" y="222" width="120" height="64" rx="3"/>
+        <text class="s-t" x="620" y="250" text-anchor="middle">Action a<tspan font-size="10" dy="3">t</tspan></text>
+        <text class="s-s" x="620" y="270" text-anchor="middle">input · command · text</text>
+
+        <rect class="s-box" x="740" y="222" width="140" height="64" rx="3"/>
+        <text class="s-t" x="810" y="250" text-anchor="middle">Planner · policy</text>
+        <text class="s-s" x="810" y="270" text-anchor="middle">scores cost · reward</text>
+
+        <line class="s-line" x1="150" y1="132" x2="183" y2="132" marker-end="url(#ah)"/>
+        <line class="s-line" x1="315" y1="132" x2="348" y2="132" marker-end="url(#ah)"/>
+        <line class="s-line" x1="500" y1="132" x2="533" y2="132" marker-end="url(#ah)"/>
+        <line class="s-acc" x1="705" y1="132" x2="738" y2="132" marker-end="url(#aha)"/>
+        <line class="s-dash" x1="810" y1="100" x2="810" y2="67" marker-end="url(#ah)"/>
+        <path class="s-line" d="M425 222 L425 196 L565 196 L565 167" marker-end="url(#ah)"/>
+        <line class="s-acc" x1="620" y1="222" x2="620" y2="167" marker-end="url(#aha)"/>
+        <line class="s-line" x1="810" y1="164" x2="810" y2="219" marker-end="url(#ah)"/>
+        <line class="s-acc" x1="740" y1="254" x2="683" y2="254" marker-end="url(#aha)"/>
+        <text class="s-s" x="711" y="244" text-anchor="middle">choose</text>
+      </svg>
+    </div>
+    <figcaption>Figure 1. The basic skeleton of a world model (this document’s diagram). The blue lines are the imagined loop of “feed in an action, see the result, choose the next action.” Latent models (JEPA and others) predict only in an abstract space with no decoder (dashed), while generative models (Genie, Sora and others) draw every step on screen.</figcaption>
+  </figure>
+  <div class="prose">
+    <h3>Part 1 — The encoder: summarizing the world</h3>
+    <p>A camera frame holds millions of pixels, but the information needed to make a decision is about “the cup is at the edge of the table.” The encoder compresses an observation into such a summary (the latent state). In Ha &amp; Schmidhuber’s 2018 model a VAE played this role,<sup class="c"><a href="#r37">37</a></sup> and more recently large vision transformers do it. A good encoder discards information that is unpredictable and useless, like the fluttering of leaves, and keeps what matters, like the position and velocity of objects. LeCun’s JEPA takes exactly this “discard what you can” as a design principle.<sup class="c"><a href="#r9">9</a></sup></p>
+
+    <h3>Part 2 — The dynamics predictor: rolling the future forward</h3>
+    <p>This is the heart of a world model. It takes the current state and an action and produces the next state. Repeating this lets you “roll out” the future several seconds or minutes ahead. There are two broad implementations.</p>
+    <ul class="plain">
+      <li><strong>Autoregressive</strong>: predicts the next step one at a time, in order. It can reflect user input at every step, which favors real-time interaction. Genie 3 and GWM-1 work this way.<sup class="c"><a href="#r15">15</a></sup></li>
+      <li><strong>Global difference prediction</strong>: estimates the whole future span at once. Quality is high but intervening midway is hard. It is closer to traditional video generation models.<sup class="c"><a href="#r34">34</a></sup></li>
+    </ul>
+    <p>Recently a blend of the two, “autoregressive diffusion,” has become mainstream: a diffusion model produces high-quality frames one chunk at a time, while chunks are chained autoregressively.</p>
+
+    <h3>Part 3 — Actions: what counts as “control”?</h3>
+    <p>An action may be gamepad input (WASD, camera rotation), a robot joint command, a car’s steering, or text like “make it rain.” Genie 3’s “promptable world events” are an example of text used as an action.<sup class="c"><a href="#r1">1</a></sup> The Waymo World Model takes driving actions, road layout and language as control inputs.<sup class="c"><a href="#r4">4</a></sup></p>
+    <p>The problem is that internet video carries no label saying “which button was pressed at this moment.” Two solutions emerged. Genie 1 inferred <strong>latent actions</strong> by itself from frame changes in the video,<sup class="c"><a href="#r3">3</a></sup> while Dreamer 4 learned “action conditioning” from a small amount of action-labeled data and obtained most of its knowledge from unlabeled video.<sup class="c"><a href="#r7">7</a></sup> V-JEPA 2 also pretrained on over a million hours of video and then added under 62 hours of robot video to build an action-conditioned model (V-JEPA 2-AC).<sup class="c"><a href="#r5">5</a></sup></p>
+
+    <h3>Part 4 — Memory: keeping the world from falling apart</h3>
+    <p>When you turn around and look forward again, the building should still be there. This is “consistency,” and it is the hardest challenge for world models. Genie 2 keeps 10–20 seconds and Genie 3 about one minute of visual memory.<sup class="c"><a href="#r3">3</a></sup><sup class="c"><a href="#r1">1</a></sup> Ways to extend memory compete: referencing past frames over a long span, maintaining a separate 3D representation (Gaussian splats, meshes), and retrieving and attaching external data. NAVER’s Seoul World Model kept the space coherent over hundreds of meters of movement by retrieving real street-view images and continually “re-grounding.”<sup class="c"><a href="#r24">24</a></sup></p>
+
+    <h3>Part 5 — The decoder: to draw or not to draw</h3>
+    <p>This part turns the predicted state into a screen that people can see. It is essential for uses where people must look, such as games, video and simulators, but unnecessary when a robot only needs to plan. Whether to include this part leads to the great debate of Chapter 7.</p>
+
+    <h3>Part 6 — The planner and policy: turning imagination into action</h3>
+    <p>Several candidate actions are rolled out inside the world model and the one with the best outcome is chosen (model predictive control, MPC). Alternatively, a policy is trained with reinforcement learning inside the world model and then deployed in reality. Dreamer 4 did the latter, completing a task requiring over 20,000 mouse and keyboard actions through imagined training alone.<sup class="c"><a href="#r7">7</a></sup></p>
+
+    <h3>Four ways to represent space</h3>
+    <p>What to contain the world in is also an important design choice. A 2025 embodied-AI survey divides them into four.<sup class="c"><a href="#r34">34</a></sup></p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Representation</th><th>Description</th><th>Strength</th><th>Examples</th></tr></thead>
+    <tbody>
+      <tr><td>Global latent vector</td><td>Compresses the whole world into one vector</td><td>Fast and light</td><td>World Models (2018), Dreamer</td></tr>
+      <tr><td>Token sequence</td><td>Chops images and video into tokens and processes them with a transformer</td><td>Reuses LLM technology; easy to combine modalities</td><td>Genie, GAIA, Cosmos</td></tr>
+      <tr><td>Spatial grid</td><td>A grid fitted to geometry, such as bird’s-eye view (BEV) or voxels</td><td>Advantageous where spatial accuracy matters, like autonomous driving</td><td>Occupancy-prediction models for driving</td></tr>
+      <tr><td>Decomposed rendering representation</td><td>Explicit primitives such as 3D Gaussian splats or NeRF</td><td>Shape stays consistent when the viewpoint changes</td><td>Marble, HY-World</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="chapter" id="ch5">
+  <div class="ch-head"><div class="ch-num">Chapter 5</div><h2>Taxonomy: four maps</h2><p class="ch-sub">Four perspectives for sorting out who calls what a “world model”</p></div>
+  <div class="gist"><span class="lab">Key points</span><ul>
+    <li>There is no single correct taxonomy. But overlaying four maps lets you place any product.</li>
+    <li>The two most practical questions: <strong>“Does it generate pixels?”</strong> and <strong>“Is the output for people or for machines?”</strong></li>
+  </ul></div>
+  <div class="prose">
+    <h3>Map 1 — Two branches: latent vs. generative</h3>
+    <p>This is the most widely used distinction.<sup class="c"><a href="#r46">46</a></sup><sup class="c"><a href="#r35">35</a></sup></p>
+  </div>
+  <div class="duo">
+    <div>
+      <h4>Latent (understanding-centered)</h4>
+      <p>Compresses the world into an abstract numerical space and predicts the future only within it. It does not draw a screen.</p>
+      <ul><li>Pros: efficient, ignores unnecessary detail, usable directly for planning</li><li>Cons: hard for people to check the result visually</li><li>Examples: the JEPA family (V-JEPA 2 and 2.1), Dreamer, MuZero, AMI Labs</li></ul>
+    </div>
+    <div class="alt">
+      <h4>Generative (simulation-centered)</h4>
+      <p>Draws the future as actual video frames or 3D scenes. People can watch and control it.</p>
+      <ul><li>Pros: interpretable, directly usable for games, video and data generation</li><li>Cons: computationally expensive, and plausible is easily confused with correct</li><li>Examples: Genie 3, Sora 2, Cosmos, GWM-1, GAIA-3, Waymo WM</li></ul>
+    </div>
+  </div>
+  <div class="prose">
+    <h3>Map 2 — Fei-Fei Li’s three types: renderer, simulator, planner</h3>
+    <p>In June 2026, World Labs divided world models into three by output.<sup class="c"><a href="#r11">11</a></sup></p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Type</th><th>Output</th><th>Criterion</th><th>Examples</th></tr></thead>
+    <tbody>
+      <tr><td>Renderer</td><td>Pixels people view</td><td>Visual quality (no explicit 3D understanding required)</td><td>Most video generation models</td></tr>
+      <tr><td>Simulator</td><td>A state a program can compute with, faithful in physics and geometry</td><td>Does it obey Newton’s laws?</td><td>Marble (outputs collision meshes), physics-based digital twins</td></tr>
+      <tr><td>Planner</td><td>Actions</td><td>Does the agent achieve its goal?</td><td>V-JEPA 2-AC, Dreamer 4</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <p>World Labs argues that <strong>the simulator is the linchpin</strong> among these. The logic is that if you simulate well, rendering and planning follow, but not the reverse.<sup class="c"><a href="#r11">11</a></sup> It is worth remembering, of course, that this is the view of a company on the 3D-simulator side.</p>
+
+    <h3>Map 3 — SPRi’s Korean taxonomy</h3>
+    <p>In its May 2026 report, the Software Policy &amp; Research Institute split models along two axes, paradigm and purpose.<sup class="c"><a href="#r25">25</a></sup></p>
+    <ul class="plain">
+      <li><strong>By paradigm</strong>: explicit (directly generates the future as images and video; highly interpretable, costly to compute) / implicit (computes only in an abstract space; efficient but hard to interpret) / simulator-based (uses existing physics engines) / hybrid (integrates several approaches, e.g., Genie 2)</li>
+      <li><strong>By purpose</strong>: video generation (Genie and others) / autonomous driving (Tesla’s world model, DriveDreamer and others) / autonomous agents (Dreamer, JEPA and others)</li>
+    </ul>
+
+    <h3>Map 4 — Three axes of an academic survey</h3>
+    <p>A 2025 survey of world models for embodied AI (Li et al.) proposed three axes: function, time and space.<sup class="c"><a href="#r34">34</a></sup></p>
+    <ul class="plain">
+      <li><strong>Function</strong>: models tied to the decisions of a specific task (decision-coupled) vs. general-purpose simulators</li>
+      <li><strong>Time</strong>: sequential simulation (autoregressive) vs. global difference prediction (parallel)</li>
+      <li><strong>Space</strong>: global latent vector / token sequence / spatial grid / decomposed rendering representation (see the table in Chapter 4)</li>
+    </ul>
+    <div class="note accent"><span class="lab">A practical test</span>When you see a new “world model” announcement, check five things. ① Does it take actions as input? ② Is it real time? ③ How many minutes does consistency hold? ④ Is the output pixels, 3D, or states and actions? ⑤ Is there evidence it was actually used to train a robot or agent? Filling in these five boxes separates marketing copy from substance. (This document’s own summary)</div>
+  </div>
+</section>
+<section class="chapter" id="ch6">
+  <div class="ch-head"><div class="ch-num">Chapter 6</div><h2>Key players and a model catalog</h2><p class="ch-sub">The companies and models you must know, as of September 2026</p></div>
+  <div class="prose"><p>The <span class="tag lat">Latent</span> tag means prediction in an abstract space; the rest are models that generate pixels or 3D. Figures are as announced by each company.</p></div>
+
+  <h3>Big-tech labs</h3>
+  <div class="entries">
+    <div class="entry"><div class="who"><b>Google DeepMind</b><span>Genie 3 · Project Genie · SIMA 2</span></div><div>
+      <p><strong>Genie 3</strong> (Aug 2025) generates explorable worlds in real time from a text prompt. It runs at 720p and 24 frames per second, supports several minutes of interaction and keeps about one minute of visual memory. The physics is learned, not coded. It supports “promptable world events” that change the weather or introduce objects and characters, and it was also tested with a SIMA agent pursuing goals inside worlds Genie 3 created. The officially stated limits are a restricted action space, interaction among multiple agents, accurate reproduction of real geography, text rendering and a duration of only a few minutes.<sup class="c"><a href="#r1">1</a></sup></p>
+      <p><strong>Project Genie</strong> (29 Jan 2026) is a consumer prototype that bundles Genie 3, Nano Banana Pro and Gemini. It opened to AI Ultra subscribers in the US (18 and over), offering world sketching, exploration and remixing, with generation limited to 60 seconds.<sup class="c"><a href="#r2">2</a></sup></p>
+      <p>The lineage runs from Genie 1 (2024, 2D, about 1 frame per second) to Genie 2 (Dec 2024, 3D, 10–20 seconds, 360p) to Genie 3.<sup class="c"><a href="#r3">3</a></sup> Genie 3 also became the basis of the Waymo World Model.<sup class="c"><a href="#r4">4</a></sup></p>
+      <div class="tags"><span class="tag">Generative</span><span class="tag">Real-time interaction</span><span class="tag">Agent training ground</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>Meta FAIR</b><span>I-JEPA → V-JEPA → V-JEPA 2 → 2.1</span></div><div>
+      <p><strong>V-JEPA 2</strong> (Jun 2025) is a latent world model trained with self-supervision on over a million hours of internet video. It posted top-level results in action understanding (Something-Something v2, 77.3%) and action anticipation (Epic-Kitchens-100 recall@5, 39.7), and V-JEPA 2-AC, built with under 62 hours of robot video, performed picking and placing with a Franka robot arm in unseen environments in two different labs (planning from a goal image).<sup class="c"><a href="#r5">5</a></sup></p>
+      <p><strong>V-JEPA 2.1</strong> (Mar 2026) improved fine-grained features with a “dense predictive loss” that gives a learning signal to both visible and masked tokens, and reported an improvement of nearly 20 points in robotic grasping.<sup class="c"><a href="#r6">6</a></sup></p>
+      <div class="tags"><span class="tag lat">Latent</span><span class="tag">Open research</span><span class="tag">Robot planning</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>NVIDIA</b><span>Cosmos → Cosmos 3</span></div><div>
+      <p><strong>Cosmos</strong> (Jan 2025, CES) is an open “world foundation model” platform for robotics and autonomous-driving developers.<sup class="c"><a href="#r14">14</a></sup> <strong>Cosmos 3</strong> (31 May 2026, GTC Taipei) merged visual reasoning, world generation and action prediction into one system. It understands and generates text, images, video, sound and actions, using a “mixture of transformers (MoT)” that pairs a reasoning transformer with a generative one.<sup class="c"><a href="#r12">12</a></sup> According to the technical report it comes in three sizes — Edge (4B), Nano (16B) and Super (64B) — and at release claimed top-tier results among open-source image and video generation and in robot-policy evaluation (RoboArena).<sup class="c"><a href="#r13">13</a></sup> Korean companies such as Samsung, LG and Doosan are also listed as development partners.<sup class="c"><a href="#r12">12</a></sup></p>
+      <div class="tags"><span class="tag">Generative + reasoning</span><span class="tag">Open model</span><span class="tag">Physical AI</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>OpenAI</b><span>Sora → Sora 2 → world-simulation research</span></div><div>
+      <p>The 2024 Sora technical report was titled <em>Video generation models as world simulators</em>, and OpenAI has positioned video generation as a path to world models.<sup class="c"><a href="#r39">39</a></sup> Sora 2 (Sep 2025) claimed to model even “failure” physically — a basketball that misses bounces off the backboard.<sup class="c"><a href="#r17">17</a></sup></p>
+      <p>But in March 2026 OpenAI announced the shutdown of the Sora app, and it closed on 26 April. The burden of computing resources was reported as the reason, and the Sora team turned to “world-simulation research for robotics that solves real physical tasks.”<sup class="c"><a href="#r18">18</a></sup> It is a symbolic event in which the paths of consumer video generation and world-model research diverged.</p>
+      <div class="tags"><span class="tag">Generative</span><span class="tag">Pivot to robotics</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>Microsoft</b><span>Muse (WHAM)</span></div><div>
+      <p>A “World and Human Action Model (WHAM)” trained on play data from the game <em>Bleeding Edge</em>, published in Nature in February 2025. It is positioned as a “gameplay ideation tool” for quickly producing play scenes at the design stage.<sup class="c"><a href="#r22">22</a></sup></p>
+      <div class="tags"><span class="tag">Generative</span><span class="tag">Games</span></div>
+    </div></div>
+  </div>
+
+  <h3>World-model startups</h3>
+  <div class="entries">
+    <div class="entry"><div class="who"><b>AMI Labs</b><span>Yann LeCun · Paris</span></div><div>
+      <p>Founded by LeCun when he left Meta in November 2025,<sup class="c"><a href="#r43">43</a></sup> it raised a $1.03 billion (about €890 million) seed in March 2026 ($3.5 billion pre-money). LeCun is chairman, Alexandre LeBrun, who led the medical-AI startup Nabla, is CEO, and Saining Xie is chief science officer; besides the Paris headquarters it has bases in New York, Montreal and Singapore. Its core technology is JEPA, and it named healthcare (in collaboration with Nabla) as the first application area.<sup class="c"><a href="#r8">8</a></sup></p>
+      <div class="tags"><span class="tag lat">Latent</span><span class="tag">JEPA</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>World Labs</b><span>Fei-Fei Li · Marble</span></div><div>
+      <p>A company that champions “spatial intelligence.” It launched its first commercial product, <strong>Marble</strong>, in November 2025. It takes text, images, video, panoramas and 3D layouts, builds explorable 3D worlds and exports them as Gaussian splats, meshes and video. It supports “Chisel,” a 3D editor that separates and edits structure and appearance, and VR viewing on Vision Pro and Quest 3. At launch the plans were free (4 generations) and $20, $35 and $95 per month.<sup class="c"><a href="#r10">10</a></sup></p>
+      <p>Fei-Fei Li says, “Our dream of truly intelligent machines will not be complete without spatial intelligence.”<sup class="c"><a href="#r10">10</a></sup> NVIDIA has also presented a workflow that used Marble to cut the time to build a robot-learning environment from weeks to hours.<sup class="c"><a href="#r11">11</a></sup></p>
+      <div class="tags"><span class="tag">3D generation</span><span class="tag">Simulator-oriented</span><span class="tag">Video production</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>Runway</b><span>GWM-1 · Gen-4.5</span></div><div>
+      <p>It started as video AI for filmmakers and expanded into world models. <strong>GWM-1</strong> (Dec 2025) is an autoregressive diffusion model based on Gen-4.5 with three branches: explorable worlds (GWM Worlds), robot-viewpoint synthetic data (GWM Robotics) and conversational avatars (GWM Avatars). It runs up to 2 minutes at 1280×720 and 24 frames per second.<sup class="c"><a href="#r15">15</a></sup> Co-founder Anastasis Germanidis describes world models as “scientific infrastructure” that will accelerate robotics, drug discovery and climate research.<sup class="c"><a href="#r16">16</a></sup></p>
+      <div class="tags"><span class="tag">Generative</span><span class="tag">Real time</span><span class="tag">Video production</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>General Intuition</b><span>Medal game video</span></div><div>
+      <p>Spun out of the game-clip platform Medal. It uses 2 billion game videos a year uploaded by 10 million monthly users to train agents that play by looking only at the screen, as people do. A distinctive point is that it concentrates on building agents rather than selling a world model, to avoid copyright conflicts with game companies. There was also a report that OpenAI offered $500 million to acquire Medal in late 2024 (unconfirmed by either side).<sup class="c"><a href="#r21">21</a></sup></p>
+      <div class="tags"><span class="tag">Generative</span><span class="tag">Agents</span><span class="tag">Game data</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>Decart · Odyssey and others</b><span>Real-time generation camp</span></div><div>
+      <p>Decart drew attention in 2024 with Oasis, a Minecraft-like real-time generation demo, and according to <em>Not Boring</em> raised $100 million at a $3.1 billion valuation.<sup class="c"><a href="#r35">35</a></sup> Many other real-time interactive-video startups have also appeared.</p>
+      <div class="tags"><span class="tag">Generative</span><span class="tag">Real time</span></div>
+    </div></div>
+  </div>
+
+  <h3>Autonomous-driving and robotics companies</h3>
+  <div class="entries">
+    <div class="entry"><div class="who"><b>Waymo</b><span>Waymo World Model</span></div><div>
+      <p>Unveiled in February 2026. Based on Genie 3, it generates camera and lidar data together. It is controlled by three inputs — driving actions (“what if I had turned the wheel like this?”), road and traffic layout, and language (weather, time of day) — and simulates rare situations such as tornadoes, floods, wrong-way vehicles, an elephant appearing and fires.<sup class="c"><a href="#r4">4</a></sup></p>
+      <div class="tags"><span class="tag">Generative</span><span class="tag">Multi-sensor</span><span class="tag">Safety validation</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>Tesla</b><span>Neural-network world simulator</span></div><div>
+      <p>Revealed in October 2025 by Ashok Elluswamy, vice president of AI software. Trained on fleet video, it generates video that responds to an AI’s actions and is used for closed-loop evaluation of new models, adversarial-scenario generation and large-scale reinforcement learning. The company claimed the same simulator also applies to the Optimus humanoid.<sup class="c"><a href="#r19">19</a></sup></p>
+      <div class="tags"><span class="tag">Generative</span><span class="tag">Closed-loop evaluation</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>Wayve</b><span>GAIA-1 → 2 → 3</span></div><div>
+      <p>A UK autonomous-driving company. <strong>GAIA-3</strong> (Dec 2025) has 15 billion parameters, twice GAIA-2, and was trained on ten times more data across several continents and vehicle types. It stresses that it was designed not just for video synthesis but for “evaluating autonomous-driving systems.”<sup class="c"><a href="#r20">20</a></sup></p>
+      <div class="tags"><span class="tag">Generative</span><span class="tag">Evaluation tool</span></div>
+    </div></div>
+  </div>
+
+  <h3>China and Korea</h3>
+  <div class="entries">
+    <div class="entry"><div class="who"><b>Tencent Hunyuan</b><span>HY-World · GameCraft</span></div><div>
+      <p>Following HunyuanWorld 1.0, it leads the Chinese camp by open-sourcing <strong>HY-World 2.0</strong>, a multimodal world model that reconstructs, generates and simulates 3D worlds, HY-WorldPlay (HY-World 1.5) for real-time interaction, and Hunyuan-GameCraft for games.<sup class="c"><a href="#r23">23</a></sup> The SPRi report also cites GigaAI’s GigaWorld-1 as a Chinese example.<sup class="c"><a href="#r25">25</a></sup> The 2026 PlayWorld benchmark included many Chinese open models such as LingBot-World and Matrix-Game 3.0.<sup class="c"><a href="#r33">33</a></sup></p>
+      <div class="tags"><span class="tag">Open source</span><span class="tag">3D + real time</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>NAVER</b><span>Seoul World Model</span></div><div>
+      <p>A paper released in March 2026, <em>Grounding World Simulation Models in a Real-World Metropolis</em>. Instead of imagining a fictional city, it retrieves nearby street-view images and uses them as conditions (retrieval augmentation), generating video that stays faithful to real Seoul geography and temporally consistent even over hundreds of meters of movement. It reported better results than existing video world models in Seoul, Busan and Ann Arbor in the US, and was also presented at the ICML 2026 expo.<sup class="c"><a href="#r24">24</a></sup></p>
+      <div class="tags"><span class="tag">Generative</span><span class="tag">Real-world grounding</span><span class="tag">Digital twin</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>LG Electronics consortium</b><span>Physical AI flagship project</span></div><div>
+      <p>The lead institution of the Ministry of Science and ICT / IITP “Physical AI flagship technology development” project. Maum.ai, ROBOTIS, Crowdworks, Alchera, KT, Holiday Robotics, KAIST, Seoul National University and TTA take part to develop a world foundation model (WFM) and a robot foundation model (RFM) (see Chapter 11).<sup class="c"><a href="#r26">26</a></sup><sup class="c"><a href="#r28">28</a></sup></p>
+      <div class="tags"><span class="tag">National project</span><span class="tag">Manufacturing · logistics</span></div>
+    </div></div>
+  </div>
+</section>
+
+<section class="chapter" id="ch7">
+  <div class="ch-head"><div class="ch-num">Chapter 7</div><h2>The big debate: must you draw pixels to understand?</h2><p class="ch-sub">Three fronts around world models, and the evidence on each</p></div>
+  <div class="gist"><span class="lab">Key points</span><ul>
+    <li><strong>Front 1</strong>: To understand the world must you draw it (generative), or is abstract prediction enough (latent)?</li>
+    <li><strong>Front 2</strong>: Do models that make realistic video “understand” physics? Several benchmarks lean toward “no.”</li>
+    <li><strong>Front 3</strong>: Is there already a world model inside LLMs? The evidence is mixed.</li>
+  </ul></div>
+  <div class="prose">
+    <h3>Front 1 — LeCun versus the generative camp</h3>
+    <p>LeCun’s position is clear. Predicting every single pixel wastes the model’s capacity on “unpredictable and irrelevant entropy.” No one can predict exactly how a leaf will flutter, and there is no need to. So JEPA predicts abstract representations rather than raw pixels and concentrates on predicting the consequences of actions to “plan before acting.”<sup class="c"><a href="#r9">9</a></sup> TIME summarized that LeCun does not recognize video generators like Sora as world models.<sup class="c"><a href="#r36">36</a></sup></p>
+    <p>The other side is closer to the view that “if it can render realistically enough, that rendering is itself understanding.”<sup class="c"><a href="#r46">46</a></sup> The General Intuition side holds that pixel-level detail provides interpretability and lets people verify results with their own eyes.<sup class="c"><a href="#r35">35</a></sup> Above all, generative world models have already secured “sellable uses”: games, autonomous-driving validation and data generation.</p>
+    <div class="note accent"><span class="lab">This document’s interpretation</span>The 2026 trend looks more like “convergence” than a “contest.” Cosmos 3 combined a reasoning transformer (understanding) and a generative transformer (simulation) in one model,<sup class="c"><a href="#r13">13</a></sup> and Marble exports both Gaussian splats for people to see and collision meshes for physics computation.<sup class="c"><a href="#r11">11</a></sup> The field is moving toward holding both representations, depending on the use.</div>
+
+    <h3>Front 2 — Realism is not understanding</h3>
+    <p>Empirical studies have piled up on this front.</p>
+    <ul class="plain">
+      <li><strong>Physics-IQ</strong> (DeepMind and INSAIT, 2025): Testing Sora, Runway, Pika, Lumiere and others on problems in fluid dynamics, optics, solid mechanics, magnetism and thermodynamics, it found physical understanding to be “severely limited and unrelated to visual realism.” Some cases did succeed, though, leaving open the possibility that some principles can be learned from observation alone.<sup class="c"><a href="#r30">30</a></sup></li>
+      <li><strong>WorldArena</strong> (Feb 2026): Evaluating embodied world models on 16 metrics, it concluded that “high visual quality does not translate into strong embodied-task ability.” In particular, the correlation between action-planning performance and visual quality was only Pearson r = 0.36.<sup class="c"><a href="#r32">32</a></sup></li>
+      <li><strong>PlayWorld</strong> (Aug 2026): Testing nine interactive models including Genie 3 with AI players over long sessions, it found they maintain visible structure well but are weak at <strong>changes that should happen out of view</strong> and at persistent state changes, and that landmarks get regenerated in different positions when you return to the same place.<sup class="c"><a href="#r33">33</a></sup></li>
+    </ul>
+
+    <h3>Front 3 — Is there a world model inside LLMs?</h3>
+    <p><strong>Evidence for.</strong> Representative studies include one showing that a GPT trained only on Othello move records represents the state of the board internally (Othello-GPT, 2023),<sup class="c"><a href="#r42">42</a></sup> and one showing that the latitude and longitude of places and the timing of events can be read out linearly from inside LLMs (Gurnee &amp; Tegmark).<sup class="c"><a href="#r41">41</a></sup></p>
+    <p><strong>Evidence against.</strong> Harvard and MIT researchers (Vafa et al., ICML 2025) showed that even a model trained on planetary-orbit data that predicts trajectories very well fails to apply Newton’s law of force when adapted to a new physics task. The model, they argue, learned “task-specific heuristics” instead of the law.<sup class="c"><a href="#r31">31</a></sup> Just as Kepler’s observations led to Newton’s laws, they point out that predicting well and discovering principles are different things. Gary Marcus has likewise kept up the criticism that generative AI fails to form robust models of the world.<sup class="c"><a href="#r49">49</a></sup></p>
+    <blockquote>“High predictive accuracy does not mean the model has the right inductive bias about the world.”<cite>— gist of Vafa, Chang, Rambachan, Mullainathan (ICML 2025)<sup class="c"><a href="#r31">31</a></sup></cite></blockquote>
+
+    <h3>How to read the debate</h3>
+    <p>All three fronts ultimately converge on one question: <strong>“Where will this model be used?”</strong> For making video people will watch, plausibility may suffice. But for a robot to grasp a glass or a car to brake, accuracy is required. That is why WorldArena measures “functional usefulness” separately from visual quality.<sup class="c"><a href="#r32">32</a></sup></p>
+  </div>
+</section>
+
+<section class="chapter" id="ch8">
+  <div class="ch-head"><div class="ch-num">Chapter 8</div><h2>Applications</h2><p class="ch-sub">Six areas where world models are already changing money and time</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Field</th><th>Role of the world model</th><th>Representative cases</th><th>Maturity (this document’s judgment)</th></tr></thead>
+    <tbody>
+      <tr><td>Autonomous driving</td><td>Generating rare and dangerous situations, counterfactual (what-if) testing, closed-loop evaluation</td><td>Waymo WM,<sup class="c"><a href="#r4">4</a></sup> Tesla,<sup class="c"><a href="#r19">19</a></sup> GAIA-3<sup class="c"><a href="#r20">20</a></sup></td><td>In operational use</td></tr>
+      <tr><td>Robotics</td><td>Synthetic-data generation, policy evaluation, planning before acting</td><td>V-JEPA 2-AC,<sup class="c"><a href="#r5">5</a></sup> Cosmos 3,<sup class="c"><a href="#r12">12</a></sup> GWM Robotics<sup class="c"><a href="#r15">15</a></sup></td><td>Early deployment</td></tr>
+      <tr><td>Games · interactive</td><td>Generating playable worlds from prompts, prototyping at the design stage</td><td>Project Genie,<sup class="c"><a href="#r2">2</a></sup> Muse,<sup class="c"><a href="#r22">22</a></sup> HY-World<sup class="c"><a href="#r23">23</a></sup></td><td>Trials · prototypes</td></tr>
+      <tr><td>Video · film production</td><td>Consistent virtual sets, camera exploration, avatars</td><td>Marble,<sup class="c"><a href="#r45">45</a></sup> GWM Worlds · Avatars<sup class="c"><a href="#r15">15</a></sup></td><td>Experimental use</td></tr>
+      <tr><td>AI-agent training</td><td>An unlimited practice ground, reinforcement learning in imagination</td><td>SIMA 2 in Genie 3,<sup class="c"><a href="#r44">44</a></sup> Dreamer 4<sup class="c"><a href="#r7">7</a></sup></td><td>Research stage</td></tr>
+      <tr><td>Earth science</td><td>Forecasting weather, climate and the Earth system</td><td>GraphCast, NVIDIA Earth-2, Google flood forecasting<sup class="c"><a href="#r36">36</a></sup></td><td>Partly operational</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <h3>Autonomous driving: where money comes first</h3>
+    <p>The reason autonomous driving leads is clear. Vast amounts of driving video already exist, real-road testing is slow and expensive, and the most important accident situations almost never occur. Waymo explains that with world models the Waymo Driver “drives billions of miles in a virtual world and learns complex scenarios.”<sup class="c"><a href="#r4">4</a></sup> Wayve said GAIA-3 cut the rejection rate of synthetic tests to one fifth.<sup class="c"><a href="#r20">20</a></sup></p>
+
+    <h3>Robotics: a remedy for the data drought</h3>
+    <p>The robotics sector attracted $40.7 billion in 2025 alone, 9% of all venture investment (CB Insights).<sup class="c"><a href="#r29">29</a></sup> World models are used in three ways: ① generating manipulation data that is hard to collect for real, ② scoring new robot policies virtually without physical hardware (“evaluating in bits, not atoms”), and ③ rolling out the outcome before the robot acts. The Korean government’s flagship project setting a target of “a 20-percentage-point improvement in robot task success rate” follows this trend.<sup class="c"><a href="#r26">26</a></sup></p>
+
+    <h3>Games: where hope and fear coexist</h3>
+    <p>Project Genie heralded “an era of generating games without coding,” but as its 60-second limit and unstable controls show, it cannot yet replace a finished game.<sup class="c"><a href="#r2">2</a></sup> The most realistic uses today are quick prototyping at the planning stage (Muse’s positioning) and training agents that play like people (General Intuition).<sup class="c"><a href="#r22">22</a></sup><sup class="c"><a href="#r21">21</a></sup></p>
+
+    <h3>Earth science: quiet, but the oldest success</h3>
+    <p>In the TIME column, Celine Herweijer, a former NASA climate scientist, argues that world models should be extended to Earth-system problems. Neural weather models already outperform physics-based forecasts on many metrics but still lag on extreme weather, and she also pointed out the limitation that states the Earth has never experienced (for example, after a collapse of Atlantic circulation) cannot be predicted.<sup class="c"><a href="#r36">36</a></sup></p>
+  </div>
+</section>
+
+<section class="chapter" id="ch9">
+  <div class="ch-head"><div class="ch-num">Chapter 9</div><h2>A practical guide for creators</h2><p class="ch-sub">What you can use now, and what still has to wait, in video, advertising, games and education</p></div>
+  <div class="gist"><span class="lab">Key points</span><ul>
+    <li>The biggest value of world models in creative work today is <strong>“spatial consistency.”</strong> They reduce the chronic problem of video-generation AI where the background changes from shot to shot.</li>
+    <li>On the other hand, <strong>long takes, text and complex interactions among several characters</strong> are still weak.</li>
+  </ul></div>
+  <div class="prose">
+    <h3>How is it different from video-generation AI?</h3>
+    <p>Video-generation models such as Seedance, Kling and Veo make one shot at a time. When you make several shots, even the same room differs slightly in window position or lighting, and you end up adjusting reference images and prompts repeatedly to match them. World-model tools first create <strong>a single world (a set)</strong> and then pull multiple shots out of it by moving a camera inside, which structurally reduces continuity problems.</p>
+
+    <h3>A workflow you can use now: the “virtual backlot”</h3>
+    <p>The filmmaking case introduced by World Labs follows six steps.<sup class="c"><a href="#r45">45</a></sup></p>
+    <ol class="plain">
+      <li><strong>Generate the world</strong> — build a 3D set with consistent depth and lighting (Marble).</li>
+      <li><strong>Explore with a camera</strong> — walk around the set and frame it from several angles.</li>
+      <li><strong>Extract sources</strong> — export stills and plates for compositing.</li>
+      <li><strong>Composite characters</strong> — place AI-made characters in the environment.</li>
+      <li><strong>Animate</strong> — add movement and timing with a video-generation tool.</li>
+      <li><strong>Final edit</strong> — finish with sound design, color grading and editing.</li>
+    </ol>
+    <p>One producer who took part in the case said, “Once the set was fixed, I could experiment freely with movement and emotion. The space gave me something solid to direct with.”<sup class="c"><a href="#r45">45</a></sup> A set made once can be reused across many episodes, which is especially advantageous for formats where the same space repeats, such as series and short dramas.</p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Tool</th><th>Suited for</th><th>Cautions (as of release)</th></tr></thead>
+    <tbody>
+      <tr><td>World Labs Marble</td><td>Virtual sets and location previs, VR scouting, hooking into 3D tools via Gaussian splats and meshes</td><td>4 free generations; paid plans $20–95 per month. Commercial-use rights start from the Pro plan<sup class="c"><a href="#r10">10</a></sup></td></tr>
+      <tr><td>Google Project Genie</td><td>Trying out world concepts, sketching interactive ideas</td><td>AI Ultra subscribers in the US only, 60-second limit, unstable physics and controls<sup class="c"><a href="#r2">2</a></sup></td></tr>
+      <tr><td>Runway GWM Worlds · Avatars</td><td>Explorable scenes, conversational characters (lip-sync, expressions)</td><td>Up to 2 minutes, about 720p. Detailed specs and pricing were not disclosed at announcement<sup class="c"><a href="#r15">15</a></sup></td></tr>
+      <tr><td>NVIDIA Cosmos 3 (open)</td><td>Building your own pipeline, research and educational practice</td><td>Released on Hugging Face. Requires GPU infrastructure and development skills<sup class="c"><a href="#r12">12</a></sup></td></tr>
+      <tr><td>Tencent HY-World family (open)</td><td>Experiments in 3D world generation, game-scene prototypes</td><td>Open source; local installation and a GPU required<sup class="c"><a href="#r23">23</a></sup></td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <h3>What still has to wait</h3>
+    <ul class="plain">
+      <li><strong>Long continuous scenes</strong>: Genie 3’s visual memory is about one minute, and when you explore for a long time the same place is regenerated differently.<sup class="c"><a href="#r1">1</a></sup><sup class="c"><a href="#r33">33</a></sup></li>
+      <li><strong>Text on screen</strong>: rendering text such as signs and captions is stated as an official limitation.<sup class="c"><a href="#r1">1</a></sup></li>
+      <li><strong>Interaction among several characters</strong>: complex interaction among multiple independently moving agents is still difficult.<sup class="c"><a href="#r1">1</a></sup></li>
+      <li><strong>Accurate physics</strong>: scenes that must show liquids, cloth or breakage accurately, such as product advertising, still need verification.<sup class="c"><a href="#r30">30</a></sup></li>
+    </ul>
+    <div class="note caution"><span class="lab">Check the rights</span>Commercial-use terms differ by tool (for example, Marble’s commercial rights differ by plan).<sup class="c"><a href="#r10">10</a></sup> It is safer to review portrait, copyright and trademark issues separately for outputs that reproduce real places or buildings or that evoke a specific game’s screen. One reason General Intuition chose to build agents rather than sell a world model was to avoid copyright conflicts with game companies.<sup class="c"><a href="#r21">21</a></sup></div>
+    <h3>What to teach in the classroom</h3>
+    <p>From the standpoint of directing education, world models raise the value of <strong>spatial design and camera direction</strong> over “prompt writing.” Because the world comes first and the camera moves within it, traditional directing skills such as blocking, movement lines and lens choice determine the quality of the result. A suitable exercise would be something like: “Build one set with Marble and design three shots in it that each convey a different emotion.” (This document’s suggestion)</p>
+  </div>
+</section>
+<section class="chapter" id="ch10">
+  <div class="ch-head"><div class="ch-num">Chapter 10</div><h2>Limits and open problems</h2><p class="ch-sub">Ten homework items that remain behind the flashy demos</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Problem</th><th>Current state</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>Long-term memory · consistency</td><td>About one minute of visual memory, a few minutes of interaction. The consumer version is limited to 60 seconds</td><td>Genie 3,<sup class="c"><a href="#r1">1</a></sup> Project Genie<sup class="c"><a href="#r2">2</a></sup></td></tr>
+      <tr><td>Off-screen state change</td><td>Keeps what is visible but is weak on changes that should progress where nothing is seen</td><td>PlayWorld<sup class="c"><a href="#r33">33</a></sup></td></tr>
+      <tr><td>Physical accuracy</td><td>Realism and physical understanding are unrelated. Weak on gravity, collisions and counterfactual situations</td><td>Physics-IQ,<sup class="c"><a href="#r30">30</a></sup> Pebblous survey<sup class="c"><a href="#r46">46</a></sup></td></tr>
+      <tr><td>Action space</td><td>Centered on movement and camera. Fine manipulation is limited</td><td>Genie 3<sup class="c"><a href="#r1">1</a></sup></td></tr>
+      <tr><td>Multi-agent</td><td>Modeling complex interaction among several independent actors is difficult</td><td>Genie 3<sup class="c"><a href="#r1">1</a></sup></td></tr>
+      <tr><td>Lack of evaluation standards</td><td>No agreed metric to prove “understanding.” Weak correlation between visual quality and functional usefulness</td><td>WorldArena,<sup class="c"><a href="#r32">32</a></sup> Pebblous<sup class="c"><a href="#r46">46</a></sup></td></tr>
+      <tr><td>Compute cost</td><td>Real-time high-resolution generation needs huge GPU resources. The compute burden was reported as a reason for ending the Sora app</td><td>Axios<sup class="c"><a href="#r18">18</a></sup></td></tr>
+      <tr><td>Sim-to-real gap</td><td>Performance drops when what was learned in a virtual setting is carried into reality</td><td>SPRi<sup class="c"><a href="#r25">25</a></sup></td></tr>
+      <tr><td>Predicting the unexperienced</td><td>Regimes absent from training data (extreme weather, abrupt climate change) cannot be predicted</td><td>TIME<sup class="c"><a href="#r36">36</a></sup></td></tr>
+      <tr><td>The illusion of generalization</td><td>A model may predict well without learning the principle (the law)</td><td>Vafa et al.<sup class="c"><a href="#r31">31</a></sup></td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <div class="note caution"><span class="lab">Beware of hype</span>Amid the investment boom, the “world model” label is quickly becoming commonplace. When you see a new announcement, apply the test from Chapter 5 (action input, real-time capability, how long consistency lasts, output format, evidence of actual agent training), and favor benchmarks and real-world performance metrics over demo videos.</div>
+    <h3>Safety and social issues</h3>
+    <p>DeepMind first released Genie 3 only as a limited research preview for academics and creators,<sup class="c"><a href="#r1">1</a></sup> and opened Project Genie in stages too, taking feedback from “trusted testers from several industries.”<sup class="c"><a href="#r2">2</a></sup> As technology that reproduces real cities precisely (Seoul World Model and others) advances, privacy, security and manipulated-video issues will need to be discussed alongside it. This is an area where policy discussion still lags behind research. (This document’s judgment)</p>
+  </div>
+</section>
+
+<section class="chapter" id="ch11">
+  <div class="ch-head"><div class="ch-num">Chapter 11</div><h2>Korea: status and challenges</h2><p class="ch-sub">Government projects, corporate research and policy recommendations</p></div>
+  <div class="gist"><span class="lab">Key points</span><ul>
+    <li>The government is putting <strong>34 billion won into 2026–2027</strong> to build world models and robot foundation models domestically with an LG Electronics consortium.</li>
+    <li>NAVER drew attention in international academia with <strong>Seoul World Model</strong>, grounded in a real city.</li>
+    <li>The strengths are manufacturing and robotics sites; the weaknesses are large-scale video data and computing scale (this document’s judgment).</li>
+  </ul></div>
+  <div class="prose">
+    <h3>Government: the Physical AI flagship technology development project</h3>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Item</th><th>Details</th></tr></thead>
+    <tbody>
+      <tr><td>Lead</td><td>Ministry of Science and ICT · Institute of Information &amp; Communications Technology Planning &amp; Evaluation (IITP)</td></tr>
+      <tr><td>Kickoff</td><td>9 June 2026, LG Science Park, Magok, Seoul<sup class="c"><a href="#r26">26</a></sup></td></tr>
+      <tr><td>Budget · period</td><td class="num">34 billion won in total, 2026–2027 (15 billion won in 2026)<sup class="c"><a href="#r28">28</a></sup></td></tr>
+      <tr><td>Participants (10 institutions)</td><td>LG Electronics (lead), Maum.ai, Holiday Robotics, ROBOTIS, Crowdworks, Alchera, KT, KAIST, Seoul National University, TTA<sup class="c"><a href="#r26">26</a></sup></td></tr>
+      <tr><td>What is developed</td><td>A world foundation model (WFM) + a robot foundation model (RFM), and digital-twin-based virtual data generation and synthesis<sup class="c"><a href="#r28">28</a></sup></td></tr>
+      <tr><td>Target</td><td>Raise the final task success rate of real robots by 20 percentage points or more (the current global best is 14.5 points)<sup class="c"><a href="#r26">26</a></sup></td></tr>
+      <tr><td>Method</td><td>A pipeline of world-model training → robot-model linkage → demonstration and evaluation → retraining, repeated four times over two years, with on-site demonstrations in manufacturing and logistics at the final stage<sup class="c"><a href="#r26">26</a></sup></td></tr>
+      <tr><td>Next</td><td>Scheduled to expand into a large full-scale project in 2028 (reported),<sup class="c"><a href="#r28">28</a></sup> linked with the large physical-AI projects in North Jeolla and South Gyeongsang<sup class="c"><a href="#r27">27</a></sup></td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <h3>Companies and research</h3>
+    <ul class="plain">
+      <li><strong>NAVER</strong>: Seoul World Model (Mar 2026). Grounded in real street views by retrieval augmentation, it generated coherent city video over hundreds of meters in Seoul, Busan and elsewhere.<sup class="c"><a href="#r24">24</a></sup></li>
+      <li><strong>LG Electronics</strong>: Lead of the national flagship project. Also named on the list of robotics development partners for NVIDIA Cosmos 3.<sup class="c"><a href="#r12">12</a></sup></li>
+      <li><strong>Samsung</strong>: Took part as an investor in AMI Labs,<sup class="c"><a href="#r8">8</a></sup> and is also named as a Cosmos 3 robotics partner.<sup class="c"><a href="#r12">12</a></sup></li>
+      <li><strong>Doosan</strong>: A Cosmos 3 robotics partner.<sup class="c"><a href="#r12">12</a></sup></li>
+      <li><strong>NC AI</strong>: Cited by the SPRi report as a Korean foundation-model example,<sup class="c"><a href="#r25">25</a></sup> and in September 2026 it was reported to be collaborating with LG Electronics on a humanoid national project.<sup class="c"><a href="#r51">51</a></sup></li>
+    </ul>
+
+    <h3>SPRi’s policy recommendations</h3>
+    <p>The Software Policy &amp; Research Institute defines world models as “core infrastructure for physical AI, autonomous driving and virtual convergence” and proposes three directions.<sup class="c"><a href="#r25">25</a></sup></p>
+    <ul class="plain">
+      <li><strong>Infrastructure</strong>: building manufacturing-specific physical datasets, developing high-fidelity virtual environments, and on-site demonstration loops</li>
+      <li><strong>Technology</strong>: securing sim-to-real alignment, integrating physics-based techniques such as virtual sensors and system identification, standardization and platformization</li>
+      <li><strong>Industry</strong>: fostering domain-specific world models for logistics, defense, virtual convergence and more, and a national platform integrating VLA, simulation and manufacturing data</li>
+    </ul>
+    <div class="note accent"><span class="lab">This document’s interpretation</span>General-purpose generative world models (Genie and Cosmos class) need vast amounts of video data and computing, an area where big tech has the edge. Where Korea can make a stand is ① <strong>domain-specific world models</strong> grounded in site data, as in manufacturing and logistics, ② <strong>real-world-grounded models</strong> that hold real spatial data, like NAVER’s, and ③ <strong>world generation for creation</strong>, combined with Korea’s strengths in games, webtoons and K-content production. The government project and SPRi’s recommendations also lean toward ①.</div>
+  </div>
+</section>
+
+<section class="chapter" id="ch12">
+  <div class="ch-head"><div class="ch-num">Chapter 12</div><h2>Outlook: what to watch</h2><p class="ch-sub">Seven indicators for gauging the progress of world models over the next 12–24 months</p></div>
+  <div class="prose">
+    <p>This chapter is this document’s overall judgment, based on the material above. Please use it not as a prediction but as a checklist of what to look at when reading the news.</p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Indicator</th><th>As of September 2026</th><th>A meaningful next step</th></tr></thead>
+    <tbody>
+      <tr><td>① Memory duration</td><td>About 1 minute (Genie 3)</td><td>Consistency held when revisiting the same place after 10 minutes or more</td></tr>
+      <tr><td>② Accessibility</td><td>US only · 60 seconds · expensive subscription</td><td>Global opening including Korea, an API, relaxed session limits</td></tr>
+      <tr><td>③ Model integration</td><td>Cosmos 3 combines reasoning, generation and action</td><td>Standardization of general-purpose models that handle LLM, video and action together</td></tr>
+      <tr><td>④ Evaluation standards</td><td>WorldArena, PlayWorld and others proliferate</td><td>The emergence of a benchmark the industry cites in common</td></tr>
+      <tr><td>⑤ Real-world results</td><td>Company-specific metrics such as robot success rates and virtual driving miles</td><td>Public, verifiable before-and-after comparisons of adopting world models</td></tr>
+      <tr><td>⑥ The latent counterattack</td><td>AMI Labs founded, V-JEPA 2.1</td><td>Demonstrations that the JEPA family beats generative models in robotics, medicine and more</td></tr>
+      <tr><td>⑦ Becoming creative tools</td><td>Early products such as Marble and GWM</td><td>Smooth integration with editing tools (Unreal, Blender, Premiere) and clearer commercial rights</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <h3>In closing</h3>
+    <p>World models are an attempt to move from a stage where “AI explains the world in words” to one where it “runs the world in its head and acts.” 2025–2026 will be recorded as the period when this idea moved from a concept in papers to products and national strategy. At the same time, the benchmarks show that the distance between plausible video and real understanding is still large.</p>
+    <p>To borrow LeCun’s words, human and animal intelligence is “learned by observing the world and acting in it.”<sup class="c"><a href="#r9">9</a></sup> The world-model race is ultimately a race over how to give machines that experience, and whether the answer will be pixels, abstract representations or a combination of both remains open.</p>
+  </div>
+</section>
+
+<section class="chapter" id="appA">
+  <div class="ch-head"><div class="ch-num">Appendix A</div><h2>Glossary</h2></div>
+  <dl class="gloss">
+    <div><dt>World model<small>World Model</small></dt><dd>An internal AI simulator that learns the state and dynamics of an environment and predicts the future as time passes and actions are taken.</dd></div>
+    <div><dt>World foundation model<small>WFM</small></dt><dd>A general-purpose world model pretrained on large-scale data and fine-tuned for many tasks. A term popularized by NVIDIA when it introduced Cosmos.</dd></div>
+    <div><dt>Physical AI<small>Physical AI</small></dt><dd>AI that perceives the physical world and acts in it, like robots and self-driving cars.</dd></div>
+    <div><dt>Embodied AI<small>Embodied AI</small></dt><dd>AI that has a body (sensors and actuators) and learns and acts by interacting with its environment.</dd></div>
+    <div><dt>Latent state · latent space<small>Latent state / space</small></dt><dd>An abstract numerical representation obtained by compressing observations (pixels and so on). World models mostly predict the future in this space.</dd></div>
+    <div><dt>Action-conditioned<small>Action-conditioned</small></dt><dd>The property of taking an action as input and predicting its result. The key criterion separating world models from video-generation models.</dd></div>
+    <div><dt>Latent action<small>Latent action</small></dt><dd>A “virtual control input” inferred from frame changes in video that has no action labels. Introduced by Genie 1.</dd></div>
+    <div><dt>JEPA<small>Joint Embedding Predictive Architecture</small></dt><dd>An architecture proposed by LeCun. It does not reconstruct pixels, but predicts the “representation” of masked parts or the future in an abstract space.</dd></div>
+    <div><dt>Self-supervised learning<small>Self-supervised learning</small></dt><dd>Learning by hiding part of the data itself and guessing it, without labels attached by people.</dd></div>
+    <div><dt>Autoregressive diffusion<small>Autoregressive diffusion</small></dt><dd>A generation method that produces high-quality frames one chunk at a time with a diffusion model and chains the chunks sequentially. The mainstream of real-time interactive models.</dd></div>
+    <div><dt>Rollout<small>Rollout</small></dt><dd>Unrolling several steps of the future by continuous prediction with a world model.</dd></div>
+    <div><dt>Imagination training<small>Imagination training</small></dt><dd>Training an agent with reinforcement learning inside virtual experience produced by a world model instead of a real environment (the Dreamer family).</dd></div>
+    <div><dt>Model predictive control<small>MPC</small></dt><dd>A method that simulates candidate actions with a model, picks the action with the best result and replans at every moment.</dd></div>
+    <div><dt>Promptable world events<small>Promptable world events</small></dt><dd>A Genie 3 feature. Inserts events such as weather changes or a character’s appearance into a running world by text.</dd></div>
+    <div><dt>Gaussian splatting<small>3D Gaussian Splatting</small></dt><dd>A 3D technique that represents a scene with millions of semi-transparent ellipsoidal particles. Fast realistic rendering. Marble’s output format.</dd></div>
+    <div><dt>Collision mesh<small>Collision mesh</small></dt><dd>A simplified 3D shape built so a physics engine can compute collisions.</dd></div>
+    <div><dt>Sim-to-Real</dt><dd>Carrying abilities learned in a virtual environment into a real one. The performance difference between the two is called the “gap.”</dd></div>
+    <div><dt>Digital twin<small>Digital twin</small></dt><dd>A virtual replica of an actual factory, city or facility.</dd></div>
+    <div><dt>VLA<small>Vision-Language-Action model</small></dt><dd>A model that takes vision and language instructions and outputs robot actions. Trained and evaluated in combination with world models.</dd></div>
+    <div><dt>Closed-loop evaluation<small>Closed-loop evaluation</small></dt><dd>Evaluation that runs an AI to the end inside a simulator so its actions feed into the next input. Closer to reality than replaying recorded data (open loop).</dd></div>
+    <div><dt>Counterfactual scenario<small>Counterfactual</small></dt><dd>Simulating “what if I had acted differently then?” Central to validating autonomous driving.</dd></div>
+    <div><dt>Inductive bias<small>Inductive bias</small></dt><dd>The built-in assumptions a model leans on when generalizing to new data. Vafa et al. used it to test whether a model learned the “law.”</dd></div>
+    <div><dt>Spatial intelligence<small>Spatial intelligence</small></dt><dd>A concept Fei-Fei Li stresses. The ability to perceive, reason about and generate 3D space and act within it.</dd></div>
+  </dl>
+</section>
+
+<section class="chapter" id="appB">
+  <div class="ch-head"><div class="ch-num">Appendix B</div><h2>Reading list by stage</h2><p class="ch-sub">Arranged in study order. Numbers are reference numbers.</p></div>
+  <div class="prose">
+    <h4>Stage 1 — Introduction (getting the concept)</h4>
+    <ul class="plain">
+      <li>SPRi issue report <em>World Models: The Evolution of AI That Understands Reality</em> — the most systematic overview in Korean<sup class="c"><a href="#r25">25</a></sup></li>
+      <li>DeepMind, <em>Genie 3: A new frontier for world models</em> — best read with the demo videos<sup class="c"><a href="#r1">1</a></sup></li>
+      <li>TIME, <em>World Models Are AI’s Next Frontier</em><sup class="c"><a href="#r36">36</a></sup></li>
+    </ul>
+    <h4>Stage 2 — Classics (understanding the roots)</h4>
+    <ul class="plain">
+      <li>Ha &amp; Schmidhuber, <em>World Models</em> (2018) — the interactive web version is especially good<sup class="c"><a href="#r37">37</a></sup></li>
+      <li>LeCun, <em>A Path Towards Autonomous Machine Intelligence</em> (2022)<sup class="c"><a href="#r38">38</a></sup></li>
+      <li>OpenAI, <em>Video generation models as world simulators</em> (2024)<sup class="c"><a href="#r39">39</a></sup></li>
+    </ul>
+    <h4>Stage 3 — Key recent papers</h4>
+    <ul class="plain">
+      <li>V-JEPA 2 (the latent standard-bearer)<sup class="c"><a href="#r5">5</a></sup> · Dreamer 4 (imagination training)<sup class="c"><a href="#r7">7</a></sup> · Cosmos 3 technical report (the integrated type)<sup class="c"><a href="#r13">13</a></sup> · Seoul World Model (real-world grounding)<sup class="c"><a href="#r24">24</a></sup></li>
+    </ul>
+    <h4>Stage 4 — Critique and evaluation</h4>
+    <ul class="plain">
+      <li>Physics-IQ<sup class="c"><a href="#r30">30</a></sup> · Vafa et al., <em>What Has a Foundation Model Found?</em><sup class="c"><a href="#r31">31</a></sup> · WorldArena<sup class="c"><a href="#r32">32</a></sup> · PlayWorld<sup class="c"><a href="#r33">33</a></sup></li>
+    </ul>
+    <h4>Stage 5 — The landscape and industry</h4>
+    <ul class="plain">
+      <li>Survey of world models for embodied AI<sup class="c"><a href="#r34">34</a></sup> · <em>Not Boring</em> essay on world models<sup class="c"><a href="#r35">35</a></sup> · CB Insights physical-AI market map<sup class="c"><a href="#r29">29</a></sup></li>
+    </ul>
+  </div>
+</section>
+
+<section class="chapter" id="appC">
+  <div class="ch-head"><div class="ch-num">Appendix C</div><h2>References</h2><p class="ch-sub">Dates are original publication dates. All links checked on 11 September 2026. Titles are given in the original language of each source.</p></div>
+  <!--REFS-->
+</section>
+</div>
+</div>
+<div class="wm-foot">World Models · Compiled as of 11 September 2026 · Figures and quotations reflect each source’s publication date and may change afterward.</div>
+</div>
+</section>

@@ -2,9 +2,9 @@ export const LOCALES = ["en", "ko", "ja"] as const;
 export type Locale = (typeof LOCALES)[number];
 
 /** 처음 방문한 사용자에게 보여 줄 기본 언어 */
-export const DEFAULT_LOCALE: Locale = "en";
+export const DEFAULT_LOCALE: Locale = "ko";
 /** 마지막으로 선택한 언어를 기억하는 쿠키(접두사 없는 주소로 들어온 방문자를 리다이렉트할 때만 사용) */
-export const LOCALE_COOKIE = "lang";
+export const LOCALE_COOKIE = "jl_lang";
 
 /** GNB에 표시되는 언어 코드 */
 export const LOCALE_LABELS: Record<Locale, string> = { en: "EN", ko: "KR", ja: "JP" };

@@ -4,8 +4,14 @@ export const navItems = [
   { href: "/about", label: "ABOUT US" },
   { href: "/cinemind", label: "CINEMIND", alpha: true },
   { href: "/shot-x", label: "SHOT-X", alpha: true },
-  { href: "/news", label: "NEWS" },
   { href: "/contact", label: "CONTACT" },
+];
+
+// INSIGHTS 드롭다운. href가 없는 항목은 링크 없이 준비 중(SOON)으로만 표시합니다.
+export const insightsNavItems: { href?: string; label: string }[] = [
+  { href: "/insights/world-models", label: "World Models" },
+  { href: "/insights/mirofish", label: "MiroFish" },
+  { href: "/news", label: "NEWS" },
 ];
 
 // 기존 GNB 메뉴 — 푸터 상단의 보조 메뉴로 유지합니다.
@@ -52,19 +58,19 @@ export const projects = [
     name: "HDAC",
     type: "하이브리드 블록체인 메인넷",
     summary: "IoT와 블록체인을 결합한 하이브리드 합의알고리즘 개발 및 메인넷 운영",
-    details: ["하이브리드 PoW/PoS 합의 메커니즘", "IoT 디바이스 통합 블록체인", "디앱 생태계 구축", "메인넷 개발완료"],
+    details: ["하이브리드 PoW/PoS 합의 메커니즘", "IoT 디바이스 통합 블록체인", "디앱 생태계 구축", "메인넷 개발 완료"],
   },
   {
     name: "REAPCHAIN",
     type: "차세대 블록체인 프로토타입",
     summary: "고성능 하이브리드 블록체인 합의알고리즘 설계 및 메인넷 프로토타입 개발",
-    details: ["혁신적 합의 알고리즘 설계", "고성능 트랜잭션 처리", "확장 가능한 아키텍처", "프로토타입 개발완료"],
+    details: ["혁신적 합의 알고리즘 설계", "고성능 트랜잭션 처리", "확장 가능한 아키텍처", "프로토타입 개발 완료"],
   },
   {
     name: "PUBLISH Protocol",
     type: "미디어 생태계 솔루션",
     summary: "블록체인 기반 미디어 생태계 프로토콜 개발 및 언론사 협업 플랫폼 구축",
-    details: ["50개 언론사 협업", "월간 760만 UV", "투명한 미디어 생태계", "프로토콜 개발완료"],
+    details: ["50개 언론사 협업", "월간 760만 UV", "투명한 미디어 생태계", "프로토콜 개발 완료"],
   },
 ];
 
@@ -77,7 +83,7 @@ export const projectCases: ProjectCase[] = [
   { title: "블록체인 기부 시스템", copy: "투명한 가상자산 후원 및 NFT 기부영수증 발급 시스템", image: "/case-donation.png", alt: "블록체인 기부와 NFT 기부영수증을 표현한 일러스트" },
   { title: "K-컬처 소셜토큰", copy: "영화, 음악, 드라마 크리에이터 후원 생태계 구축", image: "/case-social-token.png", alt: "K-컬처 크리에이터 소셜토큰 생태계를 표현한 일러스트" },
   { title: "저작권 로열티 NFT", copy: "소프트웨어 저작권 로열티 및 영업권 멤버십 NFT 발행", image: "/case-royalty-nft.png", alt: "저작권 로열티와 멤버십 NFT를 표현한 일러스트" },
-  { title: "저작권기반 DAO 플랫폼 개발", copy: "IP 저작권을 보유한 공동 저작권자들이 함께 의사결정에 참여하고, 제안하고 기록하며 권리경제를 공유하는 시스템", image: "/case-dao.png", alt: "저작권 기반 DAO 거버넌스 플랫폼을 표현한 일러스트" },
+  { title: "저작권 기반 DAO 플랫폼 개발", copy: "IP 저작권을 보유한 공동 저작권자들이 함께 의사결정에 참여하고, 제안하고 기록하며 권리 경제를 공유하는 시스템", image: "/case-dao.png", alt: "저작권 기반 DAO 거버넌스 플랫폼을 표현한 일러스트" },
 ];
 
 export type Product = {
@@ -161,7 +167,7 @@ export const products: Product[] = [
     name: "CoReset DAO",
     category: "AI 시대 권리 실행 인프라",
     tagline: "함께 기록하고 함께 권리를 만듭니다.",
-    description: "공동저작권, 라이선스 실행과 제3자 대항력을 연결하는 AI 시대 권리 실행 인프라입니다. 공동 저작권자들이 함께 참여하고 제안하고 기록하며 새로운 권리 경제를 만들어가고, DAO 참여로 권리를 활성화하며 라이선스 사용과 권리 상태 변화를 기록합니다.",
+    description: "공동저작권, 라이선스 실행과 제3자 대항력을 연결하는 AI 시대 권리 실행 인프라입니다. 공동 저작권자들이 함께 참여하고 제안하고 기록하며 새로운 권리 경제를 만들어 가고, DAO 참여로 권리를 활성화하며 라이선스 사용과 권리 상태 변화를 기록합니다.",
     demo: "https://coreset.ai/",
     demoLabel: "서비스 바로가기",
     markImage: "/coreset-icon.png",
@@ -265,7 +271,7 @@ export const newsItems: NewsItem[] = [
     category: "ECOSYSTEM",
     date: "2026.08.17",
     title: "Robinhood Chain TVL, 8월 들어 45% 증가",
-    summary: "Robinhood Chain의 TVL이 5억4천만 달러를 넘어섰습니다. 스테이블코인 성장이 전체 네트워크 유동성 확대를 주도했습니다.",
+    summary: "Robinhood Chain의 TVL이 5억 4천만 달러를 넘어섰습니다. 스테이블코인 성장이 전체 네트워크 유동성 확대를 주도했습니다.",
     source: "The Block",
     url: "https://www.theblock.co/news/ecosystems/2026-08-17-robinhood-chain-tvl-surges-45-august-tokenized-rwas-lose-ground-411998",
     image: "https://www.tbstat.com/cdn-cgi/image/f%3Davif%2Cq%3D50/wp/uploads/2021/08/20210803_Robinhood_Crypto-1200x675.jpg",

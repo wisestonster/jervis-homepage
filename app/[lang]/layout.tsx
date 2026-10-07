@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: LangParams): Promise<Metadata
     ...createPageMetadata({ title: site.title, description: site.description, path: "/", locale }),
     metadataBase: getSiteUrl(),
     applicationName: site.name,
-    title: { default: site.title, template: `%s | ${site.name}` },
+    title: { default: site.title, template: `%s | ${locale === "ko" ? `${site.name}(${SITE_NAME_EN})` : site.name}` },
     description: site.description,
     keywords: site.keywords,
     authors: [{ name: site.name, url: `/${locale}` }],
@@ -29,8 +29,13 @@ export async function generateMetadata({ params }: LangParams): Promise<Metadata
     manifest: "/manifest.webmanifest",
     formatDetection: { telephone: false, email: false, address: false },
     verification: process.env.GOOGLE_SITE_VERIFICATION
-      ? { google: process.env.GOOGLE_SITE_VERIFICATION }
-      : undefined,
+      ? {
+          google: process.env.GOOGLE_SITE_VERIFICATION,
+          other: process.env.NAVER_SITE_VERIFICATION ? { "naver-site-verification": process.env.NAVER_SITE_VERIFICATION } : undefined,
+        }
+      : process.env.NAVER_SITE_VERIFICATION
+        ? { other: { "naver-site-verification": process.env.NAVER_SITE_VERIFICATION } }
+        : undefined,
   };
 }
 
@@ -45,7 +50,8 @@ export default async function RootLayout({ children, params }: Readonly<{ childr
         "@type": "Organization",
         "@id": `${siteUrl}/#organization`,
         name: site.name,
-        alternateName: locale === "ko" ? SITE_NAME_EN : "저비스랩스",
+        alternateName: [SITE_NAME_EN, "저비스랩스", "JervisLabs", "주식회사 저비스랩스"],
+        legalName: "주식회사 저비스랩스",
         url: siteUrl,
         logo: absoluteUrl("/jervis-labs-logo.png"),
         email: "wisestone@jervis.kr",
@@ -63,6 +69,7 @@ export default async function RootLayout({ children, params }: Readonly<{ childr
         "@id": `${siteUrl}/#website`,
         url: absoluteUrl(`/${locale}`),
         name: site.name,
+        alternateName: [SITE_NAME_EN, "저비스랩스"],
         description: site.description,
         inLanguage: HTML_LANG[locale],
         publisher: { "@id": `${siteUrl}/#organization` },
@@ -70,7 +77,7 @@ export default async function RootLayout({ children, params }: Readonly<{ childr
     ],
   };
 
-  return <html lang={HTML_LANG[locale]}><body>
+  return <html lang={HTML_LANG[locale]} data-scroll-behavior="smooth"><body>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
     <SiteHeader locale={locale} /><main>{children}</main><SiteFooter locale={locale} />
   </body></html>;

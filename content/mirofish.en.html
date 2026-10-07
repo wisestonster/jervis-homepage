@@ -1,0 +1,470 @@
+<section class="page-hero">
+  <div class="container wm-mast">
+    <div>
+      <p class="eyebrow">Field Reference · MiroFish · As of 2026-10-07</p>
+      <h1>MiroFish</h1>
+      <p class="page-hero__copy">“Feed in one document and a parallel world opens.” An open-source swarm-intelligence prediction engine that takes news, policy drafts, reports or fiction as a “seed,” builds a virtual society populated by many AI agents, and watches how that society unfolds to gauge the future. This reference was compiled by cross-checking the official repository, the paper behind its base engine OASIS, validation and critique materials, and press coverage.</p>
+    </div>
+    <div class="wm-epigraph">
+      <div class="eq" aria-label="seed to world to report">Seed → World → Report</div>
+      <p>Build a virtual society (world) from a real-world clue (seed), and get back what happened in it as a readable report. That is MiroFish in one line. This document also covers what that flow actually guarantees — and what it does not.<sup class="c"><a href="#r1">1</a></sup></p>
+      <div class="meta-row"><span>10 chapters · 3 appendices</span><span>17 references</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="wm-section">
+<div class="container">
+<div class="wrap">
+<nav class="toc" aria-label="Table of contents">
+  <details open>
+    <summary>Contents</summary>
+    <ol>
+      <li><a href="#guide"><span>00</span><span>Overview</span></a></li>
+      <li><a href="#ch1"><span>01</span><span>What is MiroFish?</span></a></li>
+      <li><a href="#ch2"><span>02</span><span>Why did it go viral?</span></a></li>
+      <li><a href="#ch3"><span>03</span><span>Lineage: from agent-based modeling to LLM societies</span></a></li>
+      <li><a href="#ch4"><span>04</span><span>Anatomy: the five-step pipeline</span></a></li>
+      <li><a href="#ch5"><span>05</span><span>The OASIS engine: a social network of a million agents</span></a></li>
+      <li><a href="#ch6"><span>06</span><span>Use cases and demos</span></a></li>
+      <li><a href="#ch7"><span>07</span><span>Limits and debate: plausible is not accurate</span></a></li>
+      <li><a href="#ch8"><span>08</span><span>If you run it yourself: operation, cost, license</span></a></li>
+      <li><a href="#ch9"><span>09</span><span>MiroFish from a content-production angle</span></a></li>
+      <li><a href="#ch10"><span>10</span><span>Outlook: what to watch</span></a></li>
+      <li><a href="#appA"><span>A</span><span>Glossary</span></a></li>
+      <li><a href="#appB"><span>B</span><span>Reading list by stage</span></a></li>
+      <li><a href="#appC"><span>C</span><span>References</span></a></li>
+    </ol>
+  </details>
+</nav>
+
+<div class="wm-main">
+<section class="chapter" id="guide">
+  <div class="ch-head"><div class="ch-num">00 · Preface</div><h2>Overview</h2></div>
+  <div class="prose">
+    <p>In early March 2026, an open-source project built by a Chinese university student topped GitHub’s global trending list. Its name was MiroFish, and its tagline was “A Simple and Universal Swarm Intelligence Engine, Predicting Anything.”<sup class="c"><a href="#r1">1</a></sup> In Korea too it was introduced as “Mirofishi” and drew attention.<sup class="c"><a href="#r11">11</a></sup></p>
+    <p>But buzz and substance are different matters. Some articles write that it “simulates an entire society and gets the future right,” while others criticize it as “hype without scientific foundation.”<sup class="c"><a href="#r7">7</a></sup> This document aims to set out only what can be confirmed between those two poles.</p>
+    <p>It is organized as follows.</p>
+    <ul class="plain">
+      <li><strong>Chapters 1–3</strong> cover the concept, background and academic lineage. Newcomers can join the conversation after reading just these.</li>
+      <li><strong>Chapters 4–5</strong> cover the internals: MiroFish’s five-step pipeline and the OASIS engine that actually moves the agents underneath.</li>
+      <li><strong>Chapter 6</strong> covers the use cases and demos presented by the official site and repository.</li>
+      <li><strong>Chapter 7</strong> covers limits and debate. It is the most important chapter in this document.</li>
+      <li><strong>Chapters 8–10</strong> cover cost and license if you run it yourself, an interpretation from a content-production angle, and indicators to watch. The appendices contain a glossary, a staged reading list and the references.</li>
+    </ul>
+    <div class="note accent"><span class="lab">Notation</span>Superscript numbers in the text refer to the reference numbers in Appendix C. Performance and scale figures that the project states itself are marked “according to the announcement,” and press reports “according to reports.” Interpretations and suggestions that this document makes itself are labeled as such.</div>
+    <div class="note caution"><span class="lab">A note on sources</span>mirofish.my appears to be an introductory site run separately from the official repository (github.com/666ghj/MiroFish), and its operator could not be confirmed. Many introduction and clone sites and forks share the same name, so facts here are based on the official repository and the papers.<sup class="c"><a href="#r2">2</a></sup></div>
+  </div>
+</section>
+
+<section class="chapter" id="ch1">
+  <div class="ch-head"><div class="ch-num">Chapter 1</div><h2>What is MiroFish?</h2><p class="ch-sub">A one-sentence definition, three analogies, and the boundaries with easily confused neighbors</p></div>
+  <div class="gist"><span class="lab">Key points</span><ul>
+    <li>MiroFish is <strong>an open-source simulation engine that takes a document, builds a virtual society inhabited by many LLM agents, and summarizes how that society unfolds in a report</strong>.</li>
+    <li>The crux is that it <strong>explores “several possible developments” rather than computing “one right answer.”</strong></li>
+    <li>It is an <strong>exploration tool</strong>, not a predictor. The official site itself says results are “exploratory outputs” that need review before decisions.<sup class="c"><a href="#r2">2</a></sup></li>
+  </ul></div>
+  <div class="prose">
+    <h3>A one-sentence definition</h3>
+    <p>The official repository introduces MiroFish as “a next-generation AI prediction engine that extracts seed information from the real world — breaking news, policy drafts, financial signals — and automatically builds a high-fidelity parallel digital world in which thousands of intelligent agents with independent personalities, long-term memory and behavioral logic interact freely and evolve socially.”<sup class="c"><a href="#r1">1</a></sup> The introduction site puts it as turning “real-world seeds such as news, policy drafts, analytical reports or fiction into a parallel world populated by agents with memory, motives and social behavior.”<sup class="c"><a href="#r2">2</a></sup></p>
+    <p>Three elements can be drawn from this definition. <strong>① Seed</strong>: it starts from a real-world document. <strong>② World</strong>: it builds a society in which agents react to one another and change over time. <strong>③ Report</strong>: it summarizes what happened in that society in a form people can read.</p>
+
+    <h3>Three analogies</h3>
+    <h4>① A “mock society” before a policy takes effect</h4>
+    <p>Imagine watching the reaction first in a virtual city of thousands of people with similar dispositions before announcing a new policy. You would see in advance which groups push back first, which rumors spread and at what point opinion splits. The position MiroFish aims for is exactly this “mock society.” Korean media made the same point, introducing it as something that lets you “experiment in advance with various social reactions before introducing a policy.”<sup class="c"><a href="#r11">11</a></sup></p>
+    <h4>② A novelist’s character notes</h4>
+    <p>A novelist writes down each character’s personality, desires and relationships, and when an event occurs follows “what would this character do?” while writing the story. MiroFish is close to a tool that automates this work with agents. The team’s demo of feeding it the first 80 chapters of <em>Dream of the Red Chamber</em> and having it simulate the lost ending is in the same vein.<sup class="c"><a href="#r14">14</a></sup></p>
+    <h4>③ A “small Earth” inside social media</h4>
+    <p>MiroFish’s agents write posts, comment, like and follow one another on two social platforms, one Twitter-like and one Reddit-like.<sup class="c"><a href="#r2">2</a></sup> Think of it as a laboratory that shrinks social media into a single box.</p>
+
+    <h3>Easily confused neighbors</h3>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Concept</th><th>What it does</th><th>Relation to MiroFish</th></tr></thead>
+    <tbody>
+      <tr><td>Statistical / time-series forecasting</td><td>Extrapolates patterns in past data with equations to predict numbers</td><td>MiroFish gets its outcomes not from data patterns but from <em>the interaction of individual actors</em>. Introductory write-ups also say it complements rather than replaces physics-based or quantitative models.<sup class="c"><a href="#r13">13</a></sup></td></tr>
+      <tr><td>Traditional agent-based modeling (ABM)</td><td>Moves actors by simple human-written rules and observes collective phenomena</td><td>MiroFish has <em>an LLM stand in for the agents’ judgment</em> instead of rules. Expressiveness grew, but academics worry that validation became harder (Chapter 7).<sup class="c"><a href="#r5">5</a></sup></td></tr>
+      <tr><td>Asking an LLM to “predict it”</td><td>Gets an answer from a single model call</td><td>MiroFish goes through many agents and many rounds. One independent test did report, however, that the result matched a single call and added no insight.<sup class="c"><a href="#r6">6</a></sup></td></tr>
+      <tr><td>Surveys and polls</td><td>Ask real people directly</td><td>MiroFish uses <em>virtual respondents made by an LLM</em> instead of real people. It is fast and cheap, but there is no guarantee that they answer as real people do.</td></tr>
+      <tr><td>World models</td><td>Learn an environment’s state and dynamics to predict the future given actions</td><td>If a world model is <em>a simulator of the physical world</em>, MiroFish is closer to <em>a simulator of society and public opinion</em>. Both share the idea of “rolling the future forward in advance,” but MiroFish relies on the common sense of an LLM rather than a learned dynamics model. (This document’s interpretation)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <div class="note accent"><span class="lab">The most important dividing line</span>Korean media explain it as “not predicting the future as a single outcome, but a way of experimenting with various possibilities.”<sup class="c"><a href="#r11">11</a></sup> So the right question to ask of MiroFish’s output is not “was it right?” but “which scenario appeared under which conditions?”</div>
+  </div>
+</section>
+
+<section class="chapter" id="ch2">
+  <div class="ch-head"><div class="ch-num">Chapter 2</div><h2>Why did it go viral?</h2><p class="ch-sub">A project built in ten days, an investment, and GitHub’s number one</p></div>
+  <div class="gist"><span class="lab">Key points</span><ul>
+    <li>The developer is reported to be Guo Hangjiang (GitHub name BaiFu), a senior at Beijing University of Posts and Telecommunications. The project was incubated by Shanda Group.</li>
+    <li>According to reports, development took about ten days, and Shanda Group invested 30 million yuan within 24 hours of seeing the demo video.</li>
+    <li>The buzz was big, but <strong>there is no public benchmark proving prediction accuracy</strong>.</li>
+  </ul></div>
+  <div class="prose">
+    <h3>The creator and background</h3>
+    <p>According to the Chinese outlet 36Kr, Guo Hangjiang, who made MiroFish, is a senior undergraduate at Beijing University of Posts and Telecommunications, with the GitHub name BaiFu. After joining Shanda Group as an intern he reportedly finished the project in about ten days, and before that he had built another popular open-source project, BettaFish, during a ten-day holiday.<sup class="c"><a href="#r12">12</a></sup> The official repository states that Shanda Group provided “strategic support and incubation.”<sup class="c"><a href="#r1">1</a></sup></p>
+    <p>The investment size is described differently across reports. 36Kr says Shanda’s Chen Tianqiao invested 30 million yuan (also presented as roughly $4.1 million) within 24 hours of receiving the demo video, while Korean media reported that it “attracted investment worth billions of won.”<sup class="c"><a href="#r12">12</a></sup><sup class="c"><a href="#r11">11</a></sup> All of this is as reported and is not a figure this document verified independently.</p>
+
+    <h3>Popularity indicators</h3>
+    <p>The indicators confirmed on the official repository page are about 77,000 GitHub stars and about 12,000 forks, under the AGPL-3.0 license (as viewed in October 2026).<sup class="c"><a href="#r1">1</a></sup> Korean media reported that it took first place on GitHub’s popularity ranking right after release.<sup class="c"><a href="#r11">11</a></sup> A Korean community fork (MiroFish-Ko) has appeared since.<sup class="c"><a href="#r15">15</a></sup></p>
+
+    <h3>Why it became a topic</h3>
+    <p>Three reasons overlapped. First, an intuitive and visual promise: “put in a document and a society is simulated.” Second, a sense of scale: thousands to hundreds of thousands of agents. The introduction site advertises “1M+ parallel agents per run.”<sup class="c"><a href="#r2">2</a></sup> Third, the narrative of a student developer and big-company investment. None of these, however, is evidence that <em>the predictions were right</em>.</p>
+    <div class="note caution"><span class="lab">A note on scale figures</span>“One million agents” is the same number as the maximum scale demonstrated in the paper for the OASIS engine MiroFish builds on. That experiment took about 18 hours per time step on 27 A100 GPUs (Chapter 5).<sup class="c"><a href="#r3">3</a></sup> It should not be read as meaning an ordinary user can easily run the same scale in a single run. (This document’s interpretation)</div>
+  </div>
+</section>
+
+<section class="chapter" id="ch3">
+  <div class="ch-head"><div class="ch-num">Chapter 3</div><h2>Lineage: from agent-based modeling to LLM societies</h2><p class="ch-sub">From artificial societies moved by rules to artificial societies moved by language models</p></div>
+  <div class="prose">
+    <p>MiroFish is not a sudden idea. Attempts to “grow” a society inside a computer have a history of more than half a century, and MiroFish stands on the latest branch of it. The timeline below is the context this document has assembled.</p>
+  </div>
+  <ol class="tl">
+    <li class="era"><span class="d">1971</span><span class="t"><span class="era-lab">A rule-based artificial society</span> — Thomas Schelling’s “segregation model.” A classic of agent-based modeling showing that residential segregation emerges from nothing more than simple neighbor-preference rules<sup class="c"><a href="#r16">16</a></sup></span></li>
+    <li><span class="d">1996</span><span class="t">Epstein &amp; Axtell, <em>Growing Artificial Societies</em> — popularizes the approach in which social phenomena “grow” inside a computer<sup class="c"><a href="#r17">17</a></sup></span></li>
+    <li class="era"><span class="d">Apr 2023</span><span class="t"><span class="era-lab">LLM agents appear</span> — Stanford and Google’s <b>Generative Agents</b>. Twenty-five LLM agents with a memory-stream, reflection and planning architecture live in a virtual town, and social behavior such as the spread of Valentine’s Day party invitations arises on its own<sup class="c"><a href="#r9">9</a></sup></span></li>
+    <li><span class="d">Nov 2024</span><span class="t"><b>OASIS</b> — the CAMEL-AI community announces an LLM-agent simulator dedicated to social media and demonstrates a scale of up to one million agents<sup class="c"><a href="#r3">3</a></sup> · Stanford researchers report that agents built from interviews with 1,052 real people reproduce survey responses to a considerable degree<sup class="c"><a href="#r10">10</a></sup></span></li>
+    <li><span class="d">Apr 2025</span><span class="t">Larooij and Törnberg of the University of Amsterdam, <em>Do Large Language Models Solve the Problems of Agent-Based Modeling?</em> — a critical review of the weak validation in generative social simulation<sup class="c"><a href="#r5">5</a></sup></span></li>
+    <li class="era"><span class="d">Mar 2026</span><span class="t"><span class="era-lab">MiroFish released</span> — bundles knowledge-graph construction, agent generation, dual-platform simulation and a report agent into one, and reaches number one on GitHub<sup class="c"><a href="#r1">1</a></sup><sup class="c"><a href="#r11">11</a></sup></span></li>
+    <li><span class="d">May 2026</span><span class="t">The WPP research team installs MiroFish itself, tests S&amp;P 500 prediction, and reports no additional insight<sup class="c"><a href="#r6">6</a></sup></span></li>
+  </ol>
+  <div class="prose">
+    <div class="note accent"><span class="lab">This document’s interpretation</span>MiroFish’s originality lies less in a new algorithm than in <strong>“assembly” and “experience.”</strong> What drove its popular spread was bundling the engine (OASIS), memory (Zep), graph construction (GraphRAG) and a report agent into one flow, and letting anyone upload a document and run it from a web interface.</div>
+  </div>
+</section>
+
+<section class="chapter" id="ch4">
+  <div class="ch-head"><div class="ch-num">Chapter 4</div><h2>Anatomy: the five-step pipeline</h2><p class="ch-sub">The flow that turns a seed into a world and a world into a report</p></div>
+  <div class="gist"><span class="lab">Key points</span><ul>
+    <li>MiroFish’s flow has five steps: <strong>graph building → environment and persona setup → parallel simulation → report generation → deep interaction</strong>.<sup class="c"><a href="#r1">1</a></sup></li>
+    <li>Humans keep the work of setting the scenario boundary, interpreting results and making high-stakes calls.<sup class="c"><a href="#r2">2</a></sup></li>
+    <li>Input is PDF, Markdown or TXT (up to 50 MB), and the current status is a “v0.1 preview.”<sup class="c"><a href="#r2">2</a></sup></li>
+  </ul></div>
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 900 270" role="img" aria-labelledby="mfTitle">
+        <title id="mfTitle">MiroFish’s five steps: build a knowledge graph from the seed document, set up agents and environment, run a parallel simulation on Twitter-like and Reddit-like platforms, produce a report, and loop where the user chats with agents or injects variables and reruns</title>
+        <defs>
+          <marker id="mah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="s-arrow"/></marker>
+          <marker id="maha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="s-arrow-a"/></marker>
+        </defs>
+        <rect class="s-box" x="10" y="30" width="150" height="76" rx="3"/>
+        <text class="s-s" x="85" y="22" text-anchor="middle">STEP 1</text>
+        <text class="s-t" x="85" y="62" text-anchor="middle">Graph building</text>
+        <text class="s-s" x="85" y="84" text-anchor="middle">seed → entities</text>
+
+        <rect class="s-box" x="190" y="30" width="150" height="76" rx="3"/>
+        <text class="s-s" x="265" y="22" text-anchor="middle">STEP 2</text>
+        <text class="s-t" x="265" y="62" text-anchor="middle">Environment · persona</text>
+        <text class="s-s" x="265" y="84" text-anchor="middle">traits · memory · rules</text>
+
+        <rect class="s-key" x="370" y="30" width="170" height="76" rx="3"/>
+        <text class="s-s" x="455" y="22" text-anchor="middle">STEP 3</text>
+        <text class="s-t" x="455" y="62" text-anchor="middle">Parallel simulation</text>
+        <text class="s-s" x="455" y="84" text-anchor="middle">Twitter-like + Reddit-like</text>
+
+        <rect class="s-box" x="570" y="30" width="150" height="76" rx="3"/>
+        <text class="s-s" x="645" y="22" text-anchor="middle">STEP 4</text>
+        <text class="s-t" x="645" y="62" text-anchor="middle">Report generation</text>
+        <text class="s-s" x="645" y="84" text-anchor="middle">ReportAgent</text>
+
+        <rect class="s-box" x="750" y="30" width="140" height="76" rx="3"/>
+        <text class="s-s" x="820" y="22" text-anchor="middle">STEP 5</text>
+        <text class="s-t" x="820" y="62" text-anchor="middle">Deep interaction</text>
+        <text class="s-s" x="820" y="84" text-anchor="middle">chat · inject variables</text>
+
+        <line class="s-line" x1="160" y1="68" x2="188" y2="68" marker-end="url(#mah)"/>
+        <line class="s-line" x1="340" y1="68" x2="368" y2="68" marker-end="url(#mah)"/>
+        <line class="s-acc" x1="540" y1="68" x2="568" y2="68" marker-end="url(#maha)"/>
+        <line class="s-line" x1="720" y1="68" x2="748" y2="68" marker-end="url(#mah)"/>
+        <path class="s-dash" d="M820 106 L820 160 L455 160 L455 109" marker-end="url(#mah)"/>
+        <text class="s-s" x="640" y="152" text-anchor="middle">inject variables and rerun</text>
+
+        <rect class="s-box" x="10" y="196" width="250" height="52" rx="3" stroke-dasharray="4 4"/>
+        <text class="s-t" x="135" y="218" text-anchor="middle" font-size="13">Input: news · policy · reports · fiction</text>
+        <text class="s-s" x="135" y="237" text-anchor="middle">PDF · Markdown · TXT (up to 50 MB)</text>
+        <rect class="s-box" x="330" y="196" width="250" height="52" rx="3" stroke-dasharray="4 4"/>
+        <text class="s-t" x="455" y="218" text-anchor="middle" font-size="13">Memory: Zep Cloud · Engine: OASIS</text>
+        <text class="s-s" x="455" y="237" text-anchor="middle">LLM via OpenAI SDK-compatible API</text>
+        <rect class="s-box" x="650" y="196" width="240" height="52" rx="3" stroke-dasharray="4 4"/>
+        <text class="s-t" x="770" y="218" text-anchor="middle" font-size="13">Output: turning points · risks</text>
+        <text class="s-s" x="770" y="237" text-anchor="middle">a readable prediction report</text>
+        <line class="s-dash" x1="85" y1="196" x2="85" y2="109" marker-end="url(#mah)"/>
+        <line class="s-dash" x1="645" y1="196" x2="645" y2="109" marker-end="url(#mah)" transform="translate(0,0)"/>
+      </svg>
+    </div>
+    <figcaption>Figure 1. MiroFish’s five-step pipeline (this document’s diagram, based on the official repository and introduction site). The blue line marks simulation as the core step, and the dashed lines show input and output and the “inject variables and rerun” loop.</figcaption>
+  </figure>
+  <div class="prose">
+    <h3>Step 1 — Graph building: turning the seed into structure</h3>
+    <p>It extracts entities and relationships from the input document with GraphRAG and builds a knowledge graph. The introduction site splits this stage into ontology generation and graph construction, producing “structured entities, motives and factual anchors” and “a living relationship graph that exposes the actors, tensions and memory structure.”<sup class="c"><a href="#r2">2</a></sup> A developer-oriented write-up describes it as structuring “who the key players are, how they are connected and what pressures exist.”<sup class="c"><a href="#r14">14</a></sup></p>
+
+    <h3>Step 2 — Environment setup and agent generation: giving characters personalities</h3>
+    <p>For each entity in the graph it creates an agent persona with a background, perspective and disposition, and stores long-term memory in Zep Cloud. An “environment configuration agent” then sets the simulation’s rule parameters.<sup class="c"><a href="#r14">14</a></sup> At this stage the number of agents is sometimes decided automatically; one independent test reported that 100 were requested but 25 were created.<sup class="c"><a href="#r6">6</a></sup></p>
+
+    <h3>Step 3 — Parallel simulation: where the society runs</h3>
+    <p>Agents interact over several rounds on two platforms, one Twitter-like and one Reddit-like. Each agent’s memory is updated as events unfold.<sup class="c"><a href="#r1">1</a></sup> The OASIS engine does the actual running (Chapter 5). The user can observe the progression from a “god’s-eye view” and inject variables midway.<sup class="c"><a href="#r13">13</a></sup></p>
+
+    <h3>Step 4 — Report generation: turning logs into a story</h3>
+    <p>A dedicated ReportAgent analyzes the simulation results with tools and compiles shifts in opinion, formation of coalitions and emergent patterns into a readable report. The introduction site says the report contains “key turning points, risks and confidence signals.”<sup class="c"><a href="#r2">2</a></sup></p>
+
+    <h3>Step 5 — Deep interaction: asking the agents directly</h3>
+    <p>Users can ask the ReportAgent follow-up questions or talk directly with (interview) individual agents to ask why they acted as they did. Injecting new variables and rerunning the scenario also happens at this step.<sup class="c"><a href="#r2">2</a></sup><sup class="c"><a href="#r14">14</a></sup> It should not be forgotten, though, that these “answers” are LLM-generated responses, not the real inner thoughts of real people.</p>
+
+    <h3>The tech stack at a glance</h3>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Component</th><th>Role</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>OASIS</td><td>Social-media simulation engine</td><td>Developed by the CAMEL-AI community. Credited in the repository’s acknowledgments<sup class="c"><a href="#r1">1</a></sup><sup class="c"><a href="#r3">3</a></sup></td></tr>
+      <tr><td>Zep Cloud</td><td>Stores the agents’ long-term memory</td><td>A required dependency. One independent test reported its free tier was used up after three runs<sup class="c"><a href="#r6">6</a></sup></td></tr>
+      <tr><td>GraphRAG</td><td>Extracts entities and relationships from documents, builds a knowledge graph</td><td>Used in Step 1<sup class="c"><a href="#r14">14</a></sup></td></tr>
+      <tr><td>LLM</td><td>Generates the agents’ judgments and utterances</td><td>Any OpenAI SDK-compatible API works. The repository recommends Alibaba’s Qwen-plus<sup class="c"><a href="#r1">1</a></sup></td></tr>
+      <tr><td>Runtime</td><td>Backend Python 3.11–3.12, frontend Node.js 18 or later</td><td>Source install or Docker, using the uv package manager<sup class="c"><a href="#r1">1</a></sup></td></tr>
+    </tbody>
+  </table></div>
+</section>
+<section class="chapter" id="ch5">
+  <div class="ch-head"><div class="ch-num">Chapter 5</div><h2>The OASIS engine: a social network of a million agents</h2><p class="ch-sub">The underlying technology that actually runs MiroFish’s Step 3 simulation</p></div>
+  <div class="gist"><span class="lab">Key points</span><ul>
+    <li>OASIS (Open Agent Social Interaction Simulations) is <strong>an LLM-agent-based social-media simulator</strong> that the CAMEL-AI community published in November 2024.<sup class="c"><a href="#r3">3</a></sup><sup class="c"><a href="#r4">4</a></sup></li>
+    <li>The paper reports reproducing information spreading, group polarization and herd effects in X and Reddit environments.</li>
+    <li>One of the most important findings is that <strong>LLM agents herd more easily than people</strong>.</li>
+  </ul></div>
+  <div class="prose">
+    <h3>Five modules</h3>
+    <p>Modeled on the structure of real social media, OASIS consists of five modules.<sup class="c"><a href="#r3">3</a></sup></p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Module</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td>Environment server</td><td>Manages users, posts, comments, relationships and interaction records in a relational database, updated dynamically</td></tr>
+      <tr><td>Recommendation system</td><td>Platform-specific recommendation algorithms. Interest- and popularity-based (TwHIN-BERT) for X, and a hot-score formula combining upvotes, downvotes and recency for Reddit</td></tr>
+      <tr><td>Agent module</td><td>LLM agents with a memory store. They perform 21 types of actions and leave a chain-of-thought trace, making them interpretable</td></tr>
+      <tr><td>Time engine</td><td>Advances simulation time with 24-dimensional hourly activity-probability vectors extracted from real user data (supports 3-minute time steps)</td></tr>
+      <tr><td>Scalable inferencer</td><td>Asynchronous distributed processing, GPU resource management and large-scale user generation that preserves scale-free network properties</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <h3>The agents’ actions</h3>
+    <p>The paper defines <strong>21 types</strong> of actions, including sign up, refresh, searching trends, posts and users, creating a post, reposting, following and unfollowing, muting, liking and disliking, writing comments and reacting to comments.<sup class="c"><a href="#r3">3</a></sup> The introduction site and some write-ups say “23 social actions,” so the figure differs between documents.<sup class="c"><a href="#r14">14</a></sup> This document takes the paper’s figure as the baseline while leaving open the possibility that actions were added in later versions.</p>
+
+    <h3>Social phenomena the paper reports reproducing</h3>
+    <ul class="plain">
+      <li><strong>Information spreading</strong>: agreement with real Twitter data at about 30% normalized RMSE (198 cases).<sup class="c"><a href="#r3">3</a></sup> It is safer to read this not as “perfect agreement” but as “the trends are similar.” (This document’s interpretation)</li>
+      <li><strong>Group polarization</strong>: opinions growing more extreme as discussion proceeds. It was more pronounced in uncensored models.</li>
+      <li><strong>Herd effect</strong>: agents followed the majority more strongly than people did, especially on negative signals. The herd effect appeared when there were 10,000 or more agents.</li>
+    </ul>
+
+    <h3>Scale and cost</h3>
+    <p>The paper tested scales from 196 to over 100,000 agents and demonstrated up to one million. That took about 18 hours per time step on 27 A100 GPUs.<sup class="c"><a href="#r3">3</a></sup> There was also an observation that larger groups produced more diverse and more helpful agent opinions.</p>
+
+    <h3>Limits the paper acknowledges</h3>
+    <p>The authors themselves list as limitations that the precision of the recommendation system affects propagation depth, that user-profile representation is simple, and that the emergence of social norms and complex behavior has not been explored enough.<sup class="c"><a href="#r3">3</a></sup></p>
+    <div class="note accent"><span class="lab">This document’s interpretation</span>The significance of the OASIS paper lies not in “predicting society accurately” but in proving the possibility that some collective phenomena in social media <em>can be reproduced</em> with LLM agents. The large gap between reproduction and prediction leads to the argument of Chapter 7.</div>
+  </div>
+</section>
+
+<section class="chapter" id="ch6">
+  <div class="ch-head"><div class="ch-num">Chapter 6</div><h2>Use cases and demos</h2><p class="ch-sub">Six uses presented by the official site, and two demonstrations</p></div>
+  <div class="prose">
+    <p>The introduction site presents six use cases.<sup class="c"><a href="#r2">2</a></sup> The “maturity” in the table is this document’s judgment based on the publicly available evidence.</p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Scenario</th><th>What to look at</th><th>Maturity (this document’s judgment)</th></tr></thead>
+    <tbody>
+      <tr><td>Public-opinion forecasting</td><td>How an issue spreads and splits among which groups</td><td>Demo stage (the Wuhan University case)</td></tr>
+      <tr><td>Launch reaction</td><td>Pre-checking reactions and pressure when a product or content is released</td><td>Exploratory use</td></tr>
+      <tr><td>Policy impact</td><td>Society’s reaction to a draft policy and points of conflict</td><td>Exploratory use</td></tr>
+      <tr><td>Brand crisis</td><td>Where the response is missing when a crisis hits</td><td>Exploratory use</td></tr>
+      <tr><td>Financial sentiment</td><td>The flow of market mood and sentiment</td><td>Planned feature (officially “coming soon”)</td></tr>
+      <tr><td>Literary continuation</td><td>Developing a novel’s sequel with character agents</td><td>Demo stage (the Dream of the Red Chamber case)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <h3>Demo 1 — The Wuhan University opinion simulation</h3>
+    <p>The first demo the team released concerns public opinion about Wuhan University. It fed a public-opinion analysis report produced by its sister project BettaFish into MiroFish and had it simulate how sentiment would evolve.<sup class="c"><a href="#r14">14</a></sup></p>
+    <h3>Demo 2 — The lost ending of <em>Dream of the Red Chamber</em></h3>
+    <p>The second demo is more unusual. It fed in the first 80 chapters of the 18th-century Chinese novel <em>Dream of the Red Chamber</em> and had the system simulate how the original’s lost ending might have continued.<sup class="c"><a href="#r14">14</a></sup> This is closer to “story development based on character logic” than to “prediction.” (This document’s interpretation)</p>
+    <div class="note caution"><span class="lab">A demo is not validation</span>Both demos are only examples showing the method, not evidence that a prediction matched the real outcome. The published material contains no benchmark comparing results with reality.<sup class="c"><a href="#r14">14</a></sup><sup class="c"><a href="#r8">8</a></sup></div>
+    <h3>Financial prediction is officially not supported</h3>
+    <p>In a discussion thread on the repository, the maintainer stated plainly that MiroFish “is not a calibrated or backtested stock- or cryptocurrency-price predictor.” It has no real-time market-data integration, quantitative factor modeling or stable confidence metrics, and a calibrated price-prediction product is not planned for the core repository. Financial prediction is a planned feature marked “coming soon,” and the maintainer insisted that results must not be presented as investment advice or proven predictive accuracy.<sup class="c"><a href="#r8">8</a></sup></p>
+  </div>
+</section>
+
+<section class="chapter" id="ch7">
+  <div class="ch-head"><div class="ch-num">Chapter 7</div><h2>Limits and debate: plausible is not accurate</h2><p class="ch-sub">Validation, bias, and the reports of those who tried it themselves</p></div>
+  <div class="gist"><span class="lab">Key points</span><ul>
+    <li>There is <strong>no published accuracy benchmark</strong>. The demos are only examples of the method.</li>
+    <li>LLM agents <strong>herd more easily than people</strong> and tend to speak more politely and consistently, so results can differ systematically from real society.</li>
+    <li>In one report that installed and tested it independently, <strong>the result was the same as a single model call</strong>.</li>
+  </ul></div>
+  <div class="prose">
+    <h3>Issue 1 — The absence of validation</h3>
+    <p>The biggest problem is simple. That a simulation produces plausible social dynamics does not mean those dynamics predict what real people will do. The team has not published a benchmark comparing predictions with past outcomes, and the demos are an introduction to the methodology, not evidence of accuracy.<sup class="c"><a href="#r14">14</a></sup> The introduction site itself says results are “exploratory outputs” that should be reviewed before operational, financial or policy decisions.<sup class="c"><a href="#r2">2</a></sup></p>
+
+    <h3>Issue 2 — The academic critique: LLMs have not solved the problems of agent-based modeling</h3>
+    <p>After reviewing LLM-based generative social-simulation research, Larooij and Törnberg of the University of Amsterdam argue that it does not solve the long-standing validation and calibration problems of agent-based modeling but rather <em>worsens</em> them.<sup class="c"><a href="#r5">5</a></sup> Their key points are as follows.</p>
+    <ul class="plain">
+      <li><strong>Weak validation</strong>: many studies rely on the subjective judgment of whether results look “believable,” without rigorous empirical comparison.</li>
+      <li><strong>A different voice from people</strong>: in quantitative comparisons, LLM responses are “longer, more polite, articulate and respectful” than those of real people.</li>
+      <li><strong>Black boxes</strong>: “LLMs are ‘black-box’ models: their capacities are emergent, and it is virtually impossible to understand why a particular model gives a particular output.”</li>
+      <li><strong>Computational burden and reproducibility</strong>: they need far more computation, yet most studies run no sensitivity analysis or repeated runs.</li>
+    </ul>
+
+    <h3>Issue 3 — The “MiroFish Mirage” debate</h3>
+    <p>Daniele Proverbio criticizes the “predicting anything” tagline as hype without a scientific foundation. His argument has three parts. First, AI multi-agent systems are still at the research stage, with failures, biases and epistemological problems being observed one after another. Second, AI behavior varies with which LLM is used and does not fully match human choices even in simple situations. Third, both the assumption that an individual LLM faithfully represents human decision-making and the assumption that an agent society mirrors human society remain unproven. He cites Google Flu Trends, once promising but ultimately not working properly, as a cautionary precedent.<sup class="c"><a href="#r7">7</a></sup></p>
+
+    <h3>Issue 4 — Reports from hands-on use</h3>
+    <p>WPP Research installed MiroFish itself on 14 May 2026 and tested prediction of the S&amp;P 500’s direction and its top five stocks. The cost was about one dollar across all runs (using gemini-2.5-flash-lite).<sup class="c"><a href="#r6">6</a></sup></p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Item</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>Index direction</td><td>Both the swarm and the control (a single API call) predicted “down,” but the actual result was +0.77%</td></tr>
+      <tr><td>Stock picks</td><td>The swarm picked mega-caps (NVDA, AMZN, META, GOOGL, MSFT), but neither side got the actual top gainers (CSCO, JBHT, APP, TTWO, F)</td></tr>
+      <tr><td>Added value of the swarm</td><td>The swarm’s prediction matched the single model’s output, adding no insight</td></tr>
+      <tr><td>Following instructions</td><td>Skipped the explicit instruction to give a ticker list and substituted vague sector commentary</td></tr>
+      <tr><td>Number of agents</td><td>100 were requested but 25 were created (decided automatically)</td></tr>
+      <tr><td>Operational problems</td><td>The free tier of the required dependency Zep Cloud ran out after three runs, and a stale Docker image had to be fixed</td></tr>
+      <tr><td>Data freshness</td><td>No real-time data integration, so predictions are only as current as the seeds you gather yourself</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <p>This test is a single case that tried finance, not MiroFish’s main area. This document does not read it as a verdict on MiroFish as a whole, but as a signal to “lower expectations and validate first.” The report judged the framework still “fragile.”<sup class="c"><a href="#r6">6</a></sup></p>
+
+    <h3>Issue 5 — Herding bias</h3>
+    <p>As the OASIS paper itself states, LLM agents are more susceptible to herding than people.<sup class="c"><a href="#r3">3</a></sup> A simulated crowd may therefore polarize faster than a real one, and because this is a <em>systematic</em> bias stemming from the underlying model and structure, it could tilt results consistently toward more extreme outcomes. (This document’s interpretation)</p>
+    <div class="note caution"><span class="lab">This document’s conclusion</span>It is safer to accept MiroFish not as “a machine that gets the future right” but as “a tool for visualizing hypotheses and exploring scenarios.” To use its results as the basis for a decision, you must backtest with your own data and run the same scenario several times with several models to check the stability of the results. (This document’s suggestion)</div>
+  </div>
+</section>
+
+<section class="chapter" id="ch8">
+  <div class="ch-head"><div class="ch-num">Chapter 8</div><h2>If you run it yourself: operation, cost, license</h2><p class="ch-sub">Setup requirements, cost control, and the AGPL-3.0</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Item</th><th>Details</th></tr></thead>
+    <tbody>
+      <tr><td>Requirements</td><td>Node.js 18 or later, Python 3.11–3.12, the uv package manager. Source install or Docker<sup class="c"><a href="#r1">1</a></sup></td></tr>
+      <tr><td>Keys needed</td><td>An LLM API key (OpenAI SDK-compatible) and a Zep Cloud API key<sup class="c"><a href="#r1">1</a></sup></td></tr>
+      <tr><td>Input</td><td>PDF, Markdown, TXT, up to 50 MB<sup class="c"><a href="#r2">2</a></sup></td></tr>
+      <tr><td>Cost control</td><td>Simulation is token-intensive. Start with fewer than 40 rounds, and using a cheaper model cuts cost sharply<sup class="c"><a href="#r13">13</a></sup><sup class="c"><a href="#r14">14</a></sup></td></tr>
+      <tr><td>License</td><td>AGPL-3.0<sup class="c"><a href="#r1">1</a></sup></td></tr>
+      <tr><td>Current status</td><td>“v0.1 preview”<sup class="c"><a href="#r2">2</a></sup></td></tr>
+      <tr><td>Korean</td><td>There is a community-made Korean fork, MiroFish-Ko (unofficial)<sup class="c"><a href="#r15">15</a></sup></td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <h3>What AGPL-3.0 means</h3>
+    <p>AGPL-3.0 is a strong copyleft license that requires you to make the modified source available to users even when you offer modified software as a <em>network service</em>. It is a small burden if you use it only as an internal tool, but if you plan to offer an external service built on it, legal review is needed. (This is a general explanation of the license, not legal advice.)</p>
+    <h3>Data and privacy</h3>
+    <p>Because input documents are sent to an external LLM API and to Zep Cloud, it is safer not to upload confidential documents or material containing personal information as is. Some forks advertise a local mode, but that is not a feature of the official project and needs separate review. (This document’s suggestion)</p>
+  </div>
+</section>
+
+<section class="chapter" id="ch9">
+  <div class="ch-head"><div class="ch-num">Chapter 9</div><h2>MiroFish from a content-production angle</h2><p class="ch-sub">What a simulation that takes a narrative as its seed can and cannot do</p></div>
+  <div class="prose">
+    <p>This chapter is this document’s interpretation and suggestion based on public material. That MiroFish accepts fiction as input and lists launch reaction as a scenario are interesting points at the content-planning stage.</p>
+    <h3>Uses that could fit well</h3>
+    <ul class="plain">
+      <li><strong>Checking a world and its character relationships</strong>: feeding in a synopsis and setting materials as the seed and watching how characters react to events to find gaps in the narrative. The same way as the <em>Dream of the Red Chamber</em> demo.</li>
+      <li><strong>Forming reaction hypotheses before release</strong>: quickly producing several <em>hypotheses</em> of the form “in which communities could what reactions arise?” for choices such as a trailer, a twist or a release cadence.</li>
+      <li><strong>Rehearsing crisis scenarios</strong>: using how a rumor spreads when a controversy erupts as material for discussion.</li>
+    </ul>
+    <h3>What not to expect</h3>
+    <ul class="plain">
+      <li><strong>Direct prediction of box-office figures</strong>: it is not calibrated to hit numbers such as audience size, ratings or revenue. The reason is the same as why financial prediction is officially unsupported.<sup class="c"><a href="#r8">8</a></sup></li>
+      <li><strong>A replacement for real audience reaction</strong>: LLM agents are more polite, more consistent and herd more easily than people.<sup class="c"><a href="#r5">5</a></sup><sup class="c"><a href="#r3">3</a></sup> It is hard to believe they reproduce unstructured reactions such as fandom emotion as they are.</li>
+      <li><strong>Immediate use in a Korean-language setting</strong>: the official project centers on Chinese and English, and how well it reflects the speech and culture of Korean communities has not been validated.</li>
+    </ul>
+    <div class="note accent"><span class="lab">This document’s interpretation</span>The useful path in content is not “a predictor that gets the answer right” but <strong>“a hypothesis generator combined with validated data.”</strong> Simulation helps decisions only when placed alongside a model calibrated and backtested on real audience and market data. The result that agents built from interviews with real people reproduced survey responses to a considerable degree, from Stanford researchers,<sup class="c"><a href="#r10">10</a></sup> suggests that the direction of grounding agents in real data is open.</div>
+  </div>
+</section>
+
+<section class="chapter" id="ch10">
+  <div class="ch-head"><div class="ch-num">Chapter 10</div><h2>Outlook: what to watch</h2><p class="ch-sub">Seven indicators for gauging the progress of swarm-intelligence simulation over the next 12–24 months</p></div>
+  <div class="prose">
+    <p>This chapter is this document’s overall judgment, based on the material above. Please use it not as a prediction but as a checklist of what to look at when reading related news.</p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Indicator</th><th>As of October 2026</th><th>A meaningful next step</th></tr></thead>
+    <tbody>
+      <tr><td>① Public benchmarks</td><td>No official benchmark comparing predictions with reality</td><td>Publication of backtest results and methods on past events</td></tr>
+      <tr><td>② Independent replication</td><td>A third party’s single test showed no difference from a single call</td><td>Evidence from repeated experiments by several teams that the swarm beats a single model</td></tr>
+      <tr><td>③ Herding calibration</td><td>LLM agents herd more easily than people</td><td>Results that reduced herding and polarization by calibrating with human data</td></tr>
+      <tr><td>④ Grounding in real people</td><td>Personas are mostly synthesized from documents</td><td>Use of agents grounded in real interviews and surveys<sup class="c"><a href="#r10">10</a></sup></td></tr>
+      <tr><td>⑤ Multilingual and cultural coverage</td><td>Centered on Chinese and English; Korean is an unofficial fork</td><td>Models that reflect and validate the traits of Korean-language communities</td></tr>
+      <tr><td>⑥ Operational stability</td><td>v0.1 preview; dependency and instruction-following problems reported</td><td>A stable release and standardized confidence metrics</td></tr>
+      <tr><td>⑦ Regulation and ethics</td><td>Discussion of opinion manipulation and policy use lags behind research</td><td>Establishment of usage guidelines, result-labeling rules and accountability</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <h3>In closing</h3>
+    <p>MiroFish is significant for turning the powerful imagination of “growing a society from a single document” into a tool anyone can download and run. At the same time, today’s evidence stays at demonstrations that “such simulation is possible,” and there is not yet proof that “this simulation is right.”</p>
+    <p>So the best stance toward this tool is neither enthusiasm nor cynicism. It is to read the results not as prophecy but as <strong>hypotheses for discussion</strong>, and to check the same question once more against real data. For swarm-intelligence simulation to become a trusted tool, that validation has to accumulate first.</p>
+  </div>
+</section>
+
+<section class="chapter" id="appA">
+  <div class="ch-head"><div class="ch-num">Appendix A</div><h2>Glossary</h2></div>
+  <dl class="gloss">
+    <div><dt>Swarm intelligence<small>Swarm intelligence</small></dt><dd>Intelligent collective behavior produced by the interaction of simple individuals. In MiroFish, it refers to the interaction of a group of LLM agents.</dd></div>
+    <div><dt>Seed<small>Seed</small></dt><dd>The real-world input document (news, policy draft, report, fiction and so on) that serves as the starting point of a simulation.</dd></div>
+    <div><dt>Agent<small>Agent</small></dt><dd>An LLM-based entity with its own personality, memory and behavioral logic that judges and acts by itself inside an environment.</dd></div>
+    <div><dt>Persona<small>Persona</small></dt><dd>The character profile — background, perspective, disposition and so on — given to an agent.</dd></div>
+    <div><dt>Agent-based modeling<small>ABM</small></dt><dd>A simulation method that reproduces and analyzes collective phenomena through the rules and interactions of individual actors.</dd></div>
+    <div><dt>Generative agents<small>Generative agents</small></dt><dd>LLM-based agents with memory, reflection and planning structures. Known from 2023 Stanford and Google research.</dd></div>
+    <div><dt>OASIS<small>Open Agent Social Interaction Simulations</small></dt><dd>An LLM-agent-based social-media simulator made by the CAMEL-AI community. MiroFish’s simulation engine.</dd></div>
+    <div><dt>GraphRAG<small>Graph Retrieval-Augmented Generation</small></dt><dd>A method that extracts entities and relationships from documents to build a knowledge graph and uses it for retrieval.</dd></div>
+    <div><dt>Ontology<small>Ontology</small></dt><dd>A framework that structurally defines kinds of entities and their relationships. The output of MiroFish’s Step 1.</dd></div>
+    <div><dt>ReportAgent<small>ReportAgent</small></dt><dd>MiroFish’s dedicated agent that analyzes simulation results, writes the report and answers follow-up questions.</dd></div>
+    <div><dt>Zep Cloud<small>Zep Cloud</small></dt><dd>An external service that stores and retrieves agents’ long-term memory. A required dependency of MiroFish.</dd></div>
+    <div><dt>Recommendation system<small>RecSys</small></dt><dd>The algorithm that decides which posts to show a user. OASIS imitates X-style and Reddit-style recommendation.</dd></div>
+    <div><dt>Herd effect<small>Herd effect</small></dt><dd>The tendency to follow the opinions or actions of the majority. Reported to be stronger in LLM agents than in people.</dd></div>
+    <div><dt>Group polarization<small>Group polarization</small></dt><dd>The phenomenon in which a group’s opinions become more extreme than they were at the start through discussion.</dd></div>
+    <div><dt>Emergence<small>Emergence</small></dt><dd>The appearance of group-level patterns that are hard to anticipate from the rules of individual elements alone.</dd></div>
+    <div><dt>Backtest<small>Backtest</small></dt><dd>A validation method that applies a forecasting method to past data to check how well it matches actual outcomes.</dd></div>
+    <div><dt>Calibration<small>Calibration</small></dt><dd>Adjusting a model’s outputs (probabilities, confidence) so they match real frequencies.</dd></div>
+    <div><dt>AGPL-3.0<small>GNU Affero General Public License v3</small></dt><dd>A copyleft license that requires releasing source even when modified software is offered as a network service.</dd></div>
+    <div><dt>World model<small>World model</small></dt><dd>An internal AI simulator that learns an environment’s dynamics and predicts the future given actions. MiroFish is closer to simulating society and public opinion than the physical world.</dd></div>
+  </dl>
+</section>
+
+<section class="chapter" id="appB">
+  <div class="ch-head"><div class="ch-num">Appendix B</div><h2>Reading list by stage</h2><p class="ch-sub">Arranged in study order. Numbers are reference numbers.</p></div>
+  <div class="prose">
+    <h4>Stage 1 — Introduction (getting a grasp)</h4>
+    <ul class="plain">
+      <li>The official repository README for MiroFish<sup class="c"><a href="#r1">1</a></sup></li>
+      <li>Asia Economy, <em>“Mirofishi” AI agent draws popularity</em> — Korean coverage<sup class="c"><a href="#r11">11</a></sup></li>
+      <li>The MiroFish introduction site — the five steps and use cases<sup class="c"><a href="#r2">2</a></sup></li>
+    </ul>
+    <h4>Stage 2 — Roots (underlying technology)</h4>
+    <ul class="plain">
+      <li>Park et al., <em>Generative Agents: Interactive Simulacra of Human Behavior</em> (2023)<sup class="c"><a href="#r9">9</a></sup></li>
+      <li>The OASIS paper (2024)<sup class="c"><a href="#r3">3</a></sup></li>
+      <li>Park et al., <em>Generative Agent Simulations of 1,000 People</em> (2024)<sup class="c"><a href="#r10">10</a></sup></li>
+    </ul>
+    <h4>Stage 3 — Critique and validation</h4>
+    <ul class="plain">
+      <li>Larooij &amp; Törnberg, <em>Do Large Language Models Solve the Problems of Agent-Based Modeling?</em><sup class="c"><a href="#r5">5</a></sup></li>
+      <li>House of Ethics, <em>The MiroFish Mirage?</em><sup class="c"><a href="#r7">7</a></sup> · WPP, <em>MiroFish: Is swarm intelligence worth the cloud bill?</em><sup class="c"><a href="#r6">6</a></sup></li>
+      <li>Repository discussion #280, <em>Stock &amp; Crypto Market Prediction Capability</em><sup class="c"><a href="#r8">8</a></sup></li>
+    </ul>
+    <h4>Stage 4 — Hands-on practice</h4>
+    <ul class="plain">
+      <li>Two developer write-ups<sup class="c"><a href="#r13">13</a></sup><sup class="c"><a href="#r14">14</a></sup> · the Korean fork<sup class="c"><a href="#r15">15</a></sup></li>
+    </ul>
+  </div>
+</section>
+
+<section class="chapter" id="appC">
+  <div class="ch-head"><div class="ch-num">Appendix C</div><h2>References</h2><p class="ch-sub">{{refs_sub}}</p></div>
+  <!--REFS-->
+</section>
+</div>
+</div>
+<div class="wm-foot">MiroFish · Compiled as of 7 October 2026 · Figures and quotations reflect each source’s publication date and may change afterward.</div>
+</div>
+</section>

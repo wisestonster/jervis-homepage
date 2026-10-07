@@ -1,0 +1,678 @@
+<section class="page-hero">
+  <div class="container wm-mast">
+    <div>
+      <p class="eyebrow">Field Reference · World Models · 基準日 2026-09-11</p>
+      <h1>ワールドモデル</h1>
+      <p class="page-hero__copy">「頭の中で世界を動かしてみるAI」。ワールドモデルの定義から系譜、内部構造、主要モデル、学界の論争、産業応用、韓国の現状まで — 最近の論文・レポート・専門家のコラム・信頼できる記事50件余りを突き合わせて一冊にまとめたリファレンスです。</p>
+    </div>
+    <div class="wm-epigraph">
+      <div class="eq" aria-label="P of s t plus 1 given s t and a t">P(s<sub>t+1</sub> | s<sub>t</sub>, a<sub>t</sub>)</div>
+      <p>いまの世界の状態 <span class="m">s</span> と私が取る行動 <span class="m">a</span> が与えられたとき、次の瞬間に世界がどうなるかを予測する関数。ワールドモデルを一行で言えばこの式です。行動 <span class="m">a</span> がなければ「映像予測」、あれば「世界シミュレーション」になります。<sup class="c"><a href="#r35">35</a></sup></p>
+      <div class="meta-row"><span>12章 · 付録3</span><span>参考文献 51</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="wm-section">
+<div class="container">
+<div class="wrap">
+<nav class="toc" aria-label="目次">
+  <details open>
+    <summary>目次</summary>
+    <ol>
+      <li><a href="#guide"><span>00</span><span>概要</span></a></li>
+      <li><a href="#ch1"><span>01</span><span>ワールドモデルとは何か</span></a></li>
+      <li><a href="#ch2"><span>02</span><span>なぜ今ワールドモデルなのか</span></a></li>
+      <li><a href="#ch3"><span>03</span><span>系譜:1943年から2026年まで</span></a></li>
+      <li><a href="#ch4"><span>04</span><span>解剖学:ワールドモデルの部品</span></a></li>
+      <li><a href="#ch5"><span>05</span><span>分類:4枚の地図</span></a></li>
+      <li><a href="#ch6"><span>06</span><span>主要プレイヤーとモデル図鑑</span></a></li>
+      <li><a href="#ch7"><span>07</span><span>大論争:ピクセルを描かなければ理解できないのか</span></a></li>
+      <li><a href="#ch8"><span>08</span><span>応用分野</span></a></li>
+      <li><a href="#ch9"><span>09</span><span>クリエイターのための実務ガイド</span></a></li>
+      <li><a href="#ch10"><span>10</span><span>限界と未解決の課題</span></a></li>
+      <li><a href="#ch11"><span>11</span><span>韓国の現状と課題</span></a></li>
+      <li><a href="#ch12"><span>12</span><span>展望:何を見守るべきか</span></a></li>
+      <li><a href="#appA"><span>A</span><span>用語集</span></a></li>
+      <li><a href="#appB"><span>B</span><span>段階別の必読リスト</span></a></li>
+      <li><a href="#appC"><span>C</span><span>参考文献</span></a></li>
+    </ol>
+  </details>
+</nav>
+
+<div class="wm-main">
+<section class="chapter" id="guide">
+  <div class="ch-head"><div class="ch-num">00 · 序文</div><h2>概要</h2></div>
+  <div class="prose">
+    <p>2025年後半から2026年にかけて、「ワールドモデル(World Model)」はAI業界で最も熱い言葉になりました。Google DeepMindはリアルタイムで歩き回れる世界を作るGenie 3を公開し、ヤン・ルカンはMetaを離れてワールドモデルのスタートアップAMI Labsを設立して10億ドルを超えるシード投資を受け、フェイフェイ・リーのWorld Labsも10億ドルを追加で調達しました。NVIDIAはロボット・自動運転向けのCosmos 3を、韓国政府は340億ウォン規模の「ワールドモデル国産化」事業を始めました。</p>
+    <p>ところがこの言葉は、人によってまったく違うものを指します。ある人は「ゲームのように操作できる映像生成器」を、ある人は「ロボットの頭の中の予測エンジン」を、またある人は「3D空間を作ってくれるツール」をワールドモデルと呼びます。AMI Labs側の関係者が「6か月以内にすべての会社が投資を受けるために自らをワールドモデルと呼ぶだろう」と皮肉ったほどです。<sup class="c"><a href="#r8">8</a></sup></p>
+    <p>この文書は、その混乱を整理することを目的としています。構成は次のとおりです。</p>
+    <ul class="plain">
+      <li><strong>1〜2章</strong>は概念と背景です。初めての方は、ここまで読めば会話に加われます。</li>
+      <li><strong>3〜5章</strong>は歴史、内部構造、分類体系です。技術的な骨格を理解したい方のための部分です。</li>
+      <li><strong>6〜8章</strong>は実際のモデルと企業、中心となる論争、応用分野です。</li>
+      <li><strong>9章</strong>は、映像・ゲーム・コンテンツ制作者の視点から、いま使えるものとまだできないことを整理しました。</li>
+      <li><strong>10〜12章</strong>は限界、韓国の現状、これから見るべき指標です。付録には用語集、段階別の必読リスト、参考文献があります。</li>
+    </ul>
+    <div class="note accent"><span class="lab">表記の原則</span>本文の上付き数字は付録Cの参考文献番号です。企業が自ら明らかにした性能・計画は「発表によれば」、報道によるものは「報道によれば」と区別しました。展望や解釈のようにこの文書が自ら下した判断は、そのように明記してあります。</div>
+  </div>
+</section>
+
+<section class="chapter" id="ch1">
+  <div class="ch-head"><div class="ch-num">第1章</div><h2>ワールドモデルとは何か</h2><p class="ch-sub">一文の定義、三つのたとえ、そして混同しやすい隣接概念との境界</p></div>
+  <div class="gist"><span class="lab">この章の要点</span><ul>
+    <li>ワールドモデルは、<strong>「行動すると世界がどう変わるか」を予測するAI内部のシミュレーター</strong>です。</li>
+    <li>核心は「行動条件付き(action-conditioned)」であることです。行動を入れられなければ、ただの映像生成器です。</li>
+    <li>目的は絵をきれいに描くことではなく、<strong>計画・学習・評価</strong>に使える予測です。</li>
+  </ul></div>
+  <div class="prose">
+    <h3>一文の定義</h3>
+    <p>Google DeepMindはワールドモデルを次のように定義します。「世界への理解に基づいて世界の一部をシミュレーションし、エージェントが環境の変化と、自らの行動が環境に与える影響を予測できるようにするAIシステム。」<sup class="c"><a href="#r1">1</a></sup> 身体性AI分野の総合サーベイも同じ趣旨で、ワールドモデルを「環境の力学を捉える内部シミュレーター」と呼んでいます。<sup class="c"><a href="#r34">34</a></sup> 韓国のソフトウェア政策研究所(SPRi)は「人工知能が物理世界の構造と力学を理解し、将来の状態を予測する技術」とまとめました。<sup class="c"><a href="#r25">25</a></sup></p>
+    <p>三つの定義に共通する要素は三つです。<strong>① 世界の現在の状態を圧縮して表現</strong>し、<strong>② 時間が流れたり行動が加わったりしたときの次の状態を予測</strong>し、<strong>③ その予測を意思決定に活用</strong>します。</p>
+
+    <h3>三つのたとえ</h3>
+    <h4>① キャッチボールをする人</h4>
+    <p>飛んでくるボールを捕るとき、私たちはニュートンの方程式を解きません。代わりに「あの速さであの角度なら、だいたいあそこに落ちる」という感覚で、あらかじめ手を伸ばします。この感覚が脳の中のワールドモデルです。1943年、心理学者ケネス・クレイク(Kenneth Craik)は、生き物が頭の中に外部の現実の「縮小模型(small-scale model)」を持ち歩き、実際に行動する前にその模型の中でいくつもの選択肢を試すという仮説を示しました。これが概念の根っこです。<sup class="c"><a href="#r50">50</a></sup></p>
+    <h4>② 初心者ドライバーとベテランドライバー</h4>
+    <p>ベテランは、路地からボールが転がり出てくると、まもなく子どもが飛び出してくるのを予想して速度を落とします。まだ起きていない未来を頭の中で先に動かしてみたのです。自動運転業界がワールドモデルに力を入れる理由はここにあります。実際の道路ではほとんど起こらない危険な状況を、仮想で何十億回も経験させられるからです。<sup class="c"><a href="#r4">4</a></sup></p>
+    <h4>③ 明晰夢の中での練習</h4>
+    <p>2018年のデイビッド・ハ(David Ha)とユルゲン・シュミットフーバー(Jürgen Schmidhuber)の論文〈World Models〉は、AIが自分で学習した世界モデルの中で、つまり「夢の中で」運転やゲームを練習し、その実力を実際の環境に移せることを示しました。<sup class="c"><a href="#r37">37</a></sup> 今日のDreamer 4が、実際のゲームを一度もプレイせず、映像データと想像の中での練習だけでマインクラフトのダイヤモンドを掘ったのも、同じ原理の拡張です。<sup class="c"><a href="#r7">7</a></sup></p>
+
+    <h3>混同しやすい隣接概念</h3>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>概念</th><th>何をするか</th><th>ワールドモデルとの関係</th></tr></thead>
+    <tbody>
+      <tr><td>大規模言語モデル(LLM)</td><td>次の単語(トークン)を予測</td><td>世界についての「文章による知識」は豊富ですが、行動に伴う物理的な結果を直接予測するように訓練されてはいません。LLMの内部にワールドモデルが生まれるかどうかは、7章の中心的な論争です。</td></tr>
+      <tr><td>映像生成モデル</td><td>プロンプトから数秒〜数分の映像を一度に生成</td><td>世界の見た目をよく真似ますが、たいていはユーザーが途中で介入できません。行動を受けて1フレームずつつなぐ構造に変わると、ワールドモデルに近づきます(例:Runway GWM-1はGen-4.5ベースの「自己回帰拡散」モデル)。<sup class="c"><a href="#r15">15</a></sup></td></tr>
+      <tr><td>3D生成・再構成</td><td>テキスト・画像から探索できる3D空間を生成</td><td>空間は一貫していますが、その中で時間と行動に応じて起こること(力学)には別のエンジンが必要です。World LabsのMarbleが代表的です。<sup class="c"><a href="#r10">10</a></sup></td></tr>
+      <tr><td>物理エンジン・ゲームエンジン</td><td>人が組んだルールで世界を計算</td><td>正確で制御可能ですが、ルールをすべて人がコーディングしなければなりません。ワールドモデルはルールをデータから<em>学習</em>する点が異なります。</td></tr>
+      <tr><td>デジタルツイン</td><td>特定の工場・都市を仮想的に複製</td><td>ワールドモデルがデジタルツインの「頭脳」として使われる流れがあります。NAVERのSeoul World Modelは、実際のソウルの街のデータに生成モデルを組み合わせた事例です。<sup class="c"><a href="#r24">24</a></sup></td></tr>
+      <tr><td>VLA(視覚-言語-行動モデル)</td><td>見て、指示を理解し、ロボットの行動を出力</td><td>VLAは「何をするか」を決める方策、ワールドモデルは「すればどうなるか」を予測するシミュレーターです。両者を組み合わせ、ワールドモデルの中でVLAを訓練・評価する方式が増えています。<sup class="c"><a href="#r29">29</a></sup></td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <div class="note accent"><span class="lab">最も重要な分かれ目</span>2026年3月に〈Not Boring〉に載ったエッセイは次のように整理しています。映像モデルは <span class="m">P(x<sub>t+1</sub> | x<sub>t</sub>)</span>、つまり「この場面の次にはどんな場面が来るか」を学びます。ワールドモデルは <span class="m">P(s<sub>t+1</sub> | s<sub>t</sub>, a<sub>t</sub>)</span>、つまり「私がこうすると世界はどうなるか」を学びます。ユーザーが行動し、その結果をリアルタイムで見られるという相互作用性が、両者を分けます。<sup class="c"><a href="#r35">35</a></sup></div>
+  </div>
+</section>
+
+<section class="chapter" id="ch2">
+  <div class="ch-head"><div class="ch-num">第2章</div><h2>なぜ今ワールドモデルなのか</h2><p class="ch-sub">言語の限界、物理データの不足、そしてお金の流れ</p></div>
+  <div class="gist"><span class="lab">この章の要点</span><ul>
+    <li>LLMは文章では世界をうまく説明できても、<strong>身体を持つAI(ロボット・自動運転)</strong>には足りないという認識が広がりました。</li>
+    <li>ロボットの学習データは、インターネットのテキスト・映像に比べて<strong>数十〜数千倍不足</strong>しています。ワールドモデルはこのデータを「生成」できます。</li>
+    <li>投資が急増しました。ワールドモデル分野への投資は、2024年の14億ドルから2025年の69億ドルに増えました(CB Insights)。<sup class="c"><a href="#r29">29</a></sup></li>
+  </ul></div>
+  <div class="prose">
+    <h3>理由1 — 言語だけでは足りないという反省</h3>
+    <p>ヤン・ルカンは以前から「言語は帯域幅が低く派生的な信号であり、主たる学習信号にはなり得ない。人間と動物の知能は、世界を観察し、その中で行動しながら学んだものだ」と主張してきました。<sup class="c"><a href="#r9">9</a></sup> 4歳の子どもは、本を1冊も読まなくても、コップを押せば落ちることを知っています。その子が目で受け取った視覚情報の量は、LLMが学習するテキストの量と同程度かそれ以上だ、というのがルカンが講演でよく挙げるたとえです。</p>
+    <p>この主張が2025年以降に力を得たのは、LLMの進歩が止まったからではなく、AIを工場・道路・家庭に投入したいという要求が高まったからです。テキストをうまく扱うモデルに「この箱を持ち上げたら隣の箱が崩れるか」を判断させるには、別の種類の知識が必要です。</p>
+
+    <h3>理由2 — 物理世界のデータの絶対的な不足</h3>
+    <p>リュ・ジェミョン(リュ・ジェミョン)科学技術情報通信部第2次官は、2026年6月のフィジカルAI先導事業の着手報告会で、この問題を次のように要約しました。</p>
+    <blockquote>「現実でこれをすべて収集するには、あまりにも莫大な費用と時間がかかり、実際のデータだけでは、失敗事例や例外的な危険状況について十分に学習することが事実上不可能だ。」<cite>— リュ・ジェミョン 科学技術情報通信部次官、2026年6月9日<sup class="c"><a href="#r27">27</a></sup></cite></blockquote>
+    <p>World Labsも、物理的に正確なシミュレーションデータは、インターネット映像に比べて「桁違い(orders of magnitude)」に不足していると説明しています。<sup class="c"><a href="#r11">11</a></sup> ワールドモデルは、この空白を埋める「データ工場」であり、ロボットが失敗しても怪我をしない「練習場」になります。</p>
+
+    <h3>理由3 — 技術が臨界点を越えた</h3>
+    <p>2024年初めまで、インタラクティブなワールドモデルは毎秒1フレーム程度で、数秒たつと世界が崩れました。2024年末にGenie 2は10〜20秒持ちこたえ、2025年8月にGenie 3は720p・毎秒24フレームで、数分間一貫した世界をリアルタイムで生成しました。<sup class="c"><a href="#r1">1</a></sup><sup class="c"><a href="#r3">3</a></sup> 「デモ」が「使ってみられるもの」に変わった瞬間、産業の関心が集まりました。</p>
+
+    <h3>理由4 — お金の流れ</h3>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>企業</th><th>時期</th><th>規模</th><th>備考</th></tr></thead>
+    <tbody class="num">
+      <tr><td>AMI Labs(ヤン・ルカン)</td><td>2026年3月</td><td>10.3億ドルのシード</td><td>投資前の企業価値35億ドル、本社はパリ。NVIDIA・サムスン・トヨタベンチャーズなどが参加<sup class="c"><a href="#r8">8</a></sup></td></tr>
+      <tr><td>World Labs(フェイフェイ・リー)</td><td>2026年2月</td><td>10億ドルのシリーズB</td><td>オートデスクが2億ドルのアンカー、AMD・NVIDIAなどが参加。累計約12.3億ドル<sup class="c"><a href="#r11">11</a></sup></td></tr>
+      <tr><td>Runway</td><td>2026年2月</td><td>3.15億ドル</td><td>累計8.6億ドル、企業価値53億ドル<sup class="c"><a href="#r16">16</a></sup></td></tr>
+      <tr><td>General Intuition</td><td>2025年10月</td><td>1.34億ドルのシード</td><td>ゲーム録画プラットフォームMedalの年20億本の映像を学習データに活用<sup class="c"><a href="#r21">21</a></sup></td></tr>
+      <tr><td>分野全体</td><td>2024→2025</td><td>14億 → 69億ドル</td><td>CB Insights集計のワールドモデル投資額<sup class="c"><a href="#r29">29</a></sup></td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <p>市場の反応も大きなものでした。2026年1月にGoogleが一般の有料ユーザーにProject Genieを公開すると、ユニティ、ロブロックス、テイクツーなどゲーム関連株が大きく下落したという報道が相次ぎました。<sup class="c"><a href="#r3">3</a></sup> 「ゲームの作り方そのものが変わるかもしれない」という期待と恐れが、同時に反映された場面です。</p>
+  </div>
+</section>
+
+<section class="chapter" id="ch3">
+  <div class="ch-head"><div class="ch-num">第3章</div><h2>系譜:1943年から2026年まで</h2><p class="ch-sub">心理学の仮説から強化学習の道具へ、そして再び基盤モデルの主戦場へ</p></div>
+  <div class="prose">
+    <p>ワールドモデルは新しいアイデアではありません。〈Not Boring〉のエッセイは、歴史を五つの波に分けています。理論的土台(1990〜91)、可能性の証明(2018〜19)、人間レベルの性能(2020〜22)、現実世界との相互作用(2023〜24)、そして現在の配備段階です。<sup class="c"><a href="#r35">35</a></sup> 下の年表はこの区分に従いつつ、最新の出来事を補強しました。</p>
+  </div>
+  <ol class="tl">
+    <li class="era"><span class="d">1943</span><span class="t"><span class="era-lab">根っこ</span> — ケネス・クレイクが『説明の本質』で「頭の中の縮小模型(small-scale model)」仮説を提示<sup class="c"><a href="#r50">50</a></sup></span></li>
+    <li><span class="d">1990–91</span><span class="t">シュミットフーバーのリカレントニューラルネットワークによる世界モデルの研究、リチャード・サットンの<b>Dyna</b>構造 — 「実際の経験+モデルで想像した経験」を一緒に学習に使う発想<sup class="c"><a href="#r35">35</a></sup></span></li>
+    <li class="era"><span class="d">2018年3月</span><span class="t"><span class="era-lab">可能性の証明</span> — ハ&amp;シュミットフーバー〈World Models〉。視覚(VAE)・記憶(MDN-RNN)・制御器に分けた構造、「夢の中での訓練」を実演<sup class="c"><a href="#r37">37</a></sup></span></li>
+    <li><span class="d">2019年11月</span><span class="t">DeepMind <b>MuZero</b> — ルールを教えなくても、囲碁・チェス・アタリの力学と価値を自ら学習(2020年にNature掲載)<sup class="c"><a href="#r48">48</a></sup></span></li>
+    <li class="era"><span class="d">2020–23</span><span class="t"><span class="era-lab">人間レベル</span> — ダニジャル・ハフナーの<b>Dreamer</b>系列。DreamerV2がアタリで人間レベル、DreamerV3が人の実演なしでマインクラフトのダイヤモンドを採掘<sup class="c"><a href="#r47">47</a></sup></span></li>
+    <li><span class="d">2022年6月</span><span class="t">ヤン・ルカン〈A Path Towards Autonomous Machine Intelligence〉。ワールドモデルを中心に据えた認知構造と<b>JEPA</b>を提案<sup class="c"><a href="#r38">38</a></sup></span></li>
+    <li><span class="d">2023</span><span class="t">Meta <b>I-JEPA</b>、Wayve <b>GAIA-1</b>(自動運転の生成ワールドモデル)。LLM内部の「世界表現」研究(Othello-GPTなど)が活発化<sup class="c"><a href="#r42">42</a></sup></span></li>
+    <li class="era"><span class="d">2024年2月</span><span class="t"><span class="era-lab">生成型の登場</span> — OpenAI Sora技術報告書〈ビデオ生成モデルは世界シミュレーター〉。DeepMind <b>Genie</b>(第1世代、110億パラメータ、行動ラベルのないゲーム映像から「潜在行動」を学習)<sup class="c"><a href="#r39">39</a></sup><sup class="c"><a href="#r3">3</a></sup></span></li>
+    <li><span class="d">2024年8〜10月</span><span class="t">Google <b>GameNGen</b>(ニューラルネットだけでDoomをリアルタイム動作)、Decart・Etched <b>Oasis</b>(マインクラフト風のリアルタイム生成)</span></li>
+    <li><span class="d">2024年12月</span><span class="t">DeepMind <b>Genie 2</b> — 画像1枚から3D世界を生成、10〜20秒持続、360p<sup class="c"><a href="#r40">40</a></sup></span></li>
+    <li><span class="d">2025年1月</span><span class="t">NVIDIA <b>Cosmos</b>ワールド基盤モデルプラットフォーム(CES)。発表によれば2,000万時間分の実世界データで学習<sup class="c"><a href="#r14">14</a></sup> · DeepMind・INSAITの<b>Physics-IQ</b> — 「視覚的なリアルさ ≠ 物理の理解」<sup class="c"><a href="#r30">30</a></sup></span></li>
+    <li><span class="d">2025年2月</span><span class="t">マイクロソフト <b>Muse(WHAM)</b>がNature掲載 — ゲーム〈Bleeding Edge〉のプレイデータで学習したゲームプレイ生成モデル<sup class="c"><a href="#r22">22</a></sup></span></li>
+    <li><span class="d">2025年6月</span><span class="t">Meta <b>V-JEPA 2</b> — 100万時間以上の映像で自己教師あり学習、62時間未満のロボット映像だけで、初めての環境で物を掴んで置くことに成功<sup class="c"><a href="#r5">5</a></sup></span></li>
+    <li class="era"><span class="d">2025年8月</span><span class="t"><span class="era-lab">リアルタイムの相互作用</span> — DeepMind <b>Genie 3</b>。720p・24fpsのリアルタイム、数分間の一貫性、約1分の視覚記憶、テキストで出来事を挿入(「プロンプト型の世界イベント」)<sup class="c"><a href="#r1">1</a></sup></span></li>
+    <li><span class="d">2025年9月</span><span class="t">OpenAI <b>Sora 2</b> — 「映像のGPT-3.5の瞬間」と自評<sup class="c"><a href="#r17">17</a></sup> · <b>Dreamer 4</b> — オフラインデータだけでマインクラフトのダイヤモンド、単一GPUでリアルタイム推論<sup class="c"><a href="#r7">7</a></sup></span></li>
+    <li><span class="d">2025年10月</span><span class="t">テスラ、FSDとOptimusが共有する「ニューラルネットの世界シミュレーター」を公開<sup class="c"><a href="#r19">19</a></sup> · General Intuition 1.34億ドルのシード<sup class="c"><a href="#r21">21</a></sup></span></li>
+    <li><span class="d">2025年11月</span><span class="t">World Labs <b>Marble</b>を商用リリース<sup class="c"><a href="#r10">10</a></sup> · ルカン、Meta退社と起業を発表<sup class="c"><a href="#r43">43</a></sup> · DeepMind <b>SIMA 2</b>エージェント<sup class="c"><a href="#r44">44</a></sup></span></li>
+    <li><span class="d">2025年12月</span><span class="t">Runway <b>GWM-1</b>(Worlds・Robotics・Avatars)<sup class="c"><a href="#r15">15</a></sup> · Wayve <b>GAIA-3</b>(150億パラメータ、自動運転の評価用)<sup class="c"><a href="#r20">20</a></sup></span></li>
+    <li class="era"><span class="d">2026年1月</span><span class="t"><span class="era-lab">配備の時代</span> — Google <b>Project Genie</b>、米国のAI Ultra購読者に公開(60秒制限)<sup class="c"><a href="#r2">2</a></sup></span></li>
+    <li><span class="d">2026年2月</span><span class="t"><b>Waymo World Model</b>(Genie 3ベース、カメラ+ライダーを同時生成)<sup class="c"><a href="#r4">4</a></sup> · World Labsが10億ドルを調達 · <b>WorldArena</b>ベンチマーク<sup class="c"><a href="#r32">32</a></sup></span></li>
+    <li><span class="d">2026年3月</span><span class="t"><b>AMI Labs</b> 10.3億ドルのシード<sup class="c"><a href="#r8">8</a></sup> · Meta FAIR <b>V-JEPA 2.1</b><sup class="c"><a href="#r6">6</a></sup> · NAVER <b>Seoul World Model</b><sup class="c"><a href="#r24">24</a></sup> · OpenAI、Soraアプリの終了を発表した後、チームをロボティクス向けの世界シミュレーション研究に転換<sup class="c"><a href="#r18">18</a></sup></span></li>
+    <li><span class="d">2026年5〜6月</span><span class="t">SPRiイシューレポート〈ワールドモデル〉<sup class="c"><a href="#r25">25</a></sup> · NVIDIA <b>Cosmos 3</b>(推論・生成・行動を一つのモデルに)<sup class="c"><a href="#r12">12</a></sup> · 科学技術情報通信部の<b>フィジカルAI先導事業</b>が着手(340億ウォン)<sup class="c"><a href="#r26">26</a></sup></span></li>
+    <li><span class="d">2026年7〜8月</span><span class="t">TIMEのコラム〈ワールドモデルはAIの次のフロンティア〉<sup class="c"><a href="#r36">36</a></sup> · <b>PlayWorld</b>ベンチマーク、Genie 3など9モデルを比較<sup class="c"><a href="#r33">33</a></sup></span></li>
+  </ol>
+</section>
+<section class="chapter" id="ch4">
+  <div class="ch-head"><div class="ch-num">第4章</div><h2>解剖学:ワールドモデルの部品</h2><p class="ch-sub">観測を圧縮し、行動を受けて未来を動かし、その未来で計画する</p></div>
+  <div class="gist"><span class="lab">この章の要点</span><ul>
+    <li>ほとんどのワールドモデルは、<strong>エンコーダー → 潜在状態 → 力学予測器 → (デコーダー) → 計画</strong>という骨格を共有しています。</li>
+    <li>違いは「予測をどこで行うか」です。ピクセルで行えば<strong>生成型</strong>、抽象空間で行えば<strong>潜在型</strong>です。</li>
+    <li>最新モデルに共通する秘訣は、<strong>ラベルのない大量の映像+少量の行動データ</strong>です。</li>
+  </ul></div>
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 900 305" role="img" aria-labelledby="figTitle">
+        <title id="figTitle">ワールドモデルの基本構造:観測がエンコーダーを通って潜在状態になり、記憶と行動を受け取った力学予測器が次の状態を予測し、プランナーがその予測で次の行動を選ぶ循環構造</title>
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="s-arrow"/></marker>
+          <marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="s-arrow-a"/></marker>
+        </defs>
+        <rect class="s-box" x="20" y="100" width="130" height="64" rx="3"/>
+        <text class="s-t" x="85" y="128" text-anchor="middle">観測 x<tspan font-size="10" dy="3">t</tspan></text>
+        <text class="s-s" x="85" y="148" text-anchor="middle">カメラ・ライダー・画面</text>
+
+        <rect class="s-box" x="185" y="100" width="130" height="64" rx="3"/>
+        <text class="s-t" x="250" y="128" text-anchor="middle">エンコーダー</text>
+        <text class="s-s" x="250" y="148" text-anchor="middle">圧縮・抽象化</text>
+
+        <rect class="s-box" x="350" y="100" width="150" height="64" rx="3"/>
+        <text class="s-t" x="425" y="128" text-anchor="middle">潜在状態 s<tspan font-size="10" dy="3">t</tspan></text>
+        <text class="s-s" x="425" y="148" text-anchor="middle">世界の要約</text>
+
+        <rect class="s-key" x="535" y="100" width="170" height="64" rx="3"/>
+        <text class="s-t" x="620" y="128" text-anchor="middle">力学予測器</text>
+        <text class="s-s" x="620" y="148" text-anchor="middle">P(s′ | s, a)</text>
+
+        <rect class="s-box" x="740" y="100" width="140" height="64" rx="3"/>
+        <text class="s-t" x="810" y="128" text-anchor="middle">予測状態 ŝ<tspan font-size="10" dy="3">t+1</tspan></text>
+        <text class="s-s" x="810" y="148" text-anchor="middle">想像した未来</text>
+
+        <rect class="s-box" x="740" y="14" width="140" height="50" rx="3" stroke-dasharray="4 4"/>
+        <text class="s-t" x="810" y="36" text-anchor="middle" font-size="13">デコーダー → 画面</text>
+        <text class="s-s" x="810" y="54" text-anchor="middle">生成型のみ</text>
+
+        <rect class="s-box" x="350" y="222" width="150" height="64" rx="3"/>
+        <text class="s-t" x="425" y="250" text-anchor="middle">記憶</text>
+        <text class="s-s" x="425" y="270" text-anchor="middle">過去のフレーム・状態</text>
+
+        <rect class="s-box" x="560" y="222" width="120" height="64" rx="3"/>
+        <text class="s-t" x="620" y="250" text-anchor="middle">行動 a<tspan font-size="10" dy="3">t</tspan></text>
+        <text class="s-s" x="620" y="270" text-anchor="middle">操作・命令・テキスト</text>
+
+        <rect class="s-box" x="740" y="222" width="140" height="64" rx="3"/>
+        <text class="s-t" x="810" y="250" text-anchor="middle">プランナー・方策</text>
+        <text class="s-s" x="810" y="270" text-anchor="middle">コスト・報酬を評価</text>
+
+        <line class="s-line" x1="150" y1="132" x2="183" y2="132" marker-end="url(#ah)"/>
+        <line class="s-line" x1="315" y1="132" x2="348" y2="132" marker-end="url(#ah)"/>
+        <line class="s-line" x1="500" y1="132" x2="533" y2="132" marker-end="url(#ah)"/>
+        <line class="s-acc" x1="705" y1="132" x2="738" y2="132" marker-end="url(#aha)"/>
+        <line class="s-dash" x1="810" y1="100" x2="810" y2="67" marker-end="url(#ah)"/>
+        <path class="s-line" d="M425 222 L425 196 L565 196 L565 167" marker-end="url(#ah)"/>
+        <line class="s-acc" x1="620" y1="222" x2="620" y2="167" marker-end="url(#aha)"/>
+        <line class="s-line" x1="810" y1="164" x2="810" y2="219" marker-end="url(#ah)"/>
+        <line class="s-acc" x1="740" y1="254" x2="683" y2="254" marker-end="url(#aha)"/>
+        <text class="s-s" x="711" y="244" text-anchor="middle">選択</text>
+      </svg>
+    </div>
+    <figcaption>図1. ワールドモデルの基本骨格(この文書の図)。青い線は「行動を入れ、結果を見て、また行動を選ぶ」想像の中の循環です。潜在型(JEPAなど)は点線のデコーダーなしに抽象空間だけで予測し、生成型(Genie、Soraなど)は各ステップを画面に描き出します。</figcaption>
+  </figure>
+  <div class="prose">
+    <h3>部品1 — エンコーダー:世界を要約する</h3>
+    <p>カメラの1シーンには数百万個のピクセルがありますが、判断を下すのに必要な情報は「コップがテーブルの端にある」程度です。エンコーダーは観測をこのような要約(潜在状態、latent state)に圧縮します。ハ&amp;シュミットフーバーの2018年のモデルではVAEがこの役割を担い、<sup class="c"><a href="#r37">37</a></sup> 最近は大型のビジョントランスフォーマーがこれを担います。良いエンコーダーは、木の葉の揺れのように予測できず役にも立たない情報は捨て、物体の位置・速度のように重要な情報は残します。ルカンのJEPAは、まさにこの「捨てるものは捨てる」を設計原則にしています。<sup class="c"><a href="#r9">9</a></sup></p>
+
+    <h3>部品2 — 力学予測器:未来を動かす</h3>
+    <p>ワールドモデルの心臓部です。現在の状態と行動を受けて次の状態を出します。これを繰り返すと、数秒、数分先の未来まで「ロールアウト(rollout)」できます。実装方式は大きく二つです。</p>
+    <ul class="plain">
+      <li><strong>自己回帰(autoregressive)</strong>:1ステップずつ順番に次を予測します。ユーザーの入力を毎ステップ反映できるので、リアルタイムの相互作用に有利です。Genie 3、GWM-1がこの方式です。<sup class="c"><a href="#r15">15</a></sup></li>
+      <li><strong>全域予測(global difference prediction)</strong>:未来の区間全体を一度に推定します。品質は高いものの、途中での介入が難しくなります。従来の映像生成モデルに近い方式です。<sup class="c"><a href="#r34">34</a></sup></li>
+    </ul>
+    <p>最近は両方式を混ぜた「自己回帰拡散(autoregressive diffusion)」が主流になりました。拡散モデルで一塊(チャンク)ずつ高品質なフレームを作り、チャンク同士は自己回帰でつなぐ方式です。</p>
+
+    <h3>部品3 — 行動:何が「操作」なのか</h3>
+    <p>行動は、ゲームパッドの入力(WASD、カメラ回転)でも、ロボットの関節コマンドでも、自動車の操舵でも、「雨を降らせて」というテキストでもありえます。Genie 3の「プロンプト型の世界イベント」は、テキストを行動として使う例です。<sup class="c"><a href="#r1">1</a></sup> Waymo World Modelは、走行行動、道路配置、言語の三つをすべて制御入力として受け取ります。<sup class="c"><a href="#r4">4</a></sup></p>
+    <p>問題は、インターネット映像には「このときどのボタンを押したか」というラベルがないことです。ここから二つの解決策が生まれました。Genie 1は映像内のフレームの変化から<strong>潜在行動(latent action)</strong>を自ら推論し、<sup class="c"><a href="#r3">3</a></sup> Dreamer 4は少量の行動ラベルつきデータで「行動条件付け」を学び、知識の大部分はラベルのない映像から得ました。<sup class="c"><a href="#r7">7</a></sup> V-JEPA 2も100万時間を超える映像で事前学習した後、62時間未満のロボット映像だけを追加して、行動条件付きモデル(V-JEPA 2-AC)を作りました。<sup class="c"><a href="#r5">5</a></sup></p>
+
+    <h3>部品4 — 記憶:世界が崩れないように</h3>
+    <p>振り返ってからもう一度前を見たとき、建物がそのままでなければなりません。これが「一貫性」であり、ワールドモデルの最も難しい課題です。Genie 2は10〜20秒、Genie 3は約1分前までの視覚記憶を保ちます。<sup class="c"><a href="#r3">3</a></sup><sup class="c"><a href="#r1">1</a></sup> 記憶を延ばす方法としては、過去のフレームを長く参照する方式、3D表現(ガウシアンスプラット・メッシュ)を別に保持する方式、外部データを検索して付け加える方式が競っています。NAVERのSeoul World Modelは、実際のストリートビュー画像を検索して絶えず「再接地(re-grounding)」することで、数百メートルの移動でも空間を保ちました。<sup class="c"><a href="#r24">24</a></sup></p>
+
+    <h3>部品5 — デコーダー:描くのか、描かないのか</h3>
+    <p>予測した状態を、人が見られる画面に変える部品です。ゲーム・映像・シミュレーターのように人が見る用途には必須ですが、ロボットが計画を立てるだけなら不要です。この部品を置くか置かないかが、7章の大論争につながります。</p>
+
+    <h3>部品6 — プランナーと方策:想像を行動に</h3>
+    <p>複数の候補行動をワールドモデルの中で動かしてみて、結果が最も良い行動を選びます(モデル予測制御、MPC)。あるいはワールドモデルの中で強化学習により方策を訓練してから現実に配備します。Dreamer 4は後者で、2万回を超えるマウス・キーボード操作が必要な課題を、想像の中での訓練だけでやり遂げました。<sup class="c"><a href="#r7">7</a></sup></p>
+
+    <h3>空間表現の四つの方式</h3>
+    <p>世界を何で表すかも重要な設計上の選択です。2025年の身体性AIサーベイは四つに分けています。<sup class="c"><a href="#r34">34</a></sup></p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>表現</th><th>説明</th><th>長所</th><th>代表例</th></tr></thead>
+    <tbody>
+      <tr><td>全域の潜在ベクトル</td><td>世界全体を一つのベクトルに圧縮</td><td>速くて軽い</td><td>World Models(2018)、Dreamer</td></tr>
+      <tr><td>トークン列</td><td>画像・映像をトークンに刻み、トランスフォーマーで処理</td><td>LLM技術を再利用でき、マルチモーダルの結合が容易</td><td>Genie、GAIA、Cosmos</td></tr>
+      <tr><td>空間グリッド</td><td>鳥瞰図(BEV)やボクセルのように幾何に合わせた格子</td><td>自動運転のように空間の精度が重要な場面に有利</td><td>自動運転の占有予測モデル</td></tr>
+      <tr><td>分解レンダリング表現</td><td>3Dガウシアンスプラット・NeRFのような明示的な基本要素</td><td>視点を変えても形が一貫</td><td>Marble、HY-World</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="chapter" id="ch5">
+  <div class="ch-head"><div class="ch-num">第5章</div><h2>分類:4枚の地図</h2><p class="ch-sub">誰が何を「ワールドモデル」と呼んでいるのかを整理する四つの視点</p></div>
+  <div class="gist"><span class="lab">この章の要点</span><ul>
+    <li>唯一の正解の分類はありません。しかし四つの地図を重ねて見れば、どの製品でも位置を示せます。</li>
+    <li>最も実用的な二つの問い:<strong>「ピクセルを生成するか」</strong>と<strong>「出力は人向けか、機械向けか」</strong>。</li>
+  </ul></div>
+  <div class="prose">
+    <h3>地図1 — 二つの流れ:潜在型 vs 生成型</h3>
+    <p>最も広く使われている区分です。<sup class="c"><a href="#r46">46</a></sup><sup class="c"><a href="#r35">35</a></sup></p>
+  </div>
+  <div class="duo">
+    <div>
+      <h4>潜在型(Latent · 理解中心)</h4>
+      <p>世界を抽象的な数値空間に圧縮し、その中だけで未来を予測します。画面は描きません。</p>
+      <ul><li>長所:効率的、不要な細部を無視、計画にそのまま使える</li><li>短所:人が結果を目で確認しにくい</li><li>代表例:JEPA系列(V-JEPA 2・2.1)、Dreamer、MuZero、AMI Labs</li></ul>
+    </div>
+    <div class="alt">
+      <h4>生成型(Generative · シミュレーション中心)</h4>
+      <p>未来を実際の映像フレームや3Dシーンとして描き出します。人が見て操作できます。</p>
+      <ul><li>長所:解釈できる、ゲーム・映像・データ生成にそのまま活用できる</li><li>短所:演算コストが大きく、それらしさと正確さを混同しやすい</li><li>代表例:Genie 3、Sora 2、Cosmos、GWM-1、GAIA-3、Waymo WM</li></ul>
+    </div>
+  </div>
+  <div class="prose">
+    <h3>地図2 — フェイフェイ・リーの三つの類型:レンダラー · シミュレーター · プランナー</h3>
+    <p>World Labsは2026年6月、出力物を基準にワールドモデルを三つに分けました。<sup class="c"><a href="#r11">11</a></sup></p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>類型</th><th>出力</th><th>評価基準</th><th>例</th></tr></thead>
+    <tbody>
+      <tr><td>レンダラー</td><td>人が見るピクセル</td><td>視覚的な品質(明示的な3D理解はなくてもよい)</td><td>映像生成モデルの大半</td></tr>
+      <tr><td>シミュレーター</td><td>プログラムが計算できる、物理的・幾何学的に忠実な状態</td><td>ニュートンの法則を守っているか</td><td>Marble(衝突メッシュを出力)、物理ベースのデジタルツイン</td></tr>
+      <tr><td>プランナー</td><td>行動</td><td>エージェントが目標を達成するか</td><td>V-JEPA 2-AC、Dreamer 4</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <p>World Labsは、このうち<strong>シミュレーターが要(linchpin)</strong>だと主張します。シミュレーションがうまくできればレンダリングと計画はついてくるが、その逆は成り立たないという論理です。<sup class="c"><a href="#r11">11</a></sup> もちろん、これは3Dシミュレーター側に立つ会社の見方であることも、合わせて覚えておく必要があります。</p>
+
+    <h3>地図3 — SPRiの韓国型分類</h3>
+    <p>ソフトウェア政策研究所は2026年5月の報告書で、パラダイムと目的の二つの軸に分けました。<sup class="c"><a href="#r25">25</a></sup></p>
+    <ul class="plain">
+      <li><strong>パラダイム別</strong>:明示的(未来を画像・映像として直接生成、解釈性が高く計算コストが大きい) / 暗黙的(抽象空間でのみ計算、効率的だが解釈が難しい) / シミュレーターベース(既存の物理エンジンを活用) / ハイブリッド(複数方式を統合、例:Genie 2)</li>
+      <li><strong>目的別</strong>:映像生成(Genieなど) / 自動運転(テスラのワールドモデル、DriveDreamerなど) / 自律エージェント(Dreamer、JEPAなど)</li>
+    </ul>
+
+    <h3>地図4 — 学術サーベイの三つの軸</h3>
+    <p>2025年の身体性AIワールドモデルのサーベイ(Liほか)は、機能・時間・空間の三つの軸を提案しました。<sup class="c"><a href="#r34">34</a></sup></p>
+    <ul class="plain">
+      <li><strong>機能</strong>:特定の課題の意思決定に結びついたモデル(decision-coupled) vs 汎用シミュレーター(general-purpose)</li>
+      <li><strong>時間</strong>:逐次シミュレーション(自己回帰) vs 全域差分予測(並列)</li>
+      <li><strong>空間</strong>:全域の潜在ベクトル / トークン列 / 空間グリッド / 分解レンダリング表現(4章の表を参照)</li>
+    </ul>
+    <div class="note accent"><span class="lab">実践的な見分け方</span>新しい「ワールドモデル」の発表を見たら、五つを確認してください。① 行動を入力として受け取るか ② リアルタイムか ③ 何分間一貫性が保たれるか ④ 出力はピクセルか、3Dか、状態・行動か ⑤ ロボット・エージェントの学習に実際に使われたという証拠があるか。この五つの欄を埋めれば、マーケティングの文句と実体が区別できます。(この文書の整理)</div>
+  </div>
+</section>
+<section class="chapter" id="ch6">
+  <div class="ch-head"><div class="ch-num">第6章</div><h2>主要プレイヤーとモデル図鑑</h2><p class="ch-sub">2026年9月時点で、必ず知っておくべき企業とモデル</p></div>
+  <div class="prose"><p>タグの<span class="tag lat">潜在型</span>は抽象空間での予測、それ以外はピクセル・3Dを生成するモデルを指します。数値は各企業の発表を基準としています。</p></div>
+
+  <h3>ビッグテックの研究所</h3>
+  <div class="entries">
+    <div class="entry"><div class="who"><b>Google DeepMind</b><span>Genie 3 · Project Genie · SIMA 2</span></div><div>
+      <p><strong>Genie 3</strong>(2025年8月)は、テキストプロンプトから探索できる世界をリアルタイムで生成します。720p、毎秒24フレーム、数分間の相互作用、約1分前までの視覚記憶を保ちます。物理はコーディングされたものではなく、学習されたものです。天気を変えたり物体・人物を登場させたりする「プロンプト型の世界イベント」に対応し、SIMAエージェントがGenie 3の作った世界の中で目標を遂行する実験も行いました。公式に示された限界は、限られた行動空間、複数エージェント間の相互作用、実際の地理の正確な再現、文字のレンダリング、数分という持続時間です。<sup class="c"><a href="#r1">1</a></sup></p>
+      <p><strong>Project Genie</strong>(2026年1月29日)は、Genie 3・Nano Banana Pro・Geminiを束ねた一般向けプロトタイプです。米国のAI Ultra購読者(18歳以上)に公開され、世界のスケッチ・探索・リミックス機能を提供しますが、生成は60秒に制限されています。<sup class="c"><a href="#r2">2</a></sup></p>
+      <p>系譜は、Genie 1(2024年、2D、毎秒約1フレーム) → Genie 2(2024年12月、3D、10〜20秒、360p) → Genie 3へと続きます。<sup class="c"><a href="#r3">3</a></sup> Genie 3は、Waymo World Modelの基盤にもなりました。<sup class="c"><a href="#r4">4</a></sup></p>
+      <div class="tags"><span class="tag">生成型</span><span class="tag">リアルタイムの相互作用</span><span class="tag">エージェント訓練場</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>Meta FAIR</b><span>I-JEPA → V-JEPA → V-JEPA 2 → 2.1</span></div><div>
+      <p><strong>V-JEPA 2</strong>(2025年6月)は、100万時間以上のインターネット映像で自己教師あり学習した潜在型ワールドモデルです。動作理解(Something-Something v2 77.3%)、行動予測(Epic-Kitchens-100 recall@5 39.7)などで最高水準を記録し、ロボット映像62時間未満で作ったV-JEPA 2-ACは、二つの別々の研究室で、初めての環境のFranka(フランカ)ロボットアームで物を掴んで置くことをこなしました(目標画像を与えて計画)。<sup class="c"><a href="#r5">5</a></sup></p>
+      <p><strong>V-JEPA 2.1</strong>(2026年3月)は、見えているトークンと隠されたトークンの両方に学習信号を与える「密な予測損失」で細かな特徴を改善し、ロボットの把持で20点近い向上を報告しました。<sup class="c"><a href="#r6">6</a></sup></p>
+      <div class="tags"><span class="tag lat">潜在型</span><span class="tag">オープン研究</span><span class="tag">ロボット計画</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>NVIDIA</b><span>Cosmos → Cosmos 3</span></div><div>
+      <p><strong>Cosmos</strong>(2025年1月、CES)は、ロボット・自動運転の開発者向けのオープンな「ワールド基盤モデル」プラットフォームです。<sup class="c"><a href="#r14">14</a></sup> <strong>Cosmos 3</strong>(2026年5月31日、GTC台北)は、視覚推論、世界生成、行動予測を一つのシステムに統合しました。テキスト・画像・映像・音・行動を理解し生成し、推論トランスフォーマーと生成トランスフォーマーを組にした「混合トランスフォーマー(MoT)」構造を使います。<sup class="c"><a href="#r12">12</a></sup> 技術報告書によれば、Edge(4B)・Nano(16B)・Super(64B)の三つの規模があり、公開時点でオープンソースの画像・映像生成とロボット方策評価(RoboArena)で最上位圏を主張しました。<sup class="c"><a href="#r13">13</a></sup> サムスン・LG・斗山など韓国企業も、開発パートナーに名を連ねました。<sup class="c"><a href="#r12">12</a></sup></p>
+      <div class="tags"><span class="tag">生成型+推論</span><span class="tag">オープンモデル</span><span class="tag">フィジカルAI</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>OpenAI</b><span>Sora → Sora 2 → 世界シミュレーション研究</span></div><div>
+      <p>2024年のSora技術報告書のタイトルが〈ビデオ生成モデルは世界シミュレーター〉だったほど、OpenAIは映像生成をワールドモデルへの道と位置づけてきました。<sup class="c"><a href="#r39">39</a></sup> Sora 2(2025年9月)は、バスケットボールが外れればバックボードに跳ね返るように、「失敗」まで物理的に再現すると主張しました。<sup class="c"><a href="#r17">17</a></sup></p>
+      <p>しかし2026年3月、OpenAIはSoraアプリの終了を発表し、アプリは4月26日に閉じました。コンピューティング資源の負担が理由と報じられ、Soraチームは「実際の物理的課題を解決するロボティクスのための世界シミュレーション研究」へと方向を転じました。<sup class="c"><a href="#r18">18</a></sup> 消費者向けの映像生成とワールドモデル研究の進む道が分かれた、象徴的な出来事です。</p>
+      <div class="tags"><span class="tag">生成型</span><span class="tag">ロボティクスへ転換</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>Microsoft</b><span>Muse (WHAM)</span></div><div>
+      <p>ゲーム〈Bleeding Edge〉のプレイデータで学習した「世界と人間行動のモデル(WHAM)」で、2025年2月にNatureに掲載されました。ゲームの企画段階でプレイの場面を素早く作ってみる「ゲームプレイのアイデア出しツール」として位置づけています。<sup class="c"><a href="#r22">22</a></sup></p>
+      <div class="tags"><span class="tag">生成型</span><span class="tag">ゲーム</span></div>
+    </div></div>
+  </div>
+
+  <h3>ワールドモデル専門のスタートアップ</h3>
+  <div class="entries">
+    <div class="entry"><div class="who"><b>AMI Labs</b><span>ヤン・ルカン · パリ</span></div><div>
+      <p>ルカンが2025年11月にMetaを離れて設立した会社で、<sup class="c"><a href="#r43">43</a></sup> 2026年3月に10.3億ドル(約8.9億ユーロ)のシードを調達しました(投資前の価値35億ドル)。ルカンが会長、医療AIスタートアップNablaを率いていたアレクサンドル・ルブランがCEO、サイニン・シエ(Saining Xie)が最高科学責任者を務め、パリの本社のほかにニューヨーク・モントリオール・シンガポールに拠点を置きます。中核技術はJEPAで、最初の応用分野としてヘルスケア(Nablaとの協力)に言及しました。<sup class="c"><a href="#r8">8</a></sup></p>
+      <div class="tags"><span class="tag lat">潜在型</span><span class="tag">JEPA</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>World Labs</b><span>フェイフェイ・リー · Marble</span></div><div>
+      <p>「空間知能(spatial intelligence)」を掲げる会社です。2025年11月に初の商用製品<strong>Marble</strong>をリリースしました。テキスト・画像・映像・パノラマ・3Dレイアウトを受け取って探索できる3D世界を作り、ガウシアンスプラット・メッシュ・映像として書き出します。構造と外観を分離して編集する3Dエディタ「Chisel」、Vision Pro・Quest 3でのVR鑑賞に対応しています。リリース当時の料金は、無料(4回)、月20・35・95ドルのプランでした。<sup class="c"><a href="#r10">10</a></sup></p>
+      <p>フェイフェイ・リーは「空間知能なしには、真に知的な機械という私たちの夢は完成しない」と言います。<sup class="c"><a href="#r10">10</a></sup> NVIDIAは、Marbleを活用してロボット学習環境の構築を数週間から数時間に短縮したワークフローを紹介したこともあります。<sup class="c"><a href="#r11">11</a></sup></p>
+      <div class="tags"><span class="tag">3D生成</span><span class="tag">シミュレーター志向</span><span class="tag">映像制作</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>Runway</b><span>GWM-1 · Gen-4.5</span></div><div>
+      <p>映画制作者向けの映像AIとして出発し、ワールドモデルへと領域を広げました。<strong>GWM-1</strong>(2025年12月)は、Gen-4.5ベースの自己回帰拡散モデルで、探索型の世界(GWM Worlds)、ロボット視点の合成データ(GWM Robotics)、対話型アバター(GWM Avatars)の三つに分かれます。最大2分、1280×720、毎秒24フレームです。<sup class="c"><a href="#r15">15</a></sup> 共同創業者のアナスタシス・ゲルマニディスは、ワールドモデルをロボット・創薬・気候研究を加速する「科学インフラ」と説明しました。<sup class="c"><a href="#r16">16</a></sup></p>
+      <div class="tags"><span class="tag">生成型</span><span class="tag">リアルタイム</span><span class="tag">映像制作</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>General Intuition</b><span>Medalのゲーム映像</span></div><div>
+      <p>ゲーム録画プラットフォームMedalから分社化しました。月1,000万人のユーザーが投稿する年20億本のゲーム映像を活用し、人のように画面だけを見て操作するエージェントを訓練します。ワールドモデルそのものを販売するより、エージェントを作ることに集中して、ゲーム会社との著作権の衝突を避けようとしている点が特徴です。2024年末にOpenAIがMedalの買収に5億ドルを提示したという報道もありました(双方未確認)。<sup class="c"><a href="#r21">21</a></sup></p>
+      <div class="tags"><span class="tag">生成型</span><span class="tag">エージェント</span><span class="tag">ゲームデータ</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>Decart · Odysseyなど</b><span>リアルタイム生成の系列</span></div><div>
+      <p>Decartは2024年にマインクラフト風のリアルタイム生成デモOasisで注目され、〈Not Boring〉によれば、企業価値31億ドルで1億ドルを調達しました。<sup class="c"><a href="#r35">35</a></sup> このほかにも、リアルタイムのインタラクティブ映像スタートアップが多数登場しました。</p>
+      <div class="tags"><span class="tag">生成型</span><span class="tag">リアルタイム</span></div>
+    </div></div>
+  </div>
+
+  <h3>自動運転・ロボット企業</h3>
+  <div class="entries">
+    <div class="entry"><div class="who"><b>Waymo</b><span>Waymo World Model</span></div><div>
+      <p>2026年2月に公開。Genie 3をベースに、カメラとライダーのデータを一緒に生成します。走行行動(「もしこのようにハンドルを切っていたら?」)、道路・交通の配置、言語(天気・時間帯)の三つで制御し、竜巻・洪水・逆走車両・ゾウの出現・火災のようなまれな状況をシミュレーションします。<sup class="c"><a href="#r4">4</a></sup></p>
+      <div class="tags"><span class="tag">生成型</span><span class="tag">マルチセンサー</span><span class="tag">安全検証</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>Tesla</b><span>ニューラルネットの世界シミュレーター</span></div><div>
+      <p>2025年10月、AIソフトウェア副社長のアショク・エルスワミが公開しました。車両フリートの映像で学習してAIの行動に反応する映像を生成し、新モデルの閉ループ評価、敵対的シナリオの生成、大規模な強化学習に使います。同じシミュレーターが、ヒューマノイドのOptimusにも適用されると主張しました。<sup class="c"><a href="#r19">19</a></sup></p>
+      <div class="tags"><span class="tag">生成型</span><span class="tag">閉ループ評価</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>Wayve</b><span>GAIA-1 → 2 → 3</span></div><div>
+      <p>英国の自動運転企業。<strong>GAIA-3</strong>(2025年12月)は150億パラメータでGAIA-2の2倍、複数の大陸・車種の10倍多いデータで学習しました。映像合成にとどまらず、「自動運転システムの評価」を目的に設計したことを強調しています。<sup class="c"><a href="#r20">20</a></sup></p>
+      <div class="tags"><span class="tag">生成型</span><span class="tag">評価ツール</span></div>
+    </div></div>
+  </div>
+
+  <h3>中国と韓国</h3>
+  <div class="entries">
+    <div class="entry"><div class="who"><b>Tencent Hunyuan</b><span>HY-World · GameCraft</span></div><div>
+      <p>HunyuanWorld 1.0に続き、3D世界を再構成・生成・シミュレーションするマルチモーダルのワールドモデル<strong>HY-World 2.0</strong>、リアルタイムの相互作用向けのHY-WorldPlay(HY-World 1.5)、ゲーム向けのHunyuan-GameCraftをオープンソースで公開し、中国陣営を牽引しています。<sup class="c"><a href="#r23">23</a></sup> SPRiの報告書は、中国の事例としてGigaAIのGigaWorld-1も挙げています。<sup class="c"><a href="#r25">25</a></sup> 2026年のPlayWorldベンチマークには、LingBot-World、Matrix-Game 3.0など中国系のオープンモデルが多数含まれました。<sup class="c"><a href="#r33">33</a></sup></p>
+      <div class="tags"><span class="tag">オープンソース</span><span class="tag">3D+リアルタイム</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>NAVER</b><span>Seoul World Model</span></div><div>
+      <p>2026年3月に公開された論文〈Grounding World Simulation Models in a Real-World Metropolis〉。架空の都市を想像する代わりに、近隣のストリートビュー画像を検索して条件として与える方式(検索拡張)で、数百メートルの移動でも、実際のソウルの地理に忠実で時間的に一貫した映像を生成します。ソウル・釜山・米国アナーバーで、既存の映像ワールドモデルより優れた結果を報告し、ICML 2026のエキスポでも発表されました。<sup class="c"><a href="#r24">24</a></sup></p>
+      <div class="tags"><span class="tag">生成型</span><span class="tag">実世界への接地</span><span class="tag">デジタルツイン</span></div>
+    </div></div>
+    <div class="entry"><div class="who"><b>LGエレクトロニクス・コンソーシアム</b><span>フィジカルAI先導事業</span></div><div>
+      <p>科学技術情報通信部・IITPの「フィジカルAI先導技術開発」事業の主管機関です。マインドAI、ロボティス、クラウドワークス、アルチェラ、KT、ホリデイロボティクス、KAIST、ソウル大学、TTAが参加し、ワールド基盤モデル(WFM)とロボット基盤モデル(RFM)を開発します(11章を参照)。<sup class="c"><a href="#r26">26</a></sup><sup class="c"><a href="#r28">28</a></sup></p>
+      <div class="tags"><span class="tag">国策</span><span class="tag">製造・物流</span></div>
+    </div></div>
+  </div>
+</section>
+
+<section class="chapter" id="ch7">
+  <div class="ch-head"><div class="ch-num">第7章</div><h2>大論争:ピクセルを描かなければ理解できないのか</h2><p class="ch-sub">ワールドモデルをめぐる三つの戦線と、その証拠</p></div>
+  <div class="gist"><span class="lab">この章の要点</span><ul>
+    <li><strong>戦線1</strong>:世界を理解するには描かなければならないのか(生成型)、抽象的に予測すれば十分なのか(潜在型)?</li>
+    <li><strong>戦線2</strong>:リアルな映像を作るモデルは物理を「理解」しているのか?複数のベンチマークは「そうではない」に近い結果です。</li>
+    <li><strong>戦線3</strong>:LLMの中にはすでにワールドモデルがあるのか?証拠は割れています。</li>
+  </ul></div>
+  <div class="prose">
+    <h3>戦線1 — ルカン 対 生成型陣営</h3>
+    <p>ルカンの立場は明確です。ピクセルを一つひとつ予測するのは、「予測できず無関係なエントロピー」にモデルの容量を浪費することだというのです。木の葉が正確にどう揺れるかは誰にも予測できず、知る必要もありません。そのためJEPAは、元のピクセルではなく抽象的な表現を予測し、行動の結果を予測して「行動する前に計画」することに集中します。<sup class="c"><a href="#r9">9</a></sup> TIMEは、ルカンがSoraのような映像生成器をワールドモデルとは認めていないと整理しました。<sup class="c"><a href="#r36">36</a></sup></p>
+    <p>反対側は、「十分にリアルにレンダリングできるなら、そのレンダリングこそが理解だ」という立場に近いものです。<sup class="c"><a href="#r46">46</a></sup> General Intuition側は、ピクセルレベルの細部が解釈可能性を与え、人が結果を目で検証できるようにすると見ています。<sup class="c"><a href="#r35">35</a></sup> 何より、生成型ワールドモデルは、ゲーム・自動運転の検証・データ生成という「売れる使い道」をすでに確保しています。</p>
+    <div class="note accent"><span class="lab">この文書の解釈</span>2026年の流れは、「勝負」というより「収斂」に近いものです。Cosmos 3は、推論トランスフォーマー(理解)と生成トランスフォーマー(シミュレーション)を一つのモデルに結合し、<sup class="c"><a href="#r13">13</a></sup> Marbleは、人が見るガウシアンスプラットと、物理計算用の衝突メッシュを一緒に書き出します。<sup class="c"><a href="#r11">11</a></sup> 用途に応じて、二つの表現をどちらも握る方向に向かっています。</div>
+
+    <h3>戦線2 — リアルさは理解ではない</h3>
+    <p>この戦線では、実証研究が積み重なりました。</p>
+    <ul class="plain">
+      <li><strong>Physics-IQ</strong>(DeepMind・INSAIT、2025):流体・光学・固体力学・磁気・熱力学の問題でSora、Runway、Pika、Lumiereなどを試した結果、物理的な理解は「深刻に限られており、視覚的なリアルさとは無関係」でした。ただし一部の事例では成功しており、観察だけで一部の原理を学べる可能性は残しました。<sup class="c"><a href="#r30">30</a></sup></li>
+      <li><strong>WorldArena</strong>(2026年2月):身体性ワールドモデルを16の指標で評価した結果、「高い視覚品質が、そのまま強い身体性課題の能力につながるわけではない」という結論を出しました。特に、行動計画の性能と視覚品質の相関は、ピアソンのr = 0.36にとどまりました。<sup class="c"><a href="#r32">32</a></sup></li>
+      <li><strong>PlayWorld</strong>(2026年8月):Genie 3を含む9つのインタラクティブモデルを、AIプレイヤーで長時間試した結果、見える構造はよく保つものの、<strong>視界の外で起こるべき変化</strong>や持続的な状態の変化に弱く、同じ場所に戻るとランドマークが別の位置に再生成される問題が明らかになりました。<sup class="c"><a href="#r33">33</a></sup></li>
+    </ul>
+
+    <h3>戦線3 — LLMの中にワールドモデルはあるのか</h3>
+    <p><strong>あるという側の証拠。</strong>オセロの棋譜だけで学習したGPTが、内部に盤面の状態を表現しているという研究(Othello-GPT、2023)、<sup class="c"><a href="#r42">42</a></sup> LLMの内部から地名の緯度・経度や出来事の時点が線形に読み取れるという研究(Gurnee &amp; Tegmark)<sup class="c"><a href="#r41">41</a></sup>が代表的です。</p>
+    <p><strong>ないという側の証拠。</strong>ハーバード・MITの研究チーム(Vafaほか、ICML 2025)は、惑星の軌道データで学習して軌道予測がきわめて上手なモデルでも、新しい物理課題に適応させてみるとニュートンの力の法則を適用できないことを示しました。モデルは法則ではなく「課題ごとのヒューリスティック」を身につけたというのです。<sup class="c"><a href="#r31">31</a></sup> ケプラーの観測がニュートンの法則につながったように、予測がうまいことと原理を発見することは別のことだという指摘です。ゲイリー・マーカスも、生成AIが頑健な世界モデルを形成できないという批判を、粘り強く続けてきました。<sup class="c"><a href="#r49">49</a></sup></p>
+    <blockquote>「予測精度が高いからといって、世界についての正しい帰納バイアスを持っているわけではない。」<cite>— Vafa, Chang, Rambachan, Mullainathan (ICML 2025) の要旨<sup class="c"><a href="#r31">31</a></sup></cite></blockquote>
+
+    <h3>論争の読み方</h3>
+    <p>三つの戦線は、結局一つの問いに集まります。<strong>「このモデルをどこに使うのか?」</strong>人が見る映像を作るには、それらしさで十分かもしれません。しかし、ロボットがガラスのコップを掴んだり、自動車がブレーキを踏んだりするには、正確さが必要です。WorldArenaが視覚品質とは別に「機能的な有用性」を測る理由は、ここにあります。<sup class="c"><a href="#r32">32</a></sup></p>
+  </div>
+</section>
+
+<section class="chapter" id="ch8">
+  <div class="ch-head"><div class="ch-num">第8章</div><h2>応用分野</h2><p class="ch-sub">ワールドモデルがすでにお金と時間を変えつつある六つの領域</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>分野</th><th>ワールドモデルの役割</th><th>代表事例</th><th>成熟度(この文書の判断)</th></tr></thead>
+    <tbody>
+      <tr><td>自動運転</td><td>まれで危険な状況の生成、反事実(what-if)の試験、閉ループ評価</td><td>Waymo WM,<sup class="c"><a href="#r4">4</a></sup> Tesla,<sup class="c"><a href="#r19">19</a></sup> GAIA-3<sup class="c"><a href="#r20">20</a></sup></td><td>実務に投入</td></tr>
+      <tr><td>ロボティクス</td><td>合成データの生成、方策の評価、行動前の計画</td><td>V-JEPA 2-AC,<sup class="c"><a href="#r5">5</a></sup> Cosmos 3,<sup class="c"><a href="#r12">12</a></sup> GWM Robotics<sup class="c"><a href="#r15">15</a></sup></td><td>初期の配備</td></tr>
+      <tr><td>ゲーム・インタラクティブ</td><td>プロンプトでプレイ可能な世界を生成、企画のプロトタイピング</td><td>Project Genie,<sup class="c"><a href="#r2">2</a></sup> Muse,<sup class="c"><a href="#r22">22</a></sup> HY-World<sup class="c"><a href="#r23">23</a></sup></td><td>体験・プロトタイプ</td></tr>
+      <tr><td>映像・映画制作</td><td>一貫した仮想セット、カメラ探索、アバター</td><td>Marble,<sup class="c"><a href="#r45">45</a></sup> GWM Worlds・Avatars<sup class="c"><a href="#r15">15</a></sup></td><td>実験的な活用</td></tr>
+      <tr><td>AIエージェントの訓練</td><td>無限の練習場、想像の中での強化学習</td><td>SIMA 2 in Genie 3,<sup class="c"><a href="#r44">44</a></sup> Dreamer 4<sup class="c"><a href="#r7">7</a></sup></td><td>研究段階</td></tr>
+      <tr><td>地球・科学</td><td>気象・気候・地球システムの予測</td><td>GraphCast, NVIDIA Earth-2, Googleの洪水予測<sup class="c"><a href="#r36">36</a></sup></td><td>一部運用中</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <h3>自動運転:最初にお金になる場所</h3>
+    <p>自動運転が先行している理由は明快です。膨大な走行映像がすでにあり、実際の道路での試験は遅くて高く、最も重要な事故の状況はほとんど起こりません。Waymoは、ワールドモデルによってWaymo Driverが「仮想世界で何十億マイルも走り、複雑なシナリオを身につける」と説明しています。<sup class="c"><a href="#r4">4</a></sup> Wayveは、GAIA-3で合成試験の棄却率を5分の1に減らしたと明らかにしました。<sup class="c"><a href="#r20">20</a></sup></p>
+
+    <h3>ロボティクス:データ不足の解決策</h3>
+    <p>ロボット分野は2025年の1年間で407億ドルを調達し、これはベンチャー投資全体の9%でした(CB Insights)。<sup class="c"><a href="#r29">29</a></sup> ワールドモデルは三つの方法で使われます。① 実際には集めにくい操作データを生成し、② 新しいロボット方策を実機なしで仮想的に採点し(「原子ではなくビットで評価」)、③ ロボットが行動する前に結果を先に動かしてみます。韓国政府の先導事業が「ロボット動作の成功率20ポイント向上」を目標に掲げたのも、この流れです。<sup class="c"><a href="#r26">26</a></sup></p>
+
+    <h3>ゲーム:期待と恐れが同居する場所</h3>
+    <p>Project Genieは「ゲームをコーディングせずに生成する時代」を予告しましたが、60秒の制限と操作の不安定さが示すように、まだ完成したゲームに取って代わることはできません。<sup class="c"><a href="#r2">2</a></sup> 現在最も現実的な使い道は、企画段階での素早いプロトタイピング(Museの位置づけ)と、人のようにプレイするエージェントの訓練(General Intuition)です。<sup class="c"><a href="#r22">22</a></sup><sup class="c"><a href="#r21">21</a></sup></p>
+
+    <h3>地球科学:静かだが最も古い成功</h3>
+    <p>TIMEのコラムで、元NASAの気候科学者セリーヌ・ヘルバイエは、ワールドモデルを地球システムの問題に拡張すべきだと主張します。ニューラルネットの気象モデルはすでに多くの指標で物理ベースの予報を上回っていますが、極端な気象の予測ではまだ遅れており、地球が一度も経験したことのない状態(例:大西洋循環の崩壊後)は予測できないという限界も、あわせて指摘しました。<sup class="c"><a href="#r36">36</a></sup></p>
+  </div>
+</section>
+
+<section class="chapter" id="ch9">
+  <div class="ch-head"><div class="ch-num">第9章</div><h2>クリエイターのための実務ガイド</h2><p class="ch-sub">映像・広告・ゲーム・教育の現場で、いま使えるものと、まだ待つべきもの</p></div>
+  <div class="gist"><span class="lab">この章の要点</span><ul>
+    <li>いま制作の現場でワールドモデルが持つ最大の価値は、<strong>「空間の一貫性」</strong>です。ショットごとに背景が変わる映像生成AIの持病を和らげてくれます。</li>
+    <li>一方で、<strong>長回し、文字、複数の人物の複雑な相互作用</strong>は、まだ弱点です。</li>
+  </ul></div>
+  <div class="prose">
+    <h3>映像生成AIと何が違うのか</h3>
+    <p>Seedance、Kling、Veoのような映像生成モデルは、一度に1ショットを作ります。ショットを複数作ると、同じ部屋でも窓の位置や照明が少しずつ変わり、それを合わせるために、参照画像とプロンプトを繰り返し調整することになります。ワールドモデル系のツールは、まず<strong>一つの世界(セット)</strong>を作り、その中でカメラを動かして複数のショットを取り出す方式なので、連続性の問題を構造的に減らしてくれます。</p>
+
+    <h3>いま使えるワークフロー:「バーチャルバックロット」</h3>
+    <p>World Labsが紹介した映画制作の事例は、次の六つのステップに従います。<sup class="c"><a href="#r45">45</a></sup></p>
+    <ol class="plain">
+      <li><strong>世界の生成</strong> — 奥行きと照明が一貫した3Dセットを作る(Marble)。</li>
+      <li><strong>カメラ探索</strong> — セットの中を歩き回り、複数のアングルでフレーミングする。</li>
+      <li><strong>素材の抽出</strong> — 合成用のスチルとプレートを書き出す。</li>
+      <li><strong>人物の合成</strong> — AIで作ったキャラクターを環境に載せる。</li>
+      <li><strong>アニメーション</strong> — 映像生成ツールで動きとタイミングを付ける。</li>
+      <li><strong>最終編集</strong> — サウンドデザイン、カラーグレーディング、編集で仕上げる。</li>
+    </ol>
+    <p>事例に参加したある制作者は、「セットを固定したら、動きと感情を思う存分試せた。空間が、演出できる確かなものを与えてくれた」と語りました。<sup class="c"><a href="#r45">45</a></sup> 一度作ったセットは複数のエピソードにわたって再利用できるため、シリーズものやショートドラマのように同じ空間が繰り返されるフォーマットには特に有利です。</p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>ツール</th><th>向いている用途</th><th>留意事項(公開時点)</th></tr></thead>
+    <tbody>
+      <tr><td>World Labs Marble</td><td>仮想セット・ロケーションのプリビズ、VRロケハン、ガウシアンスプラット・メッシュで3Dツールと連携</td><td>無料4回、有料は月20〜95ドル。商用利用権はProプランから<sup class="c"><a href="#r10">10</a></sup></td></tr>
+      <tr><td>Google Project Genie</td><td>世界観のコンセプト体験、インタラクティブなアイデアのスケッチ</td><td>米国のAI Ultra購読者のみ、60秒制限、物理・操作が不安定<sup class="c"><a href="#r2">2</a></sup></td></tr>
+      <tr><td>Runway GWM Worlds · Avatars</td><td>探索型の場面、対話型キャラクター(リップシンク・表情)</td><td>最大2分、720p級。詳細な仕様・価格は発表当時は未公開<sup class="c"><a href="#r15">15</a></sup></td></tr>
+      <tr><td>NVIDIA Cosmos 3(オープン)</td><td>独自パイプラインの構築、研究・教育用の実習</td><td>Hugging Faceで公開。GPUインフラと開発力が必要<sup class="c"><a href="#r12">12</a></sup></td></tr>
+      <tr><td>Tencent HY-World系列(オープン)</td><td>3D世界生成の実験、ゲームシーンのプロトタイプ</td><td>オープンソース、ローカルへのインストールとGPUが必要<sup class="c"><a href="#r23">23</a></sup></td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <h3>まだ待つべきこと</h3>
+    <ul class="plain">
+      <li><strong>長い連続シーン</strong>:Genie 3の視覚記憶は約1分で、長時間探索すると同じ場所が違う形で再生成されます。<sup class="c"><a href="#r1">1</a></sup><sup class="c"><a href="#r33">33</a></sup></li>
+      <li><strong>画面内の文字</strong>:看板・字幕のようなテキストのレンダリングは、公式の限界として明記されています。<sup class="c"><a href="#r1">1</a></sup></li>
+      <li><strong>複数の人物の相互作用</strong>:独立して動く複数のエージェント間の複雑な相互作用は、まだ難しい状況です。<sup class="c"><a href="#r1">1</a></sup></li>
+      <li><strong>正確な物理</strong>:製品広告のように、液体・布・破損を正確に見せなければならない場面は、依然として検証が必要です。<sup class="c"><a href="#r30">30</a></sup></li>
+    </ul>
+    <div class="note caution"><span class="lab">権利関係のチェック</span>ツールごとに商用利用の条件が異なります(例:Marbleはプランごとに商用利用権が異なる)。<sup class="c"><a href="#r10">10</a></sup> 実在の場所・建物を再現したり、特定のゲーム画面を連想させたりする成果物は、肖像・著作権・商標の問題を別途検討するのが安全です。General Intuitionがワールドモデルの販売ではなくエージェント開発を選んだ理由の一つも、ゲーム会社との著作権の衝突を避けることでした。<sup class="c"><a href="#r21">21</a></sup></div>
+    <h3>教育現場で教えること</h3>
+    <p>映像演出教育の観点では、ワールドモデルは「プロンプトの書き方」より<strong>空間設計とカメラ演出</strong>の価値を、あらためて引き上げます。世界が先にあり、カメラがその中を動く構造なので、ブロッキング・動線・レンズ選択といった伝統的な演出力が、成果物の質を左右します。実習課題としては、「Marbleでセットを一つ作り、その中で異なる感情を伝える三つのショットを設計せよ」のような方式が向いています。(この文書の提案)</p>
+  </div>
+</section>
+<section class="chapter" id="ch10">
+  <div class="ch-head"><div class="ch-num">第10章</div><h2>限界と未解決の課題</h2><p class="ch-sub">華やかなデモの裏に残っている十の宿題</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>課題</th><th>現在の状態</th><th>根拠</th></tr></thead>
+    <tbody>
+      <tr><td>長期記憶・一貫性</td><td>視覚記憶は約1分、相互作用は数分。一般向けは60秒制限</td><td>Genie 3,<sup class="c"><a href="#r1">1</a></sup> Project Genie<sup class="c"><a href="#r2">2</a></sup></td></tr>
+      <tr><td>視界外の状態変化</td><td>見えているものは保つが、見えない所で進むべき変化に弱い</td><td>PlayWorld<sup class="c"><a href="#r33">33</a></sup></td></tr>
+      <tr><td>物理的な正確さ</td><td>リアルさと物理の理解は無関係。重力・衝突・反事実の状況に弱い</td><td>Physics-IQ,<sup class="c"><a href="#r30">30</a></sup> Pebblousサーベイ<sup class="c"><a href="#r46">46</a></sup></td></tr>
+      <tr><td>行動空間</td><td>移動・カメラ中心。精緻な操作は限定的</td><td>Genie 3<sup class="c"><a href="#r1">1</a></sup></td></tr>
+      <tr><td>マルチエージェント</td><td>複数の独立した主体の複雑な相互作用のモデリングが難しい</td><td>Genie 3<sup class="c"><a href="#r1">1</a></sup></td></tr>
+      <tr><td>評価基準の不在</td><td>「理解」を証明する合意された指標がない。視覚品質と機能的な有用性の相関が弱い</td><td>WorldArena,<sup class="c"><a href="#r32">32</a></sup> Pebblous<sup class="c"><a href="#r46">46</a></sup></td></tr>
+      <tr><td>演算コスト</td><td>リアルタイムの高解像度生成には膨大なGPUが必要。Soraアプリ終了の理由としてコンピューティングの負担が報じられた</td><td>Axios<sup class="c"><a href="#r18">18</a></sup></td></tr>
+      <tr><td>Sim-to-Realのギャップ</td><td>仮想で学んだことが現実に移るとき、性能が低下する</td><td>SPRi<sup class="c"><a href="#r25">25</a></sup></td></tr>
+      <tr><td>未経験領域の予測</td><td>学習データにない領域(極端な気象、気候の急変)は予測できない</td><td>TIME<sup class="c"><a href="#r36">36</a></sup></td></tr>
+      <tr><td>一般化の錯覚</td><td>予測は上手でも、原理(法則)を学んでいないことがある</td><td>Vafaほか<sup class="c"><a href="#r31">31</a></sup></td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <div class="note caution"><span class="lab">誇張への警戒</span>ワールドモデルへの投資ブームの中で、「ワールドモデル」というラベルは急速にありふれたものになりつつあります。新しい発表を見るときは、5章の見分け方(行動入力、リアルタイム性、一貫性の持続時間、出力形式、実際のエージェント学習の証拠)を当てはめ、デモ映像よりもベンチマークと実世界での成果指標を優先して見るのがよいでしょう。</div>
+    <h3>安全と社会的な論点</h3>
+    <p>DeepMindはGenie 3を、最初は学界・クリエイター向けの限定的な研究プレビューとしてのみ公開し、<sup class="c"><a href="#r1">1</a></sup> Project Genieも「複数の産業の信頼できるテスター」の意見を受けて段階的に開きました。<sup class="c"><a href="#r2">2</a></sup> 実在の都市を精密に再現する技術(Seoul World Modelなど)が発展するほど、プライバシー・セキュリティ・改ざんされた映像の問題も、あわせて議論される必要があります。この部分は、まだ研究より政策の議論が遅れている領域です。(この文書の判断)</p>
+  </div>
+</section>
+
+<section class="chapter" id="ch11">
+  <div class="ch-head"><div class="ch-num">第11章</div><h2>韓国の現状と課題</h2><p class="ch-sub">政府の事業、企業の研究、政策提言</p></div>
+  <div class="gist"><span class="lab">この章の要点</span><ul>
+    <li>政府は<strong>2026〜2027年に340億ウォン</strong>を投じ、LGエレクトロニクス・コンソーシアムとワールドモデル・ロボット基盤モデルの国産化を進めます。</li>
+    <li>NAVERは、実際の都市に接地した<strong>Seoul World Model</strong>で、国際学界から注目されました。</li>
+    <li>強みは製造・ロボットの現場、弱みは大規模な映像データとコンピューティングの規模です(この文書の判断)。</li>
+  </ul></div>
+  <div class="prose">
+    <h3>政府:フィジカルAI先導技術開発事業</h3>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>項目</th><th>内容</th></tr></thead>
+    <tbody>
+      <tr><td>主管</td><td>科学技術情報通信部 · 情報通信企画評価院(IITP)</td></tr>
+      <tr><td>着手</td><td>2026年6月9日、ソウル・麻谷(マゴク)のLGサイエンスパーク<sup class="c"><a href="#r26">26</a></sup></td></tr>
+      <tr><td>予算・期間</td><td class="num">総額340億ウォン、2026〜2027年(2026年は150億ウォン)<sup class="c"><a href="#r28">28</a></sup></td></tr>
+      <tr><td>参加(10機関)</td><td>LGエレクトロニクス(主管)、マインドAI、ホリデイロボティクス、ロボティス、クラウドワークス、アルチェラ、KT、KAIST、ソウル大学、TTA<sup class="c"><a href="#r26">26</a></sup></td></tr>
+      <tr><td>開発対象</td><td>ワールド基盤モデル(WFM) + ロボット基盤モデル(RFM)、デジタルツインベースの仮想データの生成・合成<sup class="c"><a href="#r28">28</a></sup></td></tr>
+      <tr><td>目標</td><td>実際のロボットの最終的な動作成功率を20ポイント以上向上(現在のグローバル最高水準は14.5ポイント)<sup class="c"><a href="#r26">26</a></sup></td></tr>
+      <tr><td>方法</td><td>ワールドモデル学習 → ロボットモデル連携 → 実証・評価 → 再学習のパイプラインを2年間で4回繰り返し、最終段階で製造・物流の現場で実証<sup class="c"><a href="#r26">26</a></sup></td></tr>
+      <tr><td>今後</td><td>2028年に大規模な本事業へ拡大予定(報道)、<sup class="c"><a href="#r28">28</a></sup> 全北・慶南の大型フィジカルAI事業と連携<sup class="c"><a href="#r27">27</a></sup></td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <h3>企業と研究</h3>
+    <ul class="plain">
+      <li><strong>NAVER</strong>:Seoul World Model(2026年3月)。検索拡張で実際のストリートビューに接地し、ソウル・釜山などで数百メートル規模の一貫した都市映像を生成しました。<sup class="c"><a href="#r24">24</a></sup></li>
+      <li><strong>LGエレクトロニクス</strong>:国策先導事業の主管。NVIDIA Cosmos 3のロボティクス開発パートナーの一覧にも名を連ねました。<sup class="c"><a href="#r12">12</a></sup></li>
+      <li><strong>サムスン</strong>:AMI Labsの投資家として参加し、<sup class="c"><a href="#r8">8</a></sup> Cosmos 3のロボティクスパートナーにも名を連ねました。<sup class="c"><a href="#r12">12</a></sup></li>
+      <li><strong>斗山</strong>:Cosmos 3のロボティクスパートナー。<sup class="c"><a href="#r12">12</a></sup></li>
+      <li><strong>NC AI</strong>:SPRiの報告書が韓国の基盤モデルの事例として挙げ、<sup class="c"><a href="#r25">25</a></sup> 2026年9月にはLGエレクトロニクスとヒューマノイドの国策課題で協力するという報道が出ました。<sup class="c"><a href="#r51">51</a></sup></li>
+    </ul>
+
+    <h3>SPRiの政策提言</h3>
+    <p>ソフトウェア政策研究所は、ワールドモデルを「フィジカルAI、自動運転、仮想融合の中核インフラ」と規定し、三つの方向を提案しました。<sup class="c"><a href="#r25">25</a></sup></p>
+    <ul class="plain">
+      <li><strong>インフラ</strong>:製造に特化した物理データセットの構築、高忠実度の仮想環境の開発、現場ベースの実証ループ</li>
+      <li><strong>技術</strong>:Sim-to-Realの整合性の確保、仮想センサー・システム同定など物理ベースの技術の統合、標準化・プラットフォーム化</li>
+      <li><strong>産業</strong>:物流・国防・仮想融合などドメイン特化のワールドモデルの育成、VLA・シミュレーション・製造データを統合した国家プラットフォーム</li>
+    </ul>
+    <div class="note accent"><span class="lab">この文書の解釈</span>汎用の生成型ワールドモデル(Genie・Cosmos級)は、膨大な映像データとコンピューティングが必要で、ビッグテックが有利な領域です。韓国が勝負をかけられるのは、① 製造・物流のように現場データがある<strong>ドメイン特化のワールドモデル</strong>、② NAVERのように実際の空間データを持つ<strong>実世界接地型のモデル</strong>、③ ゲーム・ウェブトゥーン・Kコンテンツの制作力と結びついた<strong>創作用の世界生成</strong>です。政府事業とSPRiの提言も、①に重きを置いています。</div>
+  </div>
+</section>
+
+<section class="chapter" id="ch12">
+  <div class="ch-head"><div class="ch-num">第12章</div><h2>展望:何を見守るべきか</h2><p class="ch-sub">これからの12〜24か月、ワールドモデルの進捗を測る七つの指標</p></div>
+  <div class="prose">
+    <p>この章は、これまでの資料に基づいたこの文書の総合的な判断です。予測ではなく、ニュースを読むときに何を見るべきかのチェックリストとして活用してください。</p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>指標</th><th>2026年9月現在</th><th>意味のある次の段階</th></tr></thead>
+    <tbody>
+      <tr><td>① 記憶の持続時間</td><td>約1分(Genie 3)</td><td>10分以上たっても、同じ場所に再訪したときに一貫性を維持</td></tr>
+      <tr><td>② アクセス性</td><td>米国限定・60秒・高額な購読</td><td>韓国などへのグローバルな開放、API、セッション制限の緩和</td></tr>
+      <tr><td>③ モデルの統合</td><td>Cosmos 3が推論・生成・行動を結合</td><td>LLM・映像・行動をすべて扱う汎用モデルの標準化</td></tr>
+      <tr><td>④ 評価の標準</td><td>WorldArena・PlayWorldなどが乱立</td><td>業界が共通して引用するベンチマークの登場</td></tr>
+      <tr><td>⑤ 実世界での成果</td><td>ロボットの成功率、仮想走行マイルなど企業ごとの独自指標</td><td>ワールドモデル導入の前後を、公開され検証可能な形で比較</td></tr>
+      <tr><td>⑥ 潜在型の反撃</td><td>AMI Labsの設立、V-JEPA 2.1</td><td>JEPA系列がロボット・医療などで生成型を上回ることの実証</td></tr>
+      <tr><td>⑦ 創作ツール化</td><td>Marble・GWMなど初期の製品</td><td>編集ツール(アンリアル・Blender・Premiere)とのスムーズな連携、商用権利の明確化</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <h3>むすびに</h3>
+    <p>ワールドモデルは、「AIが世界を言葉で説明する段階」から、「世界を頭の中で動かしてみて行動する段階」へ移ろうとする試みです。2025〜2026年は、このアイデアが論文の中の概念から、製品と国家戦略へと移ってきた時期として記録されるでしょう。同時にベンチマークは、それらしい映像と実際の理解の間の距離が、依然として遠いことを示しています。</p>
+    <p>ルカンの表現を借りれば、人間と動物の知能は「世界を観察し、その中で行動しながら学んだもの」です。<sup class="c"><a href="#r9">9</a></sup> ワールドモデルの競争は、結局のところ機械にその経験をどう与えるかの競争であり、その答えがピクセルなのか、抽象的な表現なのか、二つの結合なのかは、まだ開かれています。</p>
+  </div>
+</section>
+
+<section class="chapter" id="appA">
+  <div class="ch-head"><div class="ch-num">付録 A</div><h2>用語集</h2></div>
+  <dl class="gloss">
+    <div><dt>ワールドモデル<small>World Model</small></dt><dd>環境の状態と力学を学習し、時間の流れと行動に応じた未来を予測する、AI内部のシミュレーター。</dd></div>
+    <div><dt>ワールド基盤モデル<small>WFM · World Foundation Model</small></dt><dd>大規模データで事前学習し、さまざまな課題に向けてファインチューニングして使う汎用のワールドモデル。NVIDIAがCosmosを紹介して広めた用語。</dd></div>
+    <div><dt>フィジカルAI<small>Physical AI</small></dt><dd>ロボット・自動運転車のように、物理世界を認識し、その中で行動するAI。</dd></div>
+    <div><dt>身体性AI<small>Embodied AI</small></dt><dd>身体(センサーとアクチュエーター)を持ち、環境と相互作用しながら学習・行動するAI。</dd></div>
+    <div><dt>潜在状態・潜在空間<small>Latent state / space</small></dt><dd>観測(ピクセルなど)を圧縮して得た抽象的な数値表現。ワールドモデルは主にこの空間で未来を予測する。</dd></div>
+    <div><dt>行動条件付き<small>Action-conditioned</small></dt><dd>行動を入力として受け取り、その結果を予測する性質。ワールドモデルと映像生成モデルを分ける中核の基準。</dd></div>
+    <div><dt>潜在行動<small>Latent action</small></dt><dd>行動ラベルのない映像から、フレームの変化をもとに推論した「仮想の操作入力」。Genie 1が導入。</dd></div>
+    <div><dt>JEPA<small>Joint Embedding Predictive Architecture</small></dt><dd>ルカンが提案した構造。ピクセルを復元せず、隠された部分や未来の「表現」を抽象空間で予測する。</dd></div>
+    <div><dt>自己教師あり学習<small>Self-supervised learning</small></dt><dd>人がラベルを付けず、データ自体の一部を隠して当てる方式で学習すること。</dd></div>
+    <div><dt>自己回帰拡散<small>Autoregressive diffusion</small></dt><dd>拡散モデルで一塊ずつ高品質なフレームを作り、塊の間を順次つなぐ生成方式。リアルタイムのインタラクティブモデルの主流。</dd></div>
+    <div><dt>ロールアウト<small>Rollout</small></dt><dd>ワールドモデルで複数ステップの未来を連続して予測し、展開してみること。</dd></div>
+    <div><dt>想像の中での訓練<small>Imagination training</small></dt><dd>実際の環境の代わりに、ワールドモデルが作った仮想の経験の中でエージェントを強化学習させること(Dreamer系列)。</dd></div>
+    <div><dt>モデル予測制御<small>MPC</small></dt><dd>候補の行動をモデルでシミュレーションして最も良い結果を出す行動を選び、瞬間ごとに計画し直す方式。</dd></div>
+    <div><dt>プロンプト型の世界イベント<small>Promptable world events</small></dt><dd>Genie 3の機能。進行中の世界に、テキストで天気の変化・人物の登場のような出来事を挿入する。</dd></div>
+    <div><dt>ガウシアンスプラット<small>3D Gaussian Splatting</small></dt><dd>数百万個の半透明の楕円体の粒子で場面を表現する3D技法。リアルなレンダリングが速い。Marbleの出力形式。</dd></div>
+    <div><dt>衝突メッシュ<small>Collision mesh</small></dt><dd>物理エンジンが衝突を計算できるように作られた、単純化された3D形状。</dd></div>
+    <div><dt>Sim-to-Real</dt><dd>仮想環境で学習した能力を実際の環境に移すこと。その間の性能の差を「ギャップ(gap)」と呼ぶ。</dd></div>
+    <div><dt>デジタルツイン<small>Digital twin</small></dt><dd>実際の工場・都市・設備を仮想的に複製したモデル。</dd></div>
+    <div><dt>VLA<small>Vision-Language-Action model</small></dt><dd>視覚と言語の指示を受けて、ロボットの行動を出力するモデル。ワールドモデルと結合して訓練・評価される。</dd></div>
+    <div><dt>閉ループ評価<small>Closed-loop evaluation</small></dt><dd>AIの行動が次の入力に反映されるように、シミュレーターの中で最後まで動かしてみる評価。録画データの再生(開ループ)より現実に近い。</dd></div>
+    <div><dt>反事実シナリオ<small>Counterfactual</small></dt><dd>「もしあのとき違う行動をしていたら?」をシミュレーションすること。自動運転の検証の核心。</dd></div>
+    <div><dt>帰納バイアス<small>Inductive bias</small></dt><dd>モデルが新しいデータに一般化するときに頼る、内在的な仮定。Vafaほかの研究は、これを通じてモデルが「法則」を学んだかを検査する。</dd></div>
+    <div><dt>空間知能<small>Spatial intelligence</small></dt><dd>フェイフェイ・リーが強調する概念。3D空間を認識・推論・生成し、その中で行動する能力。</dd></div>
+  </dl>
+</section>
+
+<section class="chapter" id="appB">
+  <div class="ch-head"><div class="ch-num">付録 B</div><h2>段階別の必読リスト</h2><p class="ch-sub">学習の順番に並べました。番号は参考文献の番号です。</p></div>
+  <div class="prose">
+    <h4>第1段階 — 入門(概念をつかむ)</h4>
+    <ul class="plain">
+      <li>SPRiイシューレポート〈ワールドモデル:現実を理解するAIの進化〉 — 韓国語で最も体系的な整理<sup class="c"><a href="#r25">25</a></sup></li>
+      <li>DeepMind〈Genie 3: A new frontier for world models〉 — デモ映像と一緒に見る<sup class="c"><a href="#r1">1</a></sup></li>
+      <li>TIME〈World Models Are AI’s Next Frontier〉<sup class="c"><a href="#r36">36</a></sup></li>
+    </ul>
+    <h4>第2段階 — 古典(根っこを理解する)</h4>
+    <ul class="plain">
+      <li>Ha &amp; Schmidhuber〈World Models〉(2018) — インタラクティブなウェブ版が特によい<sup class="c"><a href="#r37">37</a></sup></li>
+      <li>LeCun〈A Path Towards Autonomous Machine Intelligence〉(2022)<sup class="c"><a href="#r38">38</a></sup></li>
+      <li>OpenAI〈Video generation models as world simulators〉(2024)<sup class="c"><a href="#r39">39</a></sup></li>
+    </ul>
+    <h4>第3段階 — 最新の中核論文</h4>
+    <ul class="plain">
+      <li>V-JEPA 2(潜在型の代表)<sup class="c"><a href="#r5">5</a></sup> · Dreamer 4(想像の中での訓練)<sup class="c"><a href="#r7">7</a></sup> · Cosmos 3技術報告書(統合型)<sup class="c"><a href="#r13">13</a></sup> · Seoul World Model(実世界接地)<sup class="c"><a href="#r24">24</a></sup></li>
+    </ul>
+    <h4>第4段階 — 批判と評価</h4>
+    <ul class="plain">
+      <li>Physics-IQ<sup class="c"><a href="#r30">30</a></sup> · Vafaほか〈What Has a Foundation Model Found?〉<sup class="c"><a href="#r31">31</a></sup> · WorldArena<sup class="c"><a href="#r32">32</a></sup> · PlayWorld<sup class="c"><a href="#r33">33</a></sup></li>
+    </ul>
+    <h4>第5段階 — 全体像と産業</h4>
+    <ul class="plain">
+      <li>身体性AIワールドモデルのサーベイ<sup class="c"><a href="#r34">34</a></sup> · 〈Not Boring〉World Modelsエッセイ<sup class="c"><a href="#r35">35</a></sup> · CB InsightsフィジカルAIマーケットマップ<sup class="c"><a href="#r29">29</a></sup></li>
+    </ul>
+  </div>
+</section>
+
+<section class="chapter" id="appC">
+  <div class="ch-head"><div class="ch-num">付録 C</div><h2>参考文献</h2><p class="ch-sub">日付は原文の公開日を基準としています。すべてのリンクは2026年9月11日に確認しました。題名は各出典の原語のまま記載しています。</p></div>
+  <!--REFS-->
+</section>
+</div>
+</div>
+<div class="wm-foot">ワールドモデル · 2026年9月11日時点で整理 · 数値と引用は各出典の公開時点のものであり、その後変更される場合があります。</div>
+</div>
+</section>

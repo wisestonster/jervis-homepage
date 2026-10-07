@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import FilmFlowBackground from "@/components/film-flow-background";
 import { ContactCTA, Arrow } from "@/components/page-ui";
 import { home } from "@/lib/copy/home";
 import { localizedPath } from "@/lib/locale";
@@ -16,6 +17,7 @@ export default async function Home({ params }: LangParams) {
   return (
     <>
       <section className="home-hero">
+        <FilmFlowBackground />
         <div className="container home-hero__grid">
           <div>
             <p className="eyebrow">{t.eyebrow}</p>

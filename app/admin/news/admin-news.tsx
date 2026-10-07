@@ -139,11 +139,11 @@ function CardFields({ value, onChange }: { value: CardForm; onChange: (next: Car
       <label>카테고리<input value={value.category} maxLength={30} onChange={(event) => update("category", event.target.value)} placeholder="예: RWA" /></label>
       <label>게시일<input type="date" value={value.publishedAt} onChange={(event) => update("publishedAt", event.target.value)} /></label>
       <div className="admin-visible-field"><span>공개 상태</span><VisibilitySwitch checked={value.visible} onChange={(checked) => update("visible", checked)} /></div>
-      <div className="admin-visible-field"><span>고정 노출</span><ToggleSwitch checked={value.pinned} onChange={(checked) => update("pinned", checked)} onLabel="고정" offLabel="고정 안함" /></div>
+      <div className="admin-visible-field"><span>고정 노출</span><ToggleSwitch checked={value.pinned} onChange={(checked) => update("pinned", checked)} onLabel="고정" offLabel="고정 안 함" /></div>
       <label className="admin-wide">카드 제목<input required value={value.title} maxLength={200} onChange={(event) => update("title", event.target.value)} /></label>
       <label className="admin-wide">카드 이미지 URL<input type="url" value={value.imageUrl} onChange={(event) => update("imageUrl", event.target.value)} placeholder="https://example.com/image.jpg" /></label>
       <label className="admin-wide">카드 내용<textarea required rows={6} value={value.summary} maxLength={5000} onChange={(event) => update("summary", event.target.value)} /></label>
-      <label className="admin-wide">원문보기 표시 내용<input required value={value.source} maxLength={100} onChange={(event) => update("source", event.target.value)} placeholder="예: 금융위원회 보도자료" /></label>
+      <label className="admin-wide">원문 보기 표시 내용<input required value={value.source} maxLength={100} onChange={(event) => update("source", event.target.value)} placeholder="예: 금융위원회 보도자료" /></label>
     </div>
   );
 }

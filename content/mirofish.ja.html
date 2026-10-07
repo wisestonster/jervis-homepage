@@ -1,0 +1,470 @@
+<section class="page-hero">
+  <div class="container wm-mast">
+    <div>
+      <p class="eyebrow">Field Reference · MiroFish · 基準日 2026-10-07</p>
+      <h1>MiroFish</h1>
+      <p class="page-hero__copy">「文書を一つ入れると、その世界の並行宇宙が開く。」ニュース・政策草案・レポート・小説を「種(seed)」として、数多くのAIエージェントが暮らす仮想社会を作り、その社会がどう進んでいくかを見守りながら未来を探るオープンソースの群知能予測エンジン。公式リポジトリ、基盤エンジンOASISの論文、検証・批判の資料、報道を突き合わせて一冊にまとめました。</p>
+    </div>
+    <div class="wm-epigraph">
+      <div class="eq" aria-label="seed to world to report">Seed → World → Report</div>
+      <p>現実の手がかり(seed)から仮想社会(world)を立ち上げ、その社会で起きたことを読めるレポート(report)として受け取る。MiroFishを一行で言えばこの流れです。この文書は、その流れが実際に何を保証し、何を保証しないのかも併せて扱います。<sup class="c"><a href="#r1">1</a></sup></p>
+      <div class="meta-row"><span>10章 · 付録3</span><span>参考文献 17</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="wm-section">
+<div class="container">
+<div class="wrap">
+<nav class="toc" aria-label="目次">
+  <details open>
+    <summary>目次</summary>
+    <ol>
+      <li><a href="#guide"><span>00</span><span>概要</span></a></li>
+      <li><a href="#ch1"><span>01</span><span>MiroFishとは何か</span></a></li>
+      <li><a href="#ch2"><span>02</span><span>なぜ話題になったのか</span></a></li>
+      <li><a href="#ch3"><span>03</span><span>系譜:エージェントベースモデリングからLLM社会まで</span></a></li>
+      <li><a href="#ch4"><span>04</span><span>解剖学:5段階のパイプライン</span></a></li>
+      <li><a href="#ch5"><span>05</span><span>エンジンOASIS:100万エージェントのソーシャルメディア</span></a></li>
+      <li><a href="#ch6"><span>06</span><span>活用シナリオとデモ</span></a></li>
+      <li><a href="#ch7"><span>07</span><span>限界と論争:それらしさは正確さではない</span></a></li>
+      <li><a href="#ch8"><span>08</span><span>自分で使うなら:運用・コスト・ライセンス</span></a></li>
+      <li><a href="#ch9"><span>09</span><span>コンテンツ制作の視点から見たMiroFish</span></a></li>
+      <li><a href="#ch10"><span>10</span><span>展望:何を見守るべきか</span></a></li>
+      <li><a href="#appA"><span>A</span><span>用語集</span></a></li>
+      <li><a href="#appB"><span>B</span><span>段階別の必読リスト</span></a></li>
+      <li><a href="#appC"><span>C</span><span>参考文献</span></a></li>
+    </ol>
+  </details>
+</nav>
+
+<div class="wm-main">
+<section class="chapter" id="guide">
+  <div class="ch-head"><div class="ch-num">00 · 序文</div><h2>概要</h2></div>
+  <div class="prose">
+    <p>2026年3月初め、中国の一人の大学生が作ったオープンソースプロジェクトが、GitHubの世界トレンド1位に躍り出ました。名前はMiroFish。「シンプルで普遍的な群知能エンジン、あらゆるものを予測する」という文句を掲げていました。<sup class="c"><a href="#r1">1</a></sup> 韓国でも「ミロピシ」という名前で紹介され、話題になりました。<sup class="c"><a href="#r11">11</a></sup></p>
+    <p>しかし、話題性と実体は別の問題です。ある記事は「社会全体をシミュレーションして未来を当てる」と書き、ある記事は「科学的根拠のない誇張」と批判します。<sup class="c"><a href="#r7">7</a></sup> この文書は、その間で確認できる事実だけを整理することを目的としています。</p>
+    <p>構成は次のとおりです。</p>
+    <ul class="plain">
+      <li><strong>1〜3章</strong>は概念、登場の背景、学術的な系譜です。初めての方は、ここまで読めば会話に加われます。</li>
+      <li><strong>4〜5章</strong>は内部構造です。MiroFishの5段階のパイプラインと、その下で実際にエージェントを動かすOASISエンジンを扱います。</li>
+      <li><strong>6章</strong>は、公式サイトとリポジトリが示した活用シナリオとデモです。</li>
+      <li><strong>7章</strong>は限界と論争です。この文書で最も重要な章です。</li>
+      <li><strong>8〜10章</strong>は、自分で運用する際のコストとライセンス、コンテンツ制作の視点からの解釈、これから見るべき指標です。付録には用語集、段階別の必読リスト、参考文献があります。</li>
+    </ul>
+    <div class="note accent"><span class="lab">表記の原則</span>本文の上付き数字は付録Cの参考文献番号です。プロジェクト側が自ら明らかにした性能・規模は「発表によれば」、報道によるものは「報道によれば」と区別しました。この文書が自ら下した解釈と提案は、そのように明記してあります。</div>
+    <div class="note caution"><span class="lab">出典についての注意</span>mirofish.myは、公式リポジトリ(github.com/666ghj/MiroFish)とは別に運営されている紹介サイトとみられ、運営主体は確認できていません。同じ名前の紹介・複製サイトやフォークが多数あるため、事実関係は公式リポジトリと論文を基準としました。<sup class="c"><a href="#r2">2</a></sup></div>
+  </div>
+</section>
+
+<section class="chapter" id="ch1">
+  <div class="ch-head"><div class="ch-num">第1章</div><h2>MiroFishとは何か</h2><p class="ch-sub">一文の定義、三つのたとえ、そして混同しやすい隣接概念との境界</p></div>
+  <div class="gist"><span class="lab">この章の要点</span><ul>
+    <li>MiroFishは、<strong>文書を入力として受け取り、数多くのLLMエージェントが暮らす仮想社会を作り、その社会の展開をレポートにまとめてくれるオープンソースのシミュレーションエンジン</strong>です。</li>
+    <li>核心は、<strong>「唯一の正解」を計算するのではなく、「複数の展開の可能性」を実験する</strong>点です。</li>
+    <li>予測器ではなく<strong>探索ツール</strong>です。公式サイトも、結果は「探索的な産出物」であり、意思決定の前に検討が必要だと明記しています。<sup class="c"><a href="#r2">2</a></sup></li>
+  </ul></div>
+  <div class="prose">
+    <h3>一文の定義</h3>
+    <p>公式リポジトリは、MiroFishを「ニュース速報、政策草案、金融シグナルのような現実の種(seed)の情報を抽出し、独立した性格・長期記憶・行動ロジックを持つ数千のインテリジェントなエージェントが自由に相互作用して社会的に進化する、高忠実度の並行デジタル世界を自動的に構築する次世代のAI予測エンジン」と紹介しています。<sup class="c"><a href="#r1">1</a></sup> 紹介サイトはこれを、「ニュース、政策草案、分析レポート、小説のような現実の種を、記憶と動機と社会的行動を持つエージェントたちが暮らす並行世界に変える」と言い換えています。<sup class="c"><a href="#r2">2</a></sup></p>
+    <p>この定義から三つの要素を抜き出せます。<strong>① 種(seed)</strong>:現実の文書から出発します。<strong>② 世界(world)</strong>:エージェントが互いに反応しながら時間とともに変わる社会を作ります。<strong>③ レポート(report)</strong>:その社会で起きたことを、人が読める形にまとめます。</p>
+
+    <h3>三つのたとえ</h3>
+    <h4>① 政策を施行する前の「模擬社会」</h4>
+    <p>新しい政策を発表する前に、似た傾向の人が数千人集まった仮想の都市で、先に反応を見守れるとしたらどうでしょう。どの集団が先に反発し、どんな噂が広がり、どの時点で世論が割れるのかを、あらかじめ見るのです。MiroFishが狙う位置が、まさにこの「模擬社会」です。韓国メディアもこの点を指摘し、「政策導入の前に、さまざまな社会的反応をあらかじめ実験できる」と紹介しました。<sup class="c"><a href="#r11">11</a></sup></p>
+    <h4>② 小説家の人物ノート</h4>
+    <p>小説家は人物ごとに性格・欲望・関係を書き留めておき、事件が起きたときに「この人物ならどうするか」をたどりながら物語を書きます。MiroFishは、この作業をエージェントで自動化したツールに近いものです。開発チームがデモとして『紅楼夢』の前80回を入れ、失われた結末をシミュレーションさせたのも、同じ文脈です。<sup class="c"><a href="#r14">14</a></sup></p>
+    <h4>③ ソーシャルメディアの中の「小さな地球」</h4>
+    <p>MiroFishのエージェントたちは、Twitter型とReddit型の二つのソーシャルメディアの上で、投稿し、コメントし、いいねを押し、互いにフォローします。<sup class="c"><a href="#r2">2</a></sup> ソーシャルメディアを丸ごと縮小した実験室だと考えると、理解しやすいでしょう。</p>
+
+    <h3>混同しやすい隣接概念</h3>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>概念</th><th>何をするか</th><th>MiroFishとの関係</th></tr></thead>
+    <tbody>
+      <tr><td>統計・時系列予測</td><td>過去データのパターンを数式で外挿して数値を予測</td><td>MiroFishは、データのパターンではなく<em>個々の行為者の相互作用</em>から結果が出る方式です。紹介記事も、物理ベースや定量モデルを置き換えるのではなく補完するツールだと述べています。<sup class="c"><a href="#r13">13</a></sup></td></tr>
+      <tr><td>従来のエージェントベースモデリング(ABM)</td><td>人が組んだ単純なルールで行為者を動かし、集団現象を観察</td><td>MiroFishは、ルールの代わりに<em>LLMがエージェントの判断を代行</em>します。表現力は大きくなりましたが、検証はより難しくなったというのが学界の懸念です(7章)。<sup class="c"><a href="#r5">5</a></sup></td></tr>
+      <tr><td>LLMに「予測して」と尋ねる</td><td>モデルを1回呼び出して答えを得る</td><td>MiroFishは、複数のエージェントと複数のラウンドを経ます。ただし、ある独立した実験では、単一の呼び出しと結果が同じで、追加の洞察がなかったという報告もあります。<sup class="c"><a href="#r6">6</a></sup></td></tr>
+      <tr><td>アンケート・世論調査</td><td>実際の人に直接尋ねる</td><td>MiroFishは、実際の人ではなく<em>LLMが作った仮想の回答者</em>を使います。速くて安いものの、実際の人の回答と同じだという保証はありません。</td></tr>
+      <tr><td>ワールドモデル</td><td>環境の状態と力学を学習し、行動に応じた未来を予測</td><td>ワールドモデルが<em>物理世界のシミュレーター</em>なら、MiroFishは<em>社会・世論のシミュレーター</em>に近いものです。どちらも「未来をあらかじめ動かしてみる」という発想を共有しますが、学習された力学モデルではなくLLMの常識に頼る点が異なります。(この文書の解釈)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <div class="note accent"><span class="lab">最も重要な分かれ目</span>韓国メディアはこれを、「未来を一つの結果として当てるのではなく、さまざまな可能性を実験する方式」と説明しています。<sup class="c"><a href="#r11">11</a></sup> したがって、MiroFishの出力を読む正しい問いは「当たったか」ではなく、「どのシナリオがどんな条件で現れたか」です。</div>
+  </div>
+</section>
+
+<section class="chapter" id="ch2">
+  <div class="ch-head"><div class="ch-num">第2章</div><h2>なぜ話題になったのか</h2><p class="ch-sub">10日で作ったプロジェクト、投資、そしてGitHub 1位</p></div>
+  <div class="gist"><span class="lab">この章の要点</span><ul>
+    <li>開発者は、北京郵電大学4年の郭航江(グオ・ハンジャン、GitHub名BaiFu)と報じられています。盛大(シャンダ)グループのインキュベーションを受けました。</li>
+    <li>報道によれば、開発には約10日かかり、盛大グループがデモ動画を見てから24時間以内に3,000万元を投資しました。</li>
+    <li>話題性は大きかったものの、<strong>予測の精度を証明する公開ベンチマークはありません</strong>。</li>
+  </ul></div>
+  <div class="prose">
+    <h3>作った人と背景</h3>
+    <p>中国メディアの36Krによれば、MiroFishを作った郭航江は北京郵電大学の4年生の学部生で、GitHub名はBaiFuです。盛大グループにインターンとして加わった後、約10日でプロジェクトを完成させ、その前にも、別の人気オープンソースBettaFishを休日の10日間で作った経歴があるそうです。<sup class="c"><a href="#r12">12</a></sup> 公式リポジトリは、盛大グループが「戦略的支援とインキュベーション」を提供したと記しています。<sup class="c"><a href="#r1">1</a></sup></p>
+    <p>投資規模は、報道によって表現が異なります。36Krは、盛大グループの陳天橋(チェン・ティエンチャオ)がデモ動画を受け取ってから24時間以内に3,000万元(約410万ドル規模とも紹介されます)を投資したと伝え、韓国メディアは「数十億ウォン規模の投資を誘致した」と報じました。<sup class="c"><a href="#r12">12</a></sup><sup class="c"><a href="#r11">11</a></sup> いずれも報道ベースで、この文書が独自に確認した数字ではありません。</p>
+
+    <h3>人気の指標</h3>
+    <p>公式リポジトリのページで確認した指標は、GitHubのスター約7.7万個、フォーク約1.2万個で、ライセンスはAGPL-3.0です(2026年10月の閲覧時点)。<sup class="c"><a href="#r1">1</a></sup> 韓国メディアは、公開直後にGitHubの人気ランキング1位を記録したと伝えました。<sup class="c"><a href="#r11">11</a></sup> その後、韓国語のコミュニティフォーク(MiroFish-Ko)も登場しました。<sup class="c"><a href="#r15">15</a></sup></p>
+
+    <h3>話題になった理由</h3>
+    <p>三つの理由が重なりました。第一に、「文書を入れると社会がシミュレーションされる」という、直感的で視覚的な約束です。第二に、エージェントが数千〜数十万人という規模感です。紹介サイトは、1回の実行で「100万以上の並列エージェント」を掲げています。<sup class="c"><a href="#r2">2</a></sup> 第三に、学生の開発者と大企業の投資という物語性です。ただし、このどれも<em>予測が当たった</em>という証拠ではありません。</p>
+    <div class="note caution"><span class="lab">規模の表記についての注意</span>「100万エージェント」は、MiroFishが基盤に使うOASISエンジンが論文で実演した最大規模と同じ数字です。その実験は、A100 GPU 27枚で1タイムステップに約18時間かかりました(5章)。<sup class="c"><a href="#r3">3</a></sup> 一般のユーザーが1回の実行で同じ規模を簡単に回せるという意味に読んではいけません。(この文書の解釈)</div>
+  </div>
+</section>
+
+<section class="chapter" id="ch3">
+  <div class="ch-head"><div class="ch-num">第3章</div><h2>系譜:エージェントベースモデリングからLLM社会まで</h2><p class="ch-sub">ルールで動く人工社会から、言語モデルで動く人工社会へ</p></div>
+  <div class="prose">
+    <p>MiroFishは、突然現れたアイデアではありません。社会をコンピューターの中で「育てて」みようという試みは、半世紀を超える歴史があり、MiroFishはその最新の流れの上に立っています。下の年表は、この文書が整理した文脈です。</p>
+  </div>
+  <ol class="tl">
+    <li class="era"><span class="d">1971</span><span class="t"><span class="era-lab">ルールベースの人工社会</span> — トーマス・シェリングの「分離モデル」。単純な隣人の選好ルールだけで居住地の分離が現れることを示した、エージェントベースモデリングの古典<sup class="c"><a href="#r16">16</a></sup></span></li>
+    <li><span class="d">1996</span><span class="t">エプスタイン&amp;アクステル『Growing Artificial Societies』 — コンピューターの中で社会現象が「育つ」というアプローチを広めた<sup class="c"><a href="#r17">17</a></sup></span></li>
+    <li class="era"><span class="d">2023年4月</span><span class="t"><span class="era-lab">LLMエージェントの登場</span> — スタンフォード・Googleの<b>Generative Agents</b>。記憶ストリーム・内省・計画の構造を備えたLLMエージェント25人が仮想の町で暮らし、バレンタインのパーティーの招待がひとりでに広まるという社会的行動を見せた<sup class="c"><a href="#r9">9</a></sup></span></li>
+    <li><span class="d">2024年11月</span><span class="t"><b>OASIS</b> — CAMEL-AIコミュニティが、ソーシャルメディア専用のLLMエージェントシミュレーターを発表し、最大100万エージェントの規模を実演<sup class="c"><a href="#r3">3</a></sup> · スタンフォードの研究チームが、実在の1,052人にインタビューして作ったエージェントが、アンケート回答をかなりの水準で再現すると報告<sup class="c"><a href="#r10">10</a></sup></span></li>
+    <li><span class="d">2025年4月</span><span class="t">アムステルダム大学のラルーイとトルンベリ〈LLMはエージェントベースモデリングの問題を解決するのか?〉 — 生成型の社会シミュレーションの検証の不備を批判的に検討<sup class="c"><a href="#r5">5</a></sup></span></li>
+    <li class="era"><span class="d">2026年3月</span><span class="t"><span class="era-lab">MiroFish公開</span> — 知識グラフの構築、エージェント生成、二重プラットフォームのシミュレーション、レポートエージェントを一つにまとめ、GitHub 1位に<sup class="c"><a href="#r1">1</a></sup><sup class="c"><a href="#r11">11</a></sup></span></li>
+    <li><span class="d">2026年5月</span><span class="t">WPPのリサーチチームがMiroFishを自分で設置してS&amp;P 500の予測を試し、追加の洞察はなかったと報告<sup class="c"><a href="#r6">6</a></sup></span></li>
+  </ol>
+  <div class="prose">
+    <div class="note accent"><span class="lab">この文書の解釈</span>MiroFishの独創性は、新しいアルゴリズムよりも<strong>「組み立て」と「体験」</strong>にあります。エンジン(OASIS)、記憶(Zep)、グラフ構築(GraphRAG)、レポートエージェントを一つの流れにまとめ、ウェブ画面で誰でも文書をアップロードして動かせるようにした点が、大衆的な広がりの鍵でした。</div>
+  </div>
+</section>
+
+<section class="chapter" id="ch4">
+  <div class="ch-head"><div class="ch-num">第4章</div><h2>解剖学:5段階のパイプライン</h2><p class="ch-sub">種を世界に、世界をレポートに変える流れ</p></div>
+  <div class="gist"><span class="lab">この章の要点</span><ul>
+    <li>MiroFishの流れは、<strong>グラフ構築 → 環境・ペルソナ設定 → 並列シミュレーション → レポート生成 → 深い相互作用</strong>の5段階です。<sup class="c"><a href="#r1">1</a></sup></li>
+    <li>人は、シナリオの境界を決め、結果を解釈し、リスクの高い決定を下す仕事を担います。<sup class="c"><a href="#r2">2</a></sup></li>
+    <li>入力はPDF・Markdown・TXT(最大50MB)で、現在の状態は「v0.1プレビュー」です。<sup class="c"><a href="#r2">2</a></sup></li>
+  </ul></div>
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 900 270" role="img" aria-labelledby="mfTitle">
+        <title id="mfTitle">MiroFishの5段階:種の文書から知識グラフを作り、エージェントと環境を設定し、Twitter型・Reddit型のプラットフォームで並列シミュレーションを回した後、レポートを作り、ユーザーがエージェントと対話したり変数を入れて再実行したりする循環構造</title>
+        <defs>
+          <marker id="mah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="s-arrow"/></marker>
+          <marker id="maha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="s-arrow-a"/></marker>
+        </defs>
+        <rect class="s-box" x="10" y="30" width="150" height="76" rx="3"/>
+        <text class="s-s" x="85" y="22" text-anchor="middle">STEP 1</text>
+        <text class="s-t" x="85" y="62" text-anchor="middle">グラフ構築</text>
+        <text class="s-s" x="85" y="84" text-anchor="middle">種 → 実体・関係</text>
+
+        <rect class="s-box" x="190" y="30" width="150" height="76" rx="3"/>
+        <text class="s-s" x="265" y="22" text-anchor="middle">STEP 2</text>
+        <text class="s-t" x="265" y="62" text-anchor="middle">環境・ペルソナ</text>
+        <text class="s-s" x="265" y="84" text-anchor="middle">性格・記憶・ルール設定</text>
+
+        <rect class="s-key" x="370" y="30" width="170" height="76" rx="3"/>
+        <text class="s-s" x="455" y="22" text-anchor="middle">STEP 3</text>
+        <text class="s-t" x="455" y="62" text-anchor="middle">並列シミュレーション</text>
+        <text class="s-s" x="455" y="84" text-anchor="middle">Twitter型 + Reddit型</text>
+
+        <rect class="s-box" x="570" y="30" width="150" height="76" rx="3"/>
+        <text class="s-s" x="645" y="22" text-anchor="middle">STEP 4</text>
+        <text class="s-t" x="645" y="62" text-anchor="middle">レポート生成</text>
+        <text class="s-s" x="645" y="84" text-anchor="middle">ReportAgent</text>
+
+        <rect class="s-box" x="750" y="30" width="140" height="76" rx="3"/>
+        <text class="s-s" x="820" y="22" text-anchor="middle">STEP 5</text>
+        <text class="s-t" x="820" y="62" text-anchor="middle">深い相互作用</text>
+        <text class="s-s" x="820" y="84" text-anchor="middle">対話・変数の投入</text>
+
+        <line class="s-line" x1="160" y1="68" x2="188" y2="68" marker-end="url(#mah)"/>
+        <line class="s-line" x1="340" y1="68" x2="368" y2="68" marker-end="url(#mah)"/>
+        <line class="s-acc" x1="540" y1="68" x2="568" y2="68" marker-end="url(#maha)"/>
+        <line class="s-line" x1="720" y1="68" x2="748" y2="68" marker-end="url(#mah)"/>
+        <path class="s-dash" d="M820 106 L820 160 L455 160 L455 109" marker-end="url(#mah)"/>
+        <text class="s-s" x="640" y="152" text-anchor="middle">変数を入れて再実行</text>
+
+        <rect class="s-box" x="10" y="196" width="250" height="52" rx="3" stroke-dasharray="4 4"/>
+        <text class="s-t" x="135" y="218" text-anchor="middle" font-size="13">入力:ニュース・政策・レポート・小説</text>
+        <text class="s-s" x="135" y="237" text-anchor="middle">PDF · Markdown · TXT (最大50MB)</text>
+        <rect class="s-box" x="330" y="196" width="250" height="52" rx="3" stroke-dasharray="4 4"/>
+        <text class="s-t" x="455" y="218" text-anchor="middle" font-size="13">記憶:Zep Cloud · エンジン:OASIS</text>
+        <text class="s-s" x="455" y="237" text-anchor="middle">LLMはOpenAI SDK互換API</text>
+        <rect class="s-box" x="650" y="196" width="240" height="52" rx="3" stroke-dasharray="4 4"/>
+        <text class="s-t" x="770" y="218" text-anchor="middle" font-size="13">出力:転換点・リスク・信頼シグナル</text>
+        <text class="s-s" x="770" y="237" text-anchor="middle">読める予測レポート</text>
+        <line class="s-dash" x1="85" y1="196" x2="85" y2="109" marker-end="url(#mah)"/>
+        <line class="s-dash" x1="645" y1="196" x2="645" y2="109" marker-end="url(#mah)" transform="translate(0,0)"/>
+      </svg>
+    </div>
+    <figcaption>図1. MiroFishの5段階パイプライン(公式リポジトリと紹介サイトに基づくこの文書の図)。青い線はシミュレーションが中核の段階であることを、点線は入出力と「変数を入れて再実行する」循環を表します。</figcaption>
+  </figure>
+  <div class="prose">
+    <h3>段階1 — グラフ構築:種を構造に</h3>
+    <p>入力文書からGraphRAGで実体と関係を抜き出し、知識グラフを作ります。紹介サイトはこの段階をオントロジー生成とグラフ構築に分け、「構造化された実体・動機・事実の錨」と、「行為者、緊張関係、記憶構造を浮かび上がらせる生きた関係グラフ」を作ると説明しています。<sup class="c"><a href="#r2">2</a></sup> 開発者向けの解説は、これを「誰が主要人物で、どうつながっていて、どんな圧力があるか」を構造化する過程と説明しています。<sup class="c"><a href="#r14">14</a></sup></p>
+
+    <h3>段階2 — 環境設定とエージェント生成:人物に性格を与える</h3>
+    <p>グラフの実体ごとに、背景・視点・傾向を持つエージェントのペルソナを作り、長期記憶はZep Cloudに保存します。続いて「環境設定エージェント」が、シミュレーションのルールのパラメータを決めます。<sup class="c"><a href="#r14">14</a></sup> この段階でエージェントの数が自動的に決まることがあり、ある独立した実験では、100人を要求したのに25人が作られたと報告されました。<sup class="c"><a href="#r6">6</a></sup></p>
+
+    <h3>段階3 — 並列シミュレーション:社会が回る区間</h3>
+    <p>Twitter型とReddit型の二つのプラットフォームで、エージェントたちが複数のラウンドにわたって相互作用します。エージェントの記憶は、事件が展開するたびに更新されます。<sup class="c"><a href="#r1">1</a></sup> 実際の駆動はOASISエンジンが担います(5章)。ユーザーは「神の視点」から展開を観察し、途中で変数を投入できます。<sup class="c"><a href="#r13">13</a></sup></p>
+
+    <h3>段階4 — レポート生成:ログを物語に</h3>
+    <p>専用のReportAgentが、シミュレーション結果をツールを使って分析し、世論の変化・連合の形成・創発的なパターンを、読めるレポートにまとめます。紹介サイトは、このレポートに「重要な転換点、リスク、信頼シグナル」が盛り込まれると説明しています。<sup class="c"><a href="#r2">2</a></sup></p>
+
+    <h3>段階5 — 深い相互作用:エージェントに直接尋ねる</h3>
+    <p>ユーザーは、ReportAgentに追加の質問をしたり、個々のエージェントと直接対話(インタビュー)して、なぜそう行動したのかを尋ねたりできます。新しい変数を入れてシナリオを回し直すのも、この段階です。<sup class="c"><a href="#r2">2</a></sup><sup class="c"><a href="#r14">14</a></sup> ただし、この「答え」は実際の人の本音ではなく、LLMが作った応答であることを忘れてはいけません。</p>
+
+    <h3>技術スタックを一目で</h3>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>構成要素</th><th>役割</th><th>備考</th></tr></thead>
+    <tbody>
+      <tr><td>OASIS</td><td>ソーシャルメディアのシミュレーションエンジン</td><td>CAMEL-AIコミュニティが開発。リポジトリが謝辞に明記<sup class="c"><a href="#r1">1</a></sup><sup class="c"><a href="#r3">3</a></sup></td></tr>
+      <tr><td>Zep Cloud</td><td>エージェントの長期記憶の保存</td><td>必須の依存関係。ある独立した実験では、無料枠が3回の実行で尽きたと報告<sup class="c"><a href="#r6">6</a></sup></td></tr>
+      <tr><td>GraphRAG</td><td>文書から実体・関係を抽出し、知識グラフを構築</td><td>段階1で使用<sup class="c"><a href="#r14">14</a></sup></td></tr>
+      <tr><td>LLM</td><td>エージェントの判断・発話の生成</td><td>OpenAI SDK互換APIなら使用可能。リポジトリはアリババのQwen-plusを推奨<sup class="c"><a href="#r1">1</a></sup></td></tr>
+      <tr><td>実行環境</td><td>バックエンドPython 3.11〜3.12、フロントエンドNode.js 18以上</td><td>ソースからのインストールまたはDocker、パッケージ管理ツールuvを使用<sup class="c"><a href="#r1">1</a></sup></td></tr>
+    </tbody>
+  </table></div>
+</section>
+<section class="chapter" id="ch5">
+  <div class="ch-head"><div class="ch-num">第5章</div><h2>エンジンOASIS:100万エージェントのソーシャルメディア</h2><p class="ch-sub">MiroFishの段階3のシミュレーションを実際に回す基盤技術</p></div>
+  <div class="gist"><span class="lab">この章の要点</span><ul>
+    <li>OASIS(Open Agent Social Interaction Simulations)は、CAMEL-AIコミュニティが2024年11月に発表した<strong>LLMエージェントベースのソーシャルメディアシミュレーター</strong>です。<sup class="c"><a href="#r3">3</a></sup><sup class="c"><a href="#r4">4</a></sup></li>
+    <li>論文は、情報の拡散・集団の極化・同調(herd)効果を、XとRedditの環境で再現したと報告しています。</li>
+    <li>最も重要な発見の一つは、<strong>LLMエージェントは人よりも同調しやすい</strong>という点です。</li>
+  </ul></div>
+  <div class="prose">
+    <h3>五つのモジュール</h3>
+    <p>OASISは、実際のソーシャルメディアの構造を模して、五つのモジュールで構成されています。<sup class="c"><a href="#r3">3</a></sup></p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>モジュール</th><th>役割</th></tr></thead>
+    <tbody>
+      <tr><td>環境サーバー</td><td>ユーザー・投稿・コメント・関係・相互作用の記録をリレーショナルデータベースで管理し、動的に更新</td></tr>
+      <tr><td>推薦システム</td><td>プラットフォームごとの推薦アルゴリズム。Xには関心・人気ベース(TwHIN-BERT)、Redditには高評価・低評価・新しさを合わせたホットスコアの式を適用</td></tr>
+      <tr><td>エージェントモジュール</td><td>記憶ストアを持つLLMエージェント。21種の行動を行い、思考過程(Chain-of-Thought)を残すため解釈可能</td></tr>
+      <tr><td>時間エンジン</td><td>実際のユーザーデータから抽出した24次元の時間帯別活動確率ベクトルで、シミュレーション時間を進行(3分単位のステップに対応)</td></tr>
+      <tr><td>スケーラブルな推論器</td><td>非同期の分散処理、GPUリソース管理、スケールフリーなネットワークの性質を保った大規模なユーザー生成</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <h3>エージェントの行動</h3>
+    <p>論文は、サインアップ、更新、トレンド・投稿・ユーザーの検索、投稿の作成、リポスト、フォロー・フォロー解除、ミュート、いいね・低評価、コメントの作成とコメントへの反応など、<strong>21種</strong>の行動を定義しています。<sup class="c"><a href="#r3">3</a></sup> 紹介サイトや一部の解説は「23種の社会的行動」と記しており、文書によって数値が異なります。<sup class="c"><a href="#r14">14</a></sup> この文書は論文の数値を基準としつつ、その後のバージョンで行動が追加された可能性を残しておきます。</p>
+
+    <h3>論文が再現したと報告した社会現象</h3>
+    <ul class="plain">
+      <li><strong>情報の拡散</strong>:実際のTwitterデータとの正規化RMSEが約30%の水準で一致(198事例)。<sup class="c"><a href="#r3">3</a></sup> これは「完全な一致」ではなく「傾向が似ている」水準と読むのが安全です。(この文書の解釈)</li>
+      <li><strong>集団の極化</strong>:議論が進むほど意見が極端に偏る現象。検閲のないモデルでより顕著でした。</li>
+      <li><strong>同調効果</strong>:エージェントは人よりも強く多数に従い、特に否定的なシグナルでそうでした。同調効果は、エージェントが1万人以上のときに現れました。</li>
+    </ul>
+
+    <h3>規模とコスト</h3>
+    <p>論文は、196人から10万人以上までさまざまな規模を試し、最大100万エージェントを実演しました。このときA100 GPU 27枚で、1タイムステップに約18時間かかりました。<sup class="c"><a href="#r3">3</a></sup> 集団が大きいほど、エージェントの意見がより多様で役に立つ方向に現れたという観察もあります。</p>
+
+    <h3>論文が明らかにした限界</h3>
+    <p>著者らは、推薦システムの精度が伝播の深さに影響する点、ユーザープロフィールの表現が単純な点、社会規範や複雑な行動の創発はまだ十分に探究できていない点を、自ら限界として挙げました。<sup class="c"><a href="#r3">3</a></sup></p>
+    <div class="note accent"><span class="lab">この文書の解釈</span>OASIS論文の意義は、「社会を正確に予測する」ことではなく、「ソーシャルメディアで見られるいくつかの集団現象を、LLMエージェントで<em>再現できる</em>」という可能性の証明にあります。再現と予測の間には大きな隔たりがあるという点が、7章の論点につながります。</div>
+  </div>
+</section>
+
+<section class="chapter" id="ch6">
+  <div class="ch-head"><div class="ch-num">第6章</div><h2>活用シナリオとデモ</h2><p class="ch-sub">公式サイトが示した六つの用途と、二つの実演</p></div>
+  <div class="prose">
+    <p>紹介サイトは、六つの活用シナリオを示しています。<sup class="c"><a href="#r2">2</a></sup> 表の「成熟度」は、公開された根拠に基づくこの文書の判断です。</p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>シナリオ</th><th>何を見るか</th><th>成熟度(この文書の判断)</th></tr></thead>
+    <tbody>
+      <tr><td>世論予測</td><td>争点がどの集団でどう広がり、分かれるか</td><td>実演段階(武漢大学の事例)</td></tr>
+      <tr><td>公開時の反応</td><td>製品・コンテンツを公開したときの反応と圧力をあらかじめ点検</td><td>探索的な活用</td></tr>
+      <tr><td>政策の影響</td><td>政策草案に対する社会の反応と対立点</td><td>探索的な活用</td></tr>
+      <tr><td>ブランド危機</td><td>危機が起きたとき、対応が抜けている箇所</td><td>探索的な活用</td></tr>
+      <tr><td>金融心理</td><td>市場心理とセンチメントの流れ</td><td>予定機能(公式の「coming soon」)</td></tr>
+      <tr><td>文学の続き書き</td><td>小説の後日談を人物エージェントで展開</td><td>実演段階(紅楼夢の事例)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <h3>実演1 — 武漢大学の世論シミュレーション</h3>
+    <p>チームが公開した最初の実演は、武漢大学に関する世論です。姉妹プロジェクトBettaFishが作った世論分析レポートをMiroFishに入れ、感情がどう進展するかをシミュレーションさせました。<sup class="c"><a href="#r14">14</a></sup></p>
+    <h3>実演2 — 『紅楼夢』の失われた結末</h3>
+    <p>二つ目の実演は、より異色です。18世紀の中国の小説『紅楼夢』の前80回を入れ、原作で失われた結末がどう続いたのかをシミュレーションさせました。<sup class="c"><a href="#r14">14</a></sup> これは「予測」というより、「人物の論理に基づく物語の展開」に近いものです。(この文書の解釈)</p>
+    <div class="note caution"><span class="lab">実演は検証ではない</span>どちらの実演も、方法論を見せる事例にすぎず、予測が実際の結果と合ったという証拠ではありません。公開された資料には、結果を現実と比較したベンチマークがありません。<sup class="c"><a href="#r14">14</a></sup><sup class="c"><a href="#r8">8</a></sup></div>
+    <h3>金融予測は公式にはサポートされていない</h3>
+    <p>リポジトリのあるディスカッションで、メンテナーは、MiroFishは「補正またはバックテストされた株式・暗号資産の価格予測器ではない」とはっきり述べました。リアルタイムの市場データ連携、定量的な要因モデリング、安定した信頼度指標がなく、補正された価格予測製品はコアのリポジトリでは計画していないそうです。金融予測は「coming soon」と表示された予定機能であり、結果を投資助言や証明された予測精度として示してはならないと釘を刺しました。<sup class="c"><a href="#r8">8</a></sup></p>
+  </div>
+</section>
+
+<section class="chapter" id="ch7">
+  <div class="ch-head"><div class="ch-num">第7章</div><h2>限界と論争:それらしさは正確さではない</h2><p class="ch-sub">検証、偏り、そして自分で使ってみた人たちの報告</p></div>
+  <div class="gist"><span class="lab">この章の要点</span><ul>
+    <li>公開された<strong>精度のベンチマークはありません</strong>。実演は方法の例にすぎません。</li>
+    <li>LLMエージェントは<strong>人よりも同調しやすく</strong>、より丁寧で一貫した話し方をする傾向があるため、結果が実際の社会と体系的に異なりうるのです。</li>
+    <li>独立して設置して試したある報告では、<strong>単一のモデル呼び出しと結果が同じでした</strong>。</li>
+  </ul></div>
+  <div class="prose">
+    <h3>論点1 — 検証の不在</h3>
+    <p>最大の問題は単純です。シミュレーションがそれらしい社会的な流れを作り出すからといって、その流れが実際の人々の行動を当てるという意味にはなりません。チームは、予測を過去の結果と比較したベンチマークを公開しておらず、実演は精度の証拠ではなく方法論の紹介です。<sup class="c"><a href="#r14">14</a></sup> 紹介サイト自身も、結果は「探索的な産出物」であり、運用・金融・政策の決定の前に検討すべきだと記しています。<sup class="c"><a href="#r2">2</a></sup></p>
+
+    <h3>論点2 — 学界の批判:LLMはエージェントベースモデリングの問題を解けていない</h3>
+    <p>アムステルダム大学のラルーイとトルンベリは、LLMベースの生成型社会シミュレーション研究を検討したうえで、それがエージェントベースモデリングの古くからの検証・補正の問題を解決するどころか、<em>悪化させる</em>と主張します。<sup class="c"><a href="#r5">5</a></sup> 核心的な指摘は次のとおりです。</p>
+    <ul class="plain">
+      <li><strong>検証の不備</strong>:多くの研究が、厳密な実証比較なしに、「それらしく見えるか(believability)」という主観的な判断に頼っています。</li>
+      <li><strong>人とは違う話し方</strong>:定量比較をすると、LLMの応答は実際の人より「長く、丁寧で、論理的で、礼儀正しい」のです。</li>
+      <li><strong>ブラックボックス</strong>:「LLMはブラックボックスのモデルであり、なぜ特定の出力が出たのかを理解することは事実上不可能だ。」</li>
+      <li><strong>計算の負担と再現性</strong>:はるかに多くの演算が必要なのに、ほとんどの研究が感度分析や繰り返し実行をしていません。</li>
+    </ul>
+
+    <h3>論点3 — 「MiroFishの蜃気楼」論争</h3>
+    <p>ダニエレ・プロベルビオは、「あらゆるものを予測する」という文句を、科学的な土台のない誇張だと批判します。彼の論旨は三つです。第一に、AIのマルチエージェントシステムはまだ研究段階にあり、失敗・偏り・認識論的な問題が次々と観察されています。第二に、AIの行動はどのLLMを使うかによって変わり、単純な状況ですら人の選択と完全には一致しません。第三に、個々のLLMが人の意思決定を忠実に代表するという仮定と、エージェント社会が人間社会を鏡のように映すという仮定は、どちらも証明されていません。彼は、かつて有望だったものの結局うまく機能しなかったGoogleインフルエンザトレンドを、警戒すべき先例として挙げています。<sup class="c"><a href="#r7">7</a></sup></p>
+
+    <h3>論点4 — 自分で使ってみた報告</h3>
+    <p>WPPリサーチは、2026年5月14日にMiroFishを自分で設置し、S&amp;P 500の方向と上位5銘柄の予測を試しました。使用コストは、すべての実行を合わせて約1ドルでした(gemini-2.5-flash-liteを使用)。<sup class="c"><a href="#r6">6</a></sup></p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>項目</th><th>結果</th></tr></thead>
+    <tbody>
+      <tr><td>指数の方向</td><td>群(swarm)と対照群(単一のAPI呼び出し)の両方が「下落」を予測したが、実際は+0.77%の上昇</td></tr>
+      <tr><td>銘柄の選択</td><td>群は超大型株(NVDA・AMZN・META・GOOGL・MSFT)を選んだが、実際の上位銘柄(CSCO・JBHT・APP・TTWO・F)は、どちらも当てられなかった</td></tr>
+      <tr><td>群の付加価値</td><td>群の予測が単一モデルの出力と同じで、追加の洞察がなかった</td></tr>
+      <tr><td>指示の履行</td><td>銘柄リストを求めた明示的な指示を飛ばし、漠然とした業種コメントに置き換えた</td></tr>
+      <tr><td>エージェントの数</td><td>100人を要求したが25人が生成された(自動決定)</td></tr>
+      <tr><td>運用上の問題</td><td>必須の依存関係Zep Cloudの無料枠が3回の実行で尽き、古いDockerイメージの修正が必要だった</td></tr>
+      <tr><td>データの新しさ</td><td>リアルタイムのデータ連携がなく、予測は自分で集めた種と同じだけの新しさにとどまる</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <p>この試験は、金融というMiroFishの主力ではない領域を一度試した単一の事例です。この文書は、これをMiroFish全体に対する判決とは読まず、「期待を下げ、検証を先にせよ」というシグナルとして読みます。報告は、フレームワークがまだ「脆い」と評価しました。<sup class="c"><a href="#r6">6</a></sup></p>
+
+    <h3>論点5 — 同調の偏り</h3>
+    <p>OASIS論文が自ら明らかにしたように、LLMエージェントは人よりも同調に弱いのです。<sup class="c"><a href="#r3">3</a></sup> したがって、シミュレーションされた群衆は、実際よりも速く極化する可能性があり、これは基盤モデルと構造に由来する<em>体系的な</em>偏りであるため、結果を一貫してより極端な方向へ傾けうるのです。(この文書の解釈)</p>
+    <div class="note caution"><span class="lab">この文書の結論</span>MiroFishは「未来を当てる機械」ではなく、「仮説を可視化し、シナリオを探索するツール」として受け止めるのが安全です。結果を意思決定の根拠に使うなら、必ず自前のデータでバックテストし、同じシナリオを複数回・複数のモデルで回して、結果の安定性を確認しなければなりません。(この文書の提案)</div>
+  </div>
+</section>
+
+<section class="chapter" id="ch8">
+  <div class="ch-head"><div class="ch-num">第8章</div><h2>自分で使うなら:運用・コスト・ライセンス</h2><p class="ch-sub">設置の要件、コストの管理、そしてAGPL-3.0</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>項目</th><th>内容</th></tr></thead>
+    <tbody>
+      <tr><td>必要な環境</td><td>Node.js 18以上、Python 3.11〜3.12、パッケージ管理ツールuv。ソースからのインストールまたはDocker<sup class="c"><a href="#r1">1</a></sup></td></tr>
+      <tr><td>必要なキー</td><td>LLMのAPIキー(OpenAI SDK互換)とZep CloudのAPIキー<sup class="c"><a href="#r1">1</a></sup></td></tr>
+      <tr><td>入力</td><td>PDF・Markdown・TXT、最大50MB<sup class="c"><a href="#r2">2</a></sup></td></tr>
+      <tr><td>コスト管理</td><td>シミュレーションはトークンを多く使います。最初は40ラウンド未満で始め、安価なモデルを使うとコストが大きく減ります<sup class="c"><a href="#r13">13</a></sup><sup class="c"><a href="#r14">14</a></sup></td></tr>
+      <tr><td>ライセンス</td><td>AGPL-3.0<sup class="c"><a href="#r1">1</a></sup></td></tr>
+      <tr><td>現在の状態</td><td>「v0.1プレビュー」<sup class="c"><a href="#r2">2</a></sup></td></tr>
+      <tr><td>韓国語</td><td>コミュニティが作った韓国語フォークMiroFish-Koがある(非公式)<sup class="c"><a href="#r15">15</a></sup></td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <h3>AGPL-3.0が意味すること</h3>
+    <p>AGPL-3.0は、ソースコードを修正して<em>ネットワークサービス</em>として提供する場合にも、修正したソースをユーザーに公開することを求める、強いコピーレフトのライセンスです。社内ツールとしてのみ使うなら負担は小さいものの、これをもとに外部へサービスを提供する計画なら、法務の検討が必要です。(一般的なライセンスの解説であり、法律上の助言ではありません。)</p>
+    <h3>データと個人情報</h3>
+    <p>入力文書が外部のLLM APIとZep Cloudに送信されるため、機密文書や個人情報を含む資料は、そのままアップロードしないほうが安全です。一部のフォークはローカルモードを掲げていますが、公式プロジェクトの機能ではないため、別途検討が必要です。(この文書の提案)</p>
+  </div>
+</section>
+
+<section class="chapter" id="ch9">
+  <div class="ch-head"><div class="ch-num">第9章</div><h2>コンテンツ制作の視点から見たMiroFish</h2><p class="ch-sub">物語を種とするシミュレーションは、何ができて、何ができないのか</p></div>
+  <div class="prose">
+    <p>この章は、公開された資料に基づくこの文書の解釈と提案です。MiroFishが小説を入力として受け取る点、公開時の反応をシナリオとして掲げる点は、コンテンツの企画段階で興味深いポイントです。</p>
+    <h3>うまく合いうる用途</h3>
+    <ul class="plain">
+      <li><strong>世界観・人物関係の点検</strong>:シノプシス・設定資料を種として入れ、人物が事件にどう反応するかを見て、物語の穴を探す用途。『紅楼夢』の実演と同じ方式です。</li>
+      <li><strong>公開前の反応の仮説づくり</strong>:予告編・どんでん返し・公開周期のような選択肢について、「どのコミュニティでどんな反応が出うるか」という<em>仮説</em>を、素早く複数作ってみる用途。</li>
+      <li><strong>危機シナリオのリハーサル</strong>:炎上が起きたときに噂がどう広がるかを、議論の材料にする用途。</li>
+    </ul>
+    <h3>期待してはいけないこと</h3>
+    <ul class="plain">
+      <li><strong>興行数値の直接予測</strong>:観客数・視聴率・売上のような数字を当てるように補正されてはいません。金融予測が公式にサポートされていないのと同じ理由です。<sup class="c"><a href="#r8">8</a></sup></li>
+      <li><strong>実際の観客の反応の代替</strong>:LLMエージェントは、人よりも丁寧で一貫しており、同調しやすいのです。<sup class="c"><a href="#r5">5</a></sup><sup class="c"><a href="#r3">3</a></sup> ファンダムの感情のような非定型の反応を、そのまま再現すると信じるのは難しいでしょう。</li>
+      <li><strong>韓国語環境での即時の利用</strong>:公式プロジェクトは中国語・英語が中心で、韓国のコミュニティの話し方や文化をどれだけ反映するかは検証されていません。</li>
+    </ul>
+    <div class="note accent"><span class="lab">この文書の解釈</span>コンテンツ分野で使える道は、「正解を当てる予測器」より<strong>「検証されたデータと結合する仮説生成器」</strong>です。実際の観客・市場データで補正しバックテストしたモデルと並べて置いて初めて、シミュレーションが意思決定の助けになります。スタンフォードの研究チームが、エージェントを実在の人へのインタビューで作ったところ、アンケート回答をかなりの水準で再現したという結果は、<sup class="c"><a href="#r10">10</a></sup> 「実際のデータでエージェントを接地(grounding)する方向」が開かれていることを示唆します。</div>
+  </div>
+</section>
+
+<section class="chapter" id="ch10">
+  <div class="ch-head"><div class="ch-num">第10章</div><h2>展望:何を見守るべきか</h2><p class="ch-sub">これからの12〜24か月、群知能シミュレーションの進捗を測る七つの指標</p></div>
+  <div class="prose">
+    <p>この章は、これまでの資料に基づくこの文書の総合的な判断です。予測ではなく、関連ニュースを読むときに何を見るべきかのチェックリストとして活用してください。</p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>指標</th><th>2026年10月現在</th><th>意味のある次の段階</th></tr></thead>
+    <tbody>
+      <tr><td>① 公開ベンチマーク</td><td>予測を現実と比較した公式のベンチマークなし</td><td>過去の事件に対するバックテストの結果と方法の公開</td></tr>
+      <tr><td>② 独立した再現</td><td>第三者の単一の試験で、単一の呼び出しと差がなかった</td><td>複数のチームの繰り返し実験で、群が単一モデルを上回るという証拠</td></tr>
+      <tr><td>③ 同調の補正</td><td>LLMエージェントが人よりも同調しやすい</td><td>人のデータで補正して、同調・極化を減らしたという結果</td></tr>
+      <tr><td>④ 実在の人との接地</td><td>ペルソナはほとんど文書から合成</td><td>実際のインタビュー・アンケートで接地したエージェントの活用<sup class="c"><a href="#r10">10</a></sup></td></tr>
+      <tr><td>⑤ 多言語・文化への対応</td><td>中国語・英語が中心で、韓国語は非公式のフォーク</td><td>韓国語コミュニティの特性を反映し、検証したモデル</td></tr>
+      <tr><td>⑥ 運用の安定性</td><td>v0.1プレビュー、依存関係・指示の履行の問題が報告されている</td><td>安定版と信頼度指標の標準化</td></tr>
+      <tr><td>⑦ 規制と倫理</td><td>世論操作・政策利用に関する議論が研究より遅れている</td><td>利用指針、結果の表記原則、責任の所在の確立</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <h3>むすびに</h3>
+    <p>MiroFishは、「社会を文書一つから育て上げる」という強力な想像を、誰でもダウンロードして回せるツールにした点で意味があります。同時に、いまの根拠は「このようなシミュレーションが可能だ」という実演にとどまっており、「このシミュレーションは正しい」という証明はまだありません。</p>
+    <p>ですから、このツールに向き合う最良の姿勢は、熱狂でも冷笑でもありません。結果を予言として読まず、<strong>議論のための仮説</strong>として読むこと、そして同じ問いを実際のデータでもう一度確認することです。群知能シミュレーションが信頼されるツールになるには、その検証が先に積み重ならなければなりません。</p>
+  </div>
+</section>
+
+<section class="chapter" id="appA">
+  <div class="ch-head"><div class="ch-num">付録 A</div><h2>用語集</h2></div>
+  <dl class="gloss">
+    <div><dt>群知能<small>Swarm intelligence</small></dt><dd>単純な個体たちが相互作用して作り出す、集団レベルの知的な行動。MiroFishでは、LLMエージェント集団の相互作用を指す。</dd></div>
+    <div><dt>種<small>Seed</small></dt><dd>シミュレーションの出発点となる、現実の入力文書(ニュース・政策草案・レポート・小説など)。</dd></div>
+    <div><dt>エージェント<small>Agent</small></dt><dd>固有の性格・記憶・行動ロジックを持ち、環境の中で自ら判断し行動するLLMベースの主体。</dd></div>
+    <div><dt>ペルソナ<small>Persona</small></dt><dd>エージェントに与える背景・視点・傾向などの人物設定。</dd></div>
+    <div><dt>エージェントベースモデリング<small>ABM · Agent-based modeling</small></dt><dd>個々の行為者のルールと相互作用で、集団現象を再現・分析するシミュレーション手法。</dd></div>
+    <div><dt>生成型エージェント<small>Generative agents</small></dt><dd>記憶・内省・計画の構造を備えたLLMベースのエージェント。2023年のスタンフォード・Googleの研究で知られる。</dd></div>
+    <div><dt>OASIS<small>Open Agent Social Interaction Simulations</small></dt><dd>CAMEL-AIコミュニティが作った、LLMエージェントベースのソーシャルメディアシミュレーター。MiroFishのシミュレーションエンジン。</dd></div>
+    <div><dt>GraphRAG<small>Graph Retrieval-Augmented Generation</small></dt><dd>文書から実体と関係を抽出して知識グラフを作り、それを検索に活用する方式。</dd></div>
+    <div><dt>オントロジー<small>Ontology</small></dt><dd>実体の種類と関係を構造的に定義した枠組み。MiroFishの段階1の成果物。</dd></div>
+    <div><dt>ReportAgent<small>ReportAgent</small></dt><dd>シミュレーション結果を分析してレポートを作り、追加の質問に答える、MiroFish専用のエージェント。</dd></div>
+    <div><dt>Zep Cloud<small>Zep Cloud</small></dt><dd>エージェントの長期記憶を保存・検索する外部サービス。MiroFishの必須の依存関係。</dd></div>
+    <div><dt>推薦システム<small>RecSys</small></dt><dd>ユーザーにどの投稿を見せるかを決めるアルゴリズム。OASISはX型・Reddit型の推薦方式を模す。</dd></div>
+    <div><dt>同調効果<small>Herd effect</small></dt><dd>多数の意見や行動に従う傾向。LLMエージェントは人よりも強く現れると報告されている。</dd></div>
+    <div><dt>集団の極化<small>Group polarization</small></dt><dd>議論を経て、集団の意見が最初よりも極端に偏る現象。</dd></div>
+    <div><dt>創発<small>Emergence</small></dt><dd>個々の要素のルールだけでは予想しにくい、集団レベルのパターンが現れる現象。</dd></div>
+    <div><dt>バックテスト<small>Backtest</small></dt><dd>過去データに予測手法を当てはめ、実際の結果とどれだけ合うかを点検する検証方法。</dd></div>
+    <div><dt>補正<small>Calibration</small></dt><dd>モデルの出力(確率・信頼度)が実際の頻度と合うように調整すること。</dd></div>
+    <div><dt>AGPL-3.0<small>GNU Affero General Public License v3</small></dt><dd>修正したソフトウェアをネットワークサービスとして提供する場合にも、ソース公開を求めるコピーレフトのライセンス。</dd></div>
+    <div><dt>ワールドモデル<small>World model</small></dt><dd>環境の力学を学習し、行動に応じた未来を予測するAI内部のシミュレーター。MiroFishは、物理世界ではなく社会・世論をシミュレーションする側に近い。</dd></div>
+  </dl>
+</section>
+
+<section class="chapter" id="appB">
+  <div class="ch-head"><div class="ch-num">付録 B</div><h2>段階別の必読リスト</h2><p class="ch-sub">学習の順番に並べました。番号は参考文献の番号です。</p></div>
+  <div class="prose">
+    <h4>第1段階 — 入門(何かをつかむ)</h4>
+    <ul class="plain">
+      <li>MiroFish公式リポジトリのREADME<sup class="c"><a href="#r1">1</a></sup></li>
+      <li>アジア経済〈「ミロピシ」AIエージェントが人気沸騰〉 — 韓国語の報道<sup class="c"><a href="#r11">11</a></sup></li>
+      <li>MiroFish紹介サイト — 5段階と活用シナリオ<sup class="c"><a href="#r2">2</a></sup></li>
+    </ul>
+    <h4>第2段階 — 根っこ(基盤技術)</h4>
+    <ul class="plain">
+      <li>Parkほか〈Generative Agents: Interactive Simulacra of Human Behavior〉(2023)<sup class="c"><a href="#r9">9</a></sup></li>
+      <li>OASIS論文(2024)<sup class="c"><a href="#r3">3</a></sup></li>
+      <li>Parkほか〈Generative Agent Simulations of 1,000 People〉(2024)<sup class="c"><a href="#r10">10</a></sup></li>
+    </ul>
+    <h4>第3段階 — 批判と検証</h4>
+    <ul class="plain">
+      <li>Larooij &amp; Törnberg〈Do Large Language Models Solve the Problems of Agent-Based Modeling?〉<sup class="c"><a href="#r5">5</a></sup></li>
+      <li>House of Ethics〈The MiroFish Mirage?〉<sup class="c"><a href="#r7">7</a></sup> · WPP〈MiroFish: Is swarm intelligence worth the cloud bill?〉<sup class="c"><a href="#r6">6</a></sup></li>
+      <li>リポジトリのディスカッション#280〈Stock &amp; Crypto Market Prediction Capability〉<sup class="c"><a href="#r8">8</a></sup></li>
+    </ul>
+    <h4>第4段階 — 実習</h4>
+    <ul class="plain">
+      <li>開発者向けの解説記事2本<sup class="c"><a href="#r13">13</a></sup><sup class="c"><a href="#r14">14</a></sup> · 韓国語フォーク<sup class="c"><a href="#r15">15</a></sup></li>
+    </ul>
+  </div>
+</section>
+
+<section class="chapter" id="appC">
+  <div class="ch-head"><div class="ch-num">付録 C</div><h2>参考文献</h2><p class="ch-sub">{{refs_sub}}</p></div>
+  <!--REFS-->
+</section>
+</div>
+</div>
+<div class="wm-foot">MiroFish · 2026年10月7日時点で整理 · 数値と引用は各出典の公開時点のものであり、その後変更される場合があります。</div>
+</div>
+</section>

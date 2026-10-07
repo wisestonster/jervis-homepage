@@ -4,7 +4,7 @@ import { DEFAULT_LOCALE, isLocale, LOCALE_COOKIE } from "@/lib/locale";
 /**
  * 언어별 URL(`/en/...`, `/ko/...`, `/ja/...`) 라우팅.
  * - 접두사가 있으면 그대로 통과시키고, 마지막으로 방문한 언어를 쿠키에 기억합니다.
- * - 접두사가 없으면(예: `/about`) 기억된 언어, 없으면 EN으로 리다이렉트합니다.
+ * - 접두사가 없으면(예: `/about`) 기억된 언어, 없으면 KO로 리다이렉트합니다.
  */
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;

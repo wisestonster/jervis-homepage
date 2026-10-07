@@ -1,0 +1,172 @@
+/* 월드모델 바이블 — 홈페이지 디자인 토큰(Inter/Pretendard, 블루·시안, 옅은 하늘색 배경)에 맞춘 스타일. 모든 규칙은 .wm 아래로 한정. */
+.wm{
+  --wm-soft:var(--soft);
+  --wm-accent:var(--blue);
+  --wm-accent-soft:#eaf3fa;
+  --wm-rule:var(--line);
+  --wm-rule-strong:#c6d3de;
+  --wm-caution:#8a5a12;
+  --wm-caution-soft:#fdf5e6;
+  --wm-good:#1b8a5a;
+  --wm-good-soft:#e8f6ef;
+  --wm-math:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  font-size:16px;line-height:1.8;word-break:keep-all;overflow-wrap:break-word;
+}
+.wm a{color:var(--blue);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.wm a:hover{color:var(--blue-dark)}
+.wm a:focus-visible,.wm summary:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:2px}
+
+/* masthead — page-hero 톤 */
+.wm .page-hero{padding:96px 0 72px}
+.wm .wm-mast{display:grid;gap:40px}
+@media (min-width:900px){.wm .wm-mast{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:end;gap:72px}}
+.wm .page-hero h1{font-size:clamp(40px,5.4vw,68px);margin:0 0 24px}
+.wm .page-hero .page-hero__copy{margin:0;max-width:34em}
+.wm .wm-epigraph{padding:26px 28px;border:1px solid var(--wm-rule);border-top:4px solid var(--cyan);border-radius:12px;background:rgba(255,255,255,.72);display:grid;gap:12px}
+.wm .eq{font:700 clamp(22px,2.6vw,28px) var(--wm-math);color:var(--blue);letter-spacing:-.01em;white-space:nowrap;overflow-x:auto}
+.wm .eq sub{font-size:.6em}
+.wm .wm-epigraph p{margin:0;color:var(--body);font-size:14.5px;line-height:1.7}
+.wm .meta-row{display:flex;flex-wrap:wrap;gap:8px 20px;font:600 12px var(--mono);letter-spacing:.04em;color:var(--muted)}
+
+/* layout */
+.wm .wm-section{padding:72px 0 96px}
+.wm .wrap{display:grid;grid-template-columns:1fr;gap:40px}
+@media (min-width:1040px){.wm .wrap{grid-template-columns:230px minmax(0,1fr);gap:56px}}
+.wm .wm-main{min-width:0}
+
+/* toc */
+.wm .toc{font-size:14px}
+@media (min-width:1040px){.wm .toc{position:sticky;top:98px;align-self:start;max-height:calc(100vh - 122px);overflow-y:auto;padding-right:6px}}
+.wm .toc details{border-top:2px solid var(--ink);border-bottom:1px solid var(--wm-rule)}
+.wm .toc summary{cursor:pointer;font:700 11px var(--mono);letter-spacing:.15em;color:var(--blue);padding-block:12px;list-style:none}
+.wm .toc summary::-webkit-details-marker{display:none}
+.wm .toc ol{list-style:none;margin:0;padding:0 0 12px;display:grid;gap:2px}
+.wm .toc a{display:grid;grid-template-columns:2.6em 1fr;gap:4px;padding:5px 0;color:var(--body);text-decoration:none;line-height:1.45}
+.wm .toc a:hover{color:var(--blue)}
+.wm .toc a span:first-child{font:600 11px var(--mono);color:var(--cyan);padding-top:3px}
+
+/* chapters */
+.wm .chapter{padding-block:0 56px;border-bottom:1px solid var(--wm-rule);margin-bottom:56px;scroll-margin-top:98px}
+.wm .chapter:last-child{border-bottom:0;margin-bottom:0}
+.wm .ch-head{display:grid;gap:8px;margin-bottom:30px}
+.wm .ch-num{font:700 11px var(--mono);letter-spacing:.15em;color:#0a7f89}
+.wm .chapter h2{margin:0;color:var(--ink);font:600 clamp(30px,3.6vw,44px)/1.2 var(--display);letter-spacing:-.03em;text-wrap:balance}
+.wm .ch-sub{color:var(--muted);font-size:16px;margin:0;max-width:40em}
+.wm .prose{max-width:46rem}
+.wm .prose p{margin:0 0 1.05em}
+.wm h3{margin:2.1em 0 .7em;color:var(--ink);font:600 22px/1.4 var(--display);letter-spacing:-.02em;text-wrap:balance;scroll-margin-top:98px}
+.wm h4{margin:1.6em 0 .4em;color:var(--ink);font:600 16.5px/1.5 var(--display)}
+.wm strong{color:var(--ink)}
+.wm ul.plain,.wm ol.plain{padding-left:1.25em;margin:0 0 1.1em}
+.wm ul.plain{list-style:disc}
+.wm ol.plain{list-style:decimal}
+.wm ul.plain li,.wm ol.plain li{margin-bottom:.4em;padding-left:.2em}
+.wm ul.plain li::marker,.wm ol.plain li::marker{color:var(--cyan)}
+.wm sup.c{font:600 10.5px var(--mono);margin-left:1px}
+.wm sup.c a{text-decoration:none}
+.wm sup.c a:hover{text-decoration:underline}
+.wm .m{font-family:var(--wm-math);font-size:.9em}
+.wm em{font-style:italic}
+
+/* callouts */
+.wm .gist{background:var(--wm-soft);border:1px solid var(--wm-rule);border-left:4px solid var(--blue);border-radius:10px;padding:20px 24px;margin:0 0 32px;max-width:46rem}
+.wm .gist .lab{font:700 11px var(--mono);letter-spacing:.15em;color:var(--blue);margin-bottom:8px;display:block}
+.wm .gist ul{margin:0;padding-left:1.15em;list-style:disc}
+.wm .gist li{margin-bottom:.3em}
+.wm .gist li::marker{color:var(--cyan)}
+.wm .note{max-width:46rem;padding:16px 20px;margin:20px 0 26px;border-radius:10px;font-size:15.5px;line-height:1.7}
+.wm .note .lab{font:700 11px var(--mono);letter-spacing:.14em;display:block;margin-bottom:4px}
+.wm .note.caution{background:var(--wm-caution-soft);border:1px solid #efdcb6}
+.wm .note.caution .lab{color:var(--wm-caution)}
+.wm .note.good{background:var(--wm-good-soft);border:1px solid #c7e5d6}
+.wm .note.good .lab{color:var(--wm-good)}
+.wm .note.accent{background:var(--wm-accent-soft);border:1px solid #cfe2f1}
+.wm .note.accent .lab{color:var(--blue)}
+.wm blockquote{margin:24px 0;padding:2px 0 2px 22px;border-left:3px solid var(--cyan);max-width:42rem;font-size:18px;line-height:1.7;font-weight:500;color:var(--ink)}
+.wm blockquote cite{display:block;font-style:normal;font-size:13.5px;font-weight:400;color:var(--muted);margin-top:8px}
+
+/* tables */
+.wm .tbl{overflow-x:auto;margin:16px 0 28px;border:1px solid var(--wm-rule);border-radius:12px;background:#fff}
+.wm table{border-collapse:collapse;width:100%;min-width:620px;font-size:14.5px;line-height:1.6}
+.wm th,.wm td{text-align:left;vertical-align:top;padding:12px 16px;border-bottom:1px solid var(--wm-rule)}
+.wm tbody tr:last-child td{border-bottom:0}
+.wm th{background:var(--wm-soft);font:700 11px var(--mono);letter-spacing:.1em;color:var(--muted);white-space:nowrap}
+.wm td:first-child{font-weight:700;color:var(--ink);white-space:nowrap}
+.wm .num{font-variant-numeric:tabular-nums}
+
+/* timeline */
+.wm .tl{list-style:none;margin:12px 0 24px;padding:0;border-left:2px solid var(--wm-rule-strong)}
+.wm .tl li{display:grid;grid-template-columns:1fr;gap:2px;padding:0 0 18px 24px;position:relative;margin:0}
+.wm .tl li::before{content:"";position:absolute;left:-7px;top:9px;width:12px;height:12px;background:#fff;border:2px solid var(--cyan);border-radius:50%}
+.wm .tl li.era::before{background:var(--blue);border-color:var(--blue)}
+@media (min-width:640px){.wm .tl li{grid-template-columns:7.5em 1fr;gap:16px}}
+.wm .tl .d{font:700 13px var(--mono);color:var(--blue);font-variant-numeric:tabular-nums;padding-top:2px}
+.wm .tl .t{font-size:15.5px}
+.wm .tl .era-lab{font-weight:700;font-size:17px;color:var(--ink)}
+
+/* model entries */
+.wm h3 + .entries,.wm .entries{display:grid;gap:0;margin:8px 0 28px;border-top:2px solid var(--ink)}
+.wm .entry{display:grid;gap:6px 28px;padding:20px 0;border-bottom:1px solid var(--wm-rule)}
+@media (min-width:760px){.wm .entry{grid-template-columns:13rem minmax(0,1fr)}}
+.wm .entry .who{display:grid;align-content:start;gap:3px}
+.wm .entry .who b{font:700 18px/1.35 var(--display);color:var(--ink)}
+.wm .entry .who span{font:500 12px var(--mono);color:var(--muted)}
+.wm .entry p{margin:0 0 .6em;max-width:42rem;font-size:15.5px}
+.wm .entry p:last-child{margin-bottom:0}
+.wm .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.wm .tag{font:600 11px var(--mono);letter-spacing:.04em;padding:3px 9px;border:1px solid var(--wm-rule-strong);color:var(--body);border-radius:999px;background:#fff}
+.wm .tag.lat{border-color:var(--cyan);color:#0a7f89;background:#eafafb}
+
+/* figure */
+.wm figure{margin:24px 0 30px}
+.wm .fig{background:var(--wm-soft);border:1px solid var(--wm-rule);border-radius:12px;padding:20px;overflow-x:auto}
+.wm .fig svg{display:block;width:100%;min-width:640px;height:auto}
+.wm figcaption{font-size:13.5px;color:var(--muted);margin-top:10px;max-width:46rem;line-height:1.65}
+.wm .s-box{fill:#fff;stroke:var(--wm-rule-strong);stroke-width:1.2}
+.wm .s-key{fill:var(--wm-accent-soft);stroke:var(--blue);stroke-width:1.4}
+.wm .s-t{fill:var(--ink);font-family:var(--font);font-size:14px;font-weight:600}
+.wm .s-s{fill:var(--muted);font-family:var(--font);font-size:11.5px}
+.wm .s-line{stroke:var(--body);stroke-width:1.3;fill:none}
+.wm .s-acc{stroke:var(--blue);stroke-width:1.6;fill:none}
+.wm .s-dash{stroke:var(--muted);stroke-width:1.2;fill:none;stroke-dasharray:4 4}
+.wm .s-arrow{fill:var(--body)}
+.wm .s-arrow-a{fill:var(--blue)}
+
+/* 2-col compare */
+.wm .duo{display:grid;gap:18px;margin:16px 0 28px}
+@media (min-width:760px){.wm .duo{grid-template-columns:1fr 1fr}}
+.wm .duo > div{border:1px solid var(--wm-rule);border-top:4px solid var(--ink);border-radius:12px;padding:20px 22px;background:#fff}
+.wm .duo > div.alt{border-top-color:var(--cyan)}
+.wm .duo h4{margin:0 0 8px;font-size:18px}
+.wm .duo p{margin:0 0 .6em;font-size:15.5px}
+.wm .duo ul{margin:0;padding-left:1.1em;font-size:15px;list-style:disc}
+.wm .duo li::marker{color:var(--cyan)}
+
+/* glossary */
+.wm dl.gloss{display:grid;gap:0;margin:8px 0;border-top:2px solid var(--ink)}
+.wm dl.gloss > div{display:grid;gap:4px 28px;padding:14px 0;border-bottom:1px solid var(--wm-rule)}
+@media (min-width:700px){.wm dl.gloss > div{grid-template-columns:15rem 1fr}}
+.wm dl.gloss dt{font-weight:700;color:var(--ink)}
+.wm dl.gloss dt small{display:block;font:500 11.5px var(--mono);color:var(--muted)}
+.wm dl.gloss dd{margin:0;font-size:15.5px;color:var(--body)}
+
+/* refs */
+.wm ol.refs{list-style:decimal;padding-left:2.6em;font-size:14px;line-height:1.65;color:var(--body);margin:0}
+.wm ol.refs li{margin-bottom:.55em;scroll-margin-top:98px;padding-left:4px}
+.wm ol.refs li::marker{font:600 12px var(--mono);color:var(--cyan)}
+.wm ol.refs li:target{background:var(--wm-accent-soft)}
+.wm ol.refs .src{color:var(--muted)}
+
+.wm .wm-foot{margin-top:56px;padding-top:20px;border-top:1px solid var(--wm-rule);font-size:13px;color:var(--muted)}
+
+@media (max-width:740px){
+  .wm .page-hero{padding:72px 0 52px}
+  .wm .wm-section{padding:52px 0 72px}
+  .wm .chapter{padding-bottom:40px;margin-bottom:40px}
+  .wm th,.wm td{padding:10px 12px}
+}
+
+/* 언어별 줄바꿈: 한국어는 어절 단위, 영어·일본어는 기본 규칙 */
+.wm[lang="en"]{word-break:normal}
+.wm[lang="ja"]{word-break:normal;line-break:strict}
+.wm[lang="ja"] td:first-child,.wm[lang="ja"] th{white-space:normal}

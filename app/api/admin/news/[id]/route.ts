@@ -47,7 +47,7 @@ export async function PATCH(
     );
   if (!source || source.length > 100)
     return NextResponse.json(
-      { error: "원문보기 표시 내용을 100자 이내로 입력해 주세요." },
+      { error: "원문 보기 표시 내용을 100자 이내로 입력해 주세요." },
       { status: 400 },
     );
   if (!sourceUrl || !validWebUrl(sourceUrl))

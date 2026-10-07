@@ -71,7 +71,7 @@ export async function POST(request: Request) {
   const to = process.env.SMTP_TO?.trim() || user;
 
   if (!host || !Number.isInteger(port) || !user || !pass || !from || !to) {
-    return response("메일 서버 설정을 확인해 주세요.", 503);
+    return response("메일 서버가 아직 설정되지 않았습니다. 이메일로 직접 문의해 주세요.", 503);
   }
 
   const transporter = nodemailer.createTransport({
